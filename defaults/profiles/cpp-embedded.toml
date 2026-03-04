@@ -1,0 +1,18 @@
+tags   = ["cpp", "embedded", "embedded-linux", "robotics", "aerospace"]
+lang   = "en"
+output = "cpp-embedded.pdf"
+
+[[trim]]
+tags = ["mgmt"]
+
+[[trim]]
+tags = ["python", "math", "devops"]
+
+[[trim]]
+tags = ["gui", "flutter", "backend", "go"]
+
+[[trim]]
+tags = ["robotics"]
+
+[[trim]]
+tags = ["cpp", "embedded", "embedded-linux", "aerospace", "arch"]

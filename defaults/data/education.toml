@@ -1,0 +1,39 @@
+# Education entries are always shown in full — no tag filtering.
+# Field layout mirrors the resume entry: title (institution), location, degree, date.
+
+[[edu]]
+
+    [edu.title]
+    en = "M. V. Lomonosov Moscow State University"
+    ru = "МГУ им. М. В. Ломоносова"
+
+    [edu.location]
+    en = "Moscow, Russia"
+    ru = "Москва, Россия"
+
+    [edu.degree]
+    en = "Diploma, Computational Mathematics and Computer Science"
+    ru = "Диплом, Прикладная математика и кибернетика"
+
+    [edu.date]
+    en = "Aug. 2020 – Jun. 2022"
+    ru = "Авг. 2020 – Июн. 2022"
+
+
+[[edu]]
+
+    [edu.title]
+    en = "National University of Science and Technology MISIS"
+    ru = "НИТУ МИСИС"
+
+    [edu.location]
+    en = "Moscow, Russia"
+    ru = "Москва, Россия"
+
+    [edu.degree]
+    en = "Specialist in Geoinformatics, Expected 2029"
+    ru = "Специалист, Геоинформатика, ожидается в 2029"
+
+    [edu.date]
+    en = "Aug. 2022 – Jan. 2029"
+    ru = "Авг. 2022 – Янв. 2029"
