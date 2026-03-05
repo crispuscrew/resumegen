@@ -1,4 +1,4 @@
-package data
+package types
 
 // I18n holds a bilingual string pair used for all localizable fields.
 type I18n struct {
@@ -15,7 +15,7 @@ type ResumeData struct {
 	Skills    []SkillCategory
 }
 
-// --- header.toml ---
+// header.toml
 
 type Header struct {
 	Name     string    `toml:"name"`
@@ -30,7 +30,7 @@ type Contact struct {
 	Href  string `toml:"href"`
 }
 
-// --- experience.toml ---
+// experience.toml
 
 type Job struct {
 	Tags     []string `toml:"tags"`
@@ -47,9 +47,8 @@ type Bullet struct {
 	Ru   string   `toml:"ru"`
 }
 
-// --- projects.toml ---
+// projects.toml
 
-// Project fields (title, subtitle, detail) are language-independent.
 type Project struct {
 	Tags     []string `toml:"tags"`
 	Title    string   `toml:"title"`
@@ -59,7 +58,7 @@ type Project struct {
 	Bullets  []Bullet `toml:"bullets"`
 }
 
-// --- education.toml ---
+// education.toml
 
 type School struct {
 	Title    I18n `toml:"title"`
@@ -68,7 +67,7 @@ type School struct {
 	Date     I18n `toml:"date"`
 }
 
-// --- skills.toml ---
+// skills.toml
 
 type SkillCategory struct {
 	Name  I18n        `toml:"name"`

@@ -3,12 +3,12 @@
 Infrastructure (configs, templates, data) is done. Everything below is Go code to write.
 
 ## 1. Project scaffold
-- [ ] `go.mod` — module `github.com/crispuscrew/resumegen`, dep `github.com/BurntSushi/toml v1.4.0`
-- [ ] `embed.go` — `//go:embed defaults` → `var Defaults embed.FS`
+- [x] `go.mod` — module `github.com/crispuscrew/resumegen`, dep `github.com/BurntSushi/toml v1.4.0`
+- [x] `embed.go` — `//go:embed defaults` → `var Defaults embed.FS`
 - [ ] `go.sum` — `go mod tidy` after writing go.mod
 
 ## 2. `internal/config` — global config
-- [ ] Struct matching `defaults/config.toml`: `Paths`, `Render`, `Estimation` sections
+- [x] Struct matching `defaults/config.toml`: `Paths`, `Render`, `Estimation` sections
 - [ ] Loader: search `./config.toml` → `$XDG_CONFIG_HOME/resumegen/config.toml`
   - Not found → prompt user → unpack `Defaults` → exit (user edits and reruns)
   - Parse error → `fmt.Fprintf(os.Stderr, ...)` + `os.Exit(1)`

@@ -1,4 +1,4 @@
-package profile
+package types
 
 type Profile struct {
 	Tags   []string    `toml:"tags"`
