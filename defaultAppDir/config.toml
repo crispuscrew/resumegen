@@ -1,0 +1,19 @@
+[paths]
+output_dir      = "output"
+typst_bin       = "typst" # Assumes typst is in PATH. Change if you want to specify a custom location.
+
+[render]
+page_limit      = 1
+
+[estimation]
+# Height estimates in pt, calibrated for New Computer Modern 11pt on US Letter.
+# Tweak here if you change font, size, or margins in template.typ.
+page_height     = 792.0   # 11 in × 72 pt
+margin_top      = 36.0    # 0.5 in × 72 pt
+margin_bottom   = 36.0
+safety          = 20.0    # conservative buffer before trim kicks in
+section         = 32.0    # heading block: above(12) + text(12) + rule(3) + below(5)
+entry_header    = 21.0    # entry grid: v(9) + row1 + gap(4) + row2 ≈ 21
+bullet          = 14.5    # 9.5 pt text + 5 pt spacing
+summary_line    = 13.0
+skill_line      = 12.0

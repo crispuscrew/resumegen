@@ -2,6 +2,10 @@ tags   = ["cpp", "embedded", "embedded-linux", "robotics", "aerospace"]
 lang   = "en"
 output = "cpp-embedded.pdf"
 
+# Trim order: first group is dropped first when the resume overflows the page limit.
+# Within a group, bullets are dropped from the end of each job/project.
+# List groups from LOWEST priority (dropped first) to HIGHEST (kept longest).
+
 [[trim]]
 tags = ["mgmt"]
 

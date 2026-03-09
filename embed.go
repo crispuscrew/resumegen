@@ -2,5 +2,5 @@ package resumegen
 
 import "embed"
 
-//go:embed defaults
+//go:embed defaultAppDir
 var Defaults embed.FS

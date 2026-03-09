@@ -11,7 +11,7 @@ type ResumeData struct {
 	Header    Header
 	Jobs      []Job
 	Projects  []Project
-	Education []School
+	Education []Edu
 	Skills    []SkillCategory
 }
 
@@ -60,7 +60,7 @@ type Project struct {
 
 // education.toml
 
-type School struct {
+type Edu struct {
 	Title    I18n `toml:"title"`
 	Location I18n `toml:"location"`
 	Degree   I18n `toml:"degree"`
