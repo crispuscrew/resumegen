@@ -4,6 +4,7 @@ import (
 	"github.com/crispuscrew/resumegen/internal/model"
 
 	"errors"
+	"path/filepath"
 	"os"
 	"io/fs"
 )
@@ -23,10 +24,8 @@ func LoadConfigStage(mdl model.Model) (model.Model, error) {
 }
 
 func LoadProfileStage(mdl model.Model) (model.Model, error) {
-	profile, err := loadProfile(mdl.AppDirFs, mdl.ProfileName + ".toml")
-	if errors.Is(err, fs.ErrNotExist) {
-		return appDirSmthNotFound(mdl, "Profile file")
-	} else if err != nil { return mdl, err }
+	profile, err := loadProfile(mdl.AppDirFs, filepath.Join("profiles", mdl.ProfileName+".toml"))
+	if err != nil { return mdl, err }
 
 	mdl.Profile = profile
 	return mdl, nil

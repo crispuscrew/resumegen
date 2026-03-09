@@ -1,4 +1,4 @@
-package types
+package model
 
 // I18n holds a bilingual string pair used for all localizable fields.
 type I18n struct {
@@ -13,6 +13,11 @@ type ResumeData struct {
 	Projects  []Project
 	Education []Edu
 	Skills    []SkillCategory
+}
+
+type Tagging struct {
+	Tags		[]string	`toml:"tags"`
+	Score		int		 	`toml:"score"` // optional, used for manual ordering. Higher is earlier.
 }
 
 // header.toml
@@ -33,48 +38,48 @@ type Contact struct {
 // experience.toml
 
 type Job struct {
-	Tags     []string `toml:"tags"`
-	Title    I18n     `toml:"title"`
-	Date     I18n     `toml:"date"`
-	Company  string   `toml:"company"`
-	Location I18n     `toml:"location"`
-	Bullets  []Bullet `toml:"bullets"`
+	Tagging
+	Bullets   	[]Bullet 	`toml:"bullets"`
+	Title		I18n     	`toml:"title"`
+	Date		I18n     	`toml:"date"`
+	Company  	string   	`toml:"company"`
+	Location 	I18n     	`toml:"location"`
 }
 
 type Bullet struct {
-	Tags []string `toml:"tags"`
-	En   string   `toml:"en"`
-	Ru   string   `toml:"ru"`
+	Tagging
+	En   		string   	`toml:"en"`
+	Ru   		string   	`toml:"ru"`
 }
 
 // projects.toml
 
 type Project struct {
-	Tags     []string `toml:"tags"`
-	Title    string   `toml:"title"`
-	Date     string   `toml:"date"`
-	Subtitle string   `toml:"subtitle"`
-	Detail   string   `toml:"detail"`
-	Bullets  []Bullet `toml:"bullets"`
+	Tagging
+	Bullets   	[]Bullet 	`toml:"bullets"`
+	Title    	string   	`toml:"title"`
+	Date     	string   	`toml:"date"`
+	Subtitle 	string   	`toml:"subtitle"`
+	Detail   	string   	`toml:"detail"`
 }
 
 // education.toml
 
 type Edu struct {
-	Title    I18n `toml:"title"`
-	Location I18n `toml:"location"`
-	Degree   I18n `toml:"degree"`
-	Date     I18n `toml:"date"`
+	Title    	I18n 		`toml:"title"`
+	Location 	I18n 		`toml:"location"`
+	Degree   	I18n 		`toml:"degree"`
+	Date     	I18n 		`toml:"date"`
 }
 
 // skills.toml
 
 type SkillCategory struct {
-	Name  I18n        `toml:"name"`
-	Items []SkillItem `toml:"items"`
+	Name  		I18n        `toml:"name"`
+	Items 		[]SkillItem `toml:"items"`
 }
 
 type SkillItem struct {
-	Name string   `toml:"name"`
-	Tags []string `toml:"tags"`
+	Tagging
+	Name 		string   	`toml:"name"`
 }

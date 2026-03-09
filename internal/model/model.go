@@ -1,8 +1,6 @@
 package model
 
 import (
-	"github.com/crispuscrew/resumegen/internal/types"
-
 	"io/fs"
 )
 
@@ -14,7 +12,7 @@ type Model struct {
 
 	AppDirFs	fs.FS
 
-	Cfg			types.Config
-	Data		types.ResumeData
-	Profile		types.Profile
+	Cfg			Config
+	Data		ResumeData
+	Profile		Profile
 }

@@ -1,0 +1,4 @@
+# highest priority first, lowest last 
+tags   = ["go", "backend", "arch", "devops", "refactoring", "gui", "flutter", "python", "math", "mgmt"]
+lang   = "en"
+output = "default.pdf"

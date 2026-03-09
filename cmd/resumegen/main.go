@@ -5,6 +5,7 @@ import (
 	"github.com/crispuscrew/resumegen/internal/stage"
 
 	"github.com/crispuscrew/resumegen/internal/loader"
+	"github.com/crispuscrew/resumegen/internal/order"
 
 	"fmt"
 	"flag"
@@ -37,6 +38,9 @@ var (
 
 var stages = []func(model.Model) (model.Model, error){
 	loader.LoadConfigStage,
+	loader.LoadProfileStage,
+	loader.LoadDataStage,
+	order.OrderStage,
 }
 
 func userChoise(msg string, defaultVal bool) (bool) {

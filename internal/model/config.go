@@ -1,4 +1,4 @@
-package types
+package model
 
 type Config struct {
 	Paths      		Paths      `toml:"paths"`

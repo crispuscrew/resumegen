@@ -1,22 +1,4 @@
-tags   = ["cpp", "embedded", "embedded-linux", "robotics", "aerospace"]
+# highest priority first, lowest last 
+tags   = ["cpp", "embedded", "embedded-linux", "aerospace", "arch", "robotics", "gui", "flutter", "backend", "go", "python", "math", "devops", "mgmt"]
 lang   = "en"
 output = "cpp-embedded.pdf"
-
-# Trim order: first group is dropped first when the resume overflows the page limit.
-# Within a group, bullets are dropped from the end of each job/project.
-# List groups from LOWEST priority (dropped first) to HIGHEST (kept longest).
-
-[[trim]]
-tags = ["mgmt"]
-
-[[trim]]
-tags = ["python", "math", "devops"]
-
-[[trim]]
-tags = ["gui", "flutter", "backend", "go"]
-
-[[trim]]
-tags = ["robotics"]
-
-[[trim]]
-tags = ["cpp", "embedded", "embedded-linux", "aerospace", "arch"]
