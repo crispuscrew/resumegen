@@ -1,27 +1,36 @@
 package model
 
-// I18n holds a bilingual string pair used for all localizable fields.
-type I18n struct {
-	En string `toml:"en"`
-	Ru string `toml:"ru"`
+type I18n map[string]string
+func (i I18n) Lang(lang string) string {
+	if v, ok := i[lang]; ok { return v }
+	return i["en"] // fallback
 }
 
 // ResumeData is the full in-memory representation of all resume content.
 type ResumeData struct {
-	Header    Header
-	Jobs      []Job
-	Projects  []Project
-	Education []Edu
-	Skills    []SkillCategory
+	Header    	Header
+	Jobs      	[]Job
+	Projects  	[]Project
+	Edu 		[]Edu
+	SkillCats	[]SkillCat
 }
 
-type Tagging struct {
+type Reason int
+const (
+	Included  Reason = iota
+	Filtered
+	Trimmed
+) 
+
+type Meta struct {
 	Tags		[]string	`toml:"tags"`
-	Score		int		 	`toml:"score"` // optional, used for manual ordering. Higher is earlier.
+	Score		int
+	Reason		Reason
 }
+type HasMeta interface { GetMeta() *Meta }
+func (m *Meta) GetMeta() *Meta { return m }
 
 // header.toml
-
 type Header struct {
 	Name     string    `toml:"name"`
 	Contacts []Contact `toml:"contacts"`
@@ -38,7 +47,7 @@ type Contact struct {
 // experience.toml
 
 type Job struct {
-	Tagging
+	Meta
 	Bullets   	[]Bullet 	`toml:"bullets"`
 	Title		I18n     	`toml:"title"`
 	Date		I18n     	`toml:"date"`
@@ -47,7 +56,7 @@ type Job struct {
 }
 
 type Bullet struct {
-	Tagging
+	Meta
 	En   		string   	`toml:"en"`
 	Ru   		string   	`toml:"ru"`
 }
@@ -55,7 +64,7 @@ type Bullet struct {
 // projects.toml
 
 type Project struct {
-	Tagging
+	Meta
 	Bullets   	[]Bullet 	`toml:"bullets"`
 	Title    	string   	`toml:"title"`
 	Date     	string   	`toml:"date"`
@@ -74,12 +83,35 @@ type Edu struct {
 
 // skills.toml
 
-type SkillCategory struct {
+type SkillCat struct {
+	Meta
 	Name  		I18n        `toml:"name"`
 	Items 		[]SkillItem `toml:"items"`
 }
 
 type SkillItem struct {
-	Tagging
+	Meta
 	Name 		string   	`toml:"name"`
+}
+
+func FlatTopLevel(data ResumeData) []*Meta {                                                                                              
+	var metas []*Meta                                                                                                                           
+	for i := range data.Jobs     { metas = append(metas, data.Jobs[i].GetMeta())     }                                                                
+	for i := range data.Projects { metas = append(metas, data.Projects[i].GetMeta()) }                                                                
+	for i := range data.SkillCats{ metas = append(metas, data.SkillCats[i].GetMeta())}
+	return metas                                                                                                                                      
+}
+
+func FlatNested(data ResumeData) []*Meta {
+	var metas []*Meta
+	for i := range data.Jobs {
+		for j := range data.Jobs[i].Bullets { metas = append(metas, data.Jobs[i].Bullets[j].GetMeta()) }
+	}
+	for i := range data.Projects {
+		for j := range data.Projects[i].Bullets { metas = append(metas, data.Projects[i].Bullets[j].GetMeta()) }
+	}
+	for i := range data.SkillCats {
+		for j := range data.SkillCats[i].Items { metas = append(metas, data.SkillCats[i].Items[j].GetMeta()) }
+	}
+	return metas
 }

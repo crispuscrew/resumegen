@@ -19,7 +19,7 @@ func loadProfile(fsys fs.FS, path string) (model.Profile, error) {
 type jobsFile     struct { Jobs       []model.Job          	`toml:"jobs"` 		}
 type projectsFile struct { Projects   []model.Project		`toml:"projects"` 	}
 type eduFile      struct { Edu        []model.Edu			`toml:"edu"` 		}
-type skillsFile   struct { Categories []model.SkillCategory	`toml:"categories"` }
+type skillsFile   struct { Categories []model.SkillCat		`toml:"categories"` }
 
 func loadData(fsys fs.FS, dataDir string) (model.ResumeData, error) {
 	var data model.ResumeData
@@ -37,11 +37,11 @@ func loadData(fsys fs.FS, dataDir string) (model.ResumeData, error) {
 
 	education, err 	:= load[eduFile](		fsys, dataDir + "/education.toml")
 	if err != nil {return model.ResumeData{}, err}
-	data.Education = education.Edu
+	data.Edu = education.Edu
 
 	skills, err 	:= load[skillsFile](	fsys, dataDir + "/skills.toml")
 	if err != nil {return model.ResumeData{}, err}
-	data.Skills = skills.Categories
+	data.SkillCats = skills.Categories
 	return data, nil
 }
 

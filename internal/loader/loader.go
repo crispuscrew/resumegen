@@ -7,36 +7,37 @@ import (
 	"path/filepath"
 	"os"
 	"io/fs"
+	"log"
 )
 
-func LoadConfigStage(mdl model.Model) (model.Model, error) {
-	resolvedPath, err := resolvePath(mdl.AppDirPath)
-	if err != nil { return mdl, err }
-	mdl.AppDirFs = os.DirFS(resolvedPath)
+func LoadConfiguration(appDirPath, profileName string, userChoise func(msg string, defaultVal bool) (bool)) (
+	model.Config, model.ResumeData, model.Profile, string) {
 
-	cfg, err := loadConfig(mdl.AppDirFs, "config.toml")
-	if errors.Is(err, fs.ErrNotExist) {
-		return appDirSmthNotFound(mdl, "Config file")
-	} else if err != nil { return mdl, err }
+	resolvedPath, err := resolvePath(appDirPath)
+	if err != nil { log.Fatalf("Cannot resolve path: %v", err)}
+	appDirFs := os.DirFS(resolvedPath)
 
-	mdl.Cfg = cfg
-	return mdl, nil
-}
 
-func LoadProfileStage(mdl model.Model) (model.Model, error) {
-	profile, err := loadProfile(mdl.AppDirFs, filepath.Join("profiles", mdl.ProfileName+".toml"))
-	if err != nil { return mdl, err }
+	notFound := func(what string) error { return appDirSmthNotFound(what, appDirPath, userChoise) }
+	tryLoad := func(err error, what string) (rerun bool) {
+		if err == nil { return false }
+		if errors.Is(err, fs.ErrNotExist) {
+			if errors.Is(notFound(what), errRerun) { return true }
+		}
+		if err != nil { log.Fatalf("load error: %v", err) }
+		return false
+	}
 
-	mdl.Profile = profile
-	return mdl, nil
-}
+	for {
+		cfg, err := loadConfig(appDirFs, "config.toml")
+		if tryLoad(err, "config.toml") { continue } 
 
-func LoadDataStage(mdl model.Model) (model.Model, error) {
-	data, err := loadData(mdl.AppDirFs, "data")
-	if errors.Is(err, fs.ErrNotExist) {
-		return appDirSmthNotFound(mdl, "Data files")
-	} else if err != nil { return mdl, err }
+		profile, err := loadProfile(appDirFs, filepath.Join("profiles", profileName+".toml"))       
+		if tryLoad(err, "profile") { continue }
 
-	mdl.Data = data
-	return mdl, nil
+		data, err := loadData(appDirFs, "data")
+		if tryLoad(err, "data") { continue }
+
+		return cfg, data, profile, resolvedPath 
+	}
 }

@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/crispuscrew/resumegen/internal/model"
-	"github.com/crispuscrew/resumegen/internal/stage"
-
 	"github.com/crispuscrew/resumegen/internal/loader"
-	"github.com/crispuscrew/resumegen/internal/order"
+	"github.com/crispuscrew/resumegen/internal/score"
+	"github.com/crispuscrew/resumegen/internal/render"
+	"github.com/crispuscrew/resumegen/internal/guard"
+	"github.com/crispuscrew/resumegen/internal/trim"
 
 	"fmt"
 	"flag"
@@ -14,33 +14,25 @@ import (
 	"path/filepath"
 )
 
-func main() {
-	flag.Parse()
-	appModel := model.Model{
-		UserChoise	: userChoise,
-		AppDirPath	: *appDirPath,
-		ProfileName	: *profileName,
-	}
-	for _, stageExecute := range stages {
-		var err error
-		appModel, err = stage.Execute(appModel, stageExecute)
-		if err != nil {
-			fmt.Printf("Error: %s\n", err.Error())
-			return
-		}
-	}
-}
-
 var (                                                                 
 	appDirPath 	= flag.String("path", defaultAppDir(), "specific path to application directory")
 	profileName = flag.String("profile", "default", "profile name to use")
 )
 
-var stages = []func(model.Model) (model.Model, error){
-	loader.LoadConfigStage,
-	loader.LoadProfileStage,
-	loader.LoadDataStage,
-	order.OrderStage,
+func main() {
+	flag.Parse()
+
+	cfg, data, profile, appDirPath := loader.LoadConfiguration(*appDirPath, *profileName, userChoise)
+	data = score.Score(data, profile.Tags)
+
+	var output string
+	for {
+		var pages float64
+		output, pages = render.Render(cfg, data, profile, appDirPath)
+		if !guard.TrimIsNeeded(pages, cfg.Render.PageLimit) { break }
+		data = trim.TrimLowest(data)
+	}
+	fmt.Printf("All is done, your output here -> %s", output)
 }
 
 func userChoise(msg string, defaultVal bool) (bool) {

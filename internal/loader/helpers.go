@@ -2,14 +2,13 @@ package loader
 
 import (
 	"github.com/crispuscrew/resumegen"
-	"github.com/crispuscrew/resumegen/internal/model"
-	"github.com/crispuscrew/resumegen/internal/stage"
 
 	"os"
 	"io/fs"
 	"fmt"
 	"path/filepath"
 	"strings"
+	"errors"
 )
 
 const (
@@ -17,17 +16,17 @@ const (
     filePerm fs.FileMode = 0o644 // rw-r--r--
 )
 
-func copyDefaultAppDir(mdl model.Model) error {
+func copyDefaultAppDir(appDirPath string, userChoise func(msg string, defaultVal bool) (bool)) error {
 	sub, err := fs.Sub(resumegen.Defaults, "defaultAppDir")
 	if err != nil { return err }
 
 	return fs.WalkDir(sub, ".", func(path string, d fs.DirEntry, err error) error {
 		if err != nil { return err }
 
-		dst := filepath.Join(mdl.AppDirPath, path)
+		dst := filepath.Join(appDirPath, path)
 		if d.IsDir() { return os.MkdirAll(dst, dirPerm) }
 		if _, err := os.Stat(dst); err == nil {
-			if !mdl.UserChoise(fmt.Sprintf("File %s already exists. Do you want to overwrite it?", dst), false) {
+			if !userChoise(fmt.Sprintf("File %s already exists. Do you want to overwrite it?", dst), false) {
 				return nil
 			}
 		}
@@ -48,12 +47,12 @@ func resolvePath(path string) (string, error) {
 	return filepath.Abs(path)
 }
 
-func appDirSmthNotFound(mdl model.Model, what string) (model.Model, error) {
-	if mdl.UserChoise(fmt.Sprintf("%s not found. Do you want copy defaults AppDir? (Its idempotent)", what), true) {
-		if err := copyDefaultAppDir(mdl); err != nil {
-			return mdl, fmt.Errorf("failed to copy default appDir: %w", err)
-		}
-		return mdl, stage.ErrRerun
+var errRerun = errors.New("Rerun")
+func appDirSmthNotFound(what string, appDirPath string, userChoise func(msg string, defaultVal bool) (bool)) error {
+	if userChoise(fmt.Sprintf("%s not found. Do you want copy defaults AppDir? (Its idempotent)", what), true) {
+		err := copyDefaultAppDir(appDirPath, userChoise)
+		if err != nil { return fmt.Errorf("failed to copy default appDir: %w", err) }
+		return errRerun
 	}
-	return mdl, fmt.Errorf("%s not found", what)
+	return nil
 }
