@@ -103,8 +103,7 @@ func build(data model.ResumeData, profile model.Profile) ([]byte, error) {
 			job.Company, job.Location.Lang(profile.Lang))
 		for _, bullet := range job.Bullets {
 			if bullet.Reason != model.Included {continue}
-			text := bullet.En
-			if profile.Lang == "ru" { text = bullet.Ru }
+			text := bullet.Text.Lang(profile.Lang)
 			fmt.Fprintf(&buf, "\n		[%s],", text)
 		}
 		buf.WriteString(")),\n")
@@ -120,8 +119,7 @@ func build(data model.ResumeData, profile model.Profile) ([]byte, error) {
 			project.Title, project.Date, project.Subtitle, project.Detail)
 		for _, bullet := range project.Bullets {
 			if bullet.Reason != model.Included {continue}
-			text := bullet.En
-			if profile.Lang == "ru" { text = bullet.Ru }
+			text := bullet.Text.Lang(profile.Lang)
 			fmt.Fprintf(&buf, "\n		[%s],", text)
 		}
 		buf.WriteString(")),\n")

@@ -8,7 +8,6 @@
 # They are written into data_gen.typ as content blocks: [string].
 
 [[jobs]]
-
     company = "LLC Gumich RTK"
 
     [jobs.title]
@@ -25,27 +24,30 @@
 
     [[jobs.bullets]]
     tags = ["cpp", "refactoring", "gui", "qt", "robotics"]
-    en   = "Refactored and extended a 2M+ LOC *Qt/QML* ground control station for robotic systems: custom QML screens and C++ integrations in a 7-person team"
-    ru   = "Рефакторил и расширял *Qt/QML*-комплекс управления робототехническими комплексами (2M+ строк): QML-экраны и C++-интеграции в команде из 7 человек"
+    [jobs.bullets.text]
+    en = "Refactored and extended a 2M+ LOC *Qt/QML* ground control station for robotic systems: custom QML screens and C++ integrations in a 7-person team"
+    ru = "Рефакторил и расширял *Qt/QML*-комплекс управления робототехническими комплексами (2M+ строк): QML-экраны и C++-интеграции в команде из 7 человек"
 
     [[jobs.bullets]]
     tags = ["mgmt"]
-    en   = "Regularly deputized for the team lead, managing delivery planning and task distribution across the team"
-    ru   = "Регулярно исполнял обязанности тимлида: планировал поставки и распределял задачи по команде"
+    [jobs.bullets.text]
+    en = "Regularly deputized for the team lead, managing delivery planning and task distribution across the team"
+    ru = "Регулярно исполнял обязанности тимлида: планировал поставки и распределял задачи по команде"
 
     [[jobs.bullets]]
     tags = ["go", "devops"]
-    en   = "Designed and implemented an internal *artifact storage service* in Go: REST API, Redis for metadata, Docker volume as file store, consumed by a React frontend — replaced manual binary distribution"
-    ru   = "Разработал внутренний *сервис хранения артефактов* на Go: REST API, Redis, Docker-том, React-фронтенд — заменил ручную дистрибуцию бинарей"
+    [jobs.bullets.text]
+    en = "Designed and implemented an internal *artifact storage service* in Go: REST API, Redis for metadata, Docker volume as file store, consumed by a React frontend — replaced manual binary distribution"
+    ru = "Разработал внутренний *сервис хранения артефактов* на Go: REST API, Redis, Docker-том, React-фронтенд — заменил ручную дистрибуцию бинарей"
 
     [[jobs.bullets]]
     tags = ["embedded-linux", "devops", "robotics"]
-    en   = "Developed a USB-over-IP relay on *Orange Pi* (ARM Linux) for the SDR subsystem, achieving *80 MB/s* sustained I/Q throughput"
-    ru   = "Разработал USB-over-IP ретранслятор на *Orange Pi* (ARM Linux) для SDR-подсистемы с устойчивой пропускной способностью *80 МБ/с* по I/Q"
+    [jobs.bullets.text]
+    en = "Developed a USB-over-IP relay on *Orange Pi* (ARM Linux) for the SDR subsystem, achieving *80 MB/s* sustained I/Q throughput"
+    ru = "Разработал USB-over-IP ретранслятор на *Orange Pi* (ARM Linux) для SDR-подсистемы с устойчивой пропускной способностью *80 МБ/с* по I/Q"
 
 
 [[jobs]]
-
     company = "LLC Ground Avionics"
 
     [jobs.title]
@@ -62,22 +64,24 @@
 
     [[jobs.bullets]]
     tags = ["arch", "gui", "flutter", "robotics", "backend"]
-    en   = "Designed system architecture and developed the *Flutter* operator interface with a custom *WebSocket* protocol for real-time ROS integration"
-    ru   = "Спроектировал архитектуру системы и разработал *Flutter*-интерфейс оператора с собственным *WebSocket*-протоколом для интеграции с ROS"
+    [jobs.bullets.text]
+    en = "Designed system architecture and developed the *Flutter* operator interface with a custom *WebSocket* protocol for real-time ROS integration"
+    ru = "Спроектировал архитектуру системы и разработал *Flutter*-интерфейс оператора с собственным *WebSocket*-протоколом для интеграции с ROS"
 
     [[jobs.bullets]]
     tags = ["cpp", "embedded"]
-    en   = "Implemented CAN bus driver for encoder feedback on *STM32F103* microcontroller"
-    ru   = "Реализовал драйвер CAN-шины для обратной связи по энкодеру на микроконтроллере *STM32F103*"
+    [jobs.bullets.text]
+    en = "Implemented CAN bus driver for encoder feedback on *STM32F103* microcontroller"
+    ru = "Реализовал драйвер CAN-шины для обратной связи по энкодеру на микроконтроллере *STM32F103*"
 
     [[jobs.bullets]]
     tags = ["python", "robotics"]
-    en   = "Developed a ROS-compatible aerodrome tug tractor simulator in *Python/Pygame* for hardware-software integration testing"
-    ru   = "Разработал ROS-совместимый симулятор тягача на *Python/Pygame* для интеграционного тестирования"
+    [jobs.bullets.text]
+    en = "Developed a ROS-compatible aerodrome tug tractor simulator in *Python/Pygame* for hardware-software integration testing"
+    ru = "Разработал ROS-совместимый симулятор тягача на *Python/Pygame* для интеграционного тестирования"
 
 
 [[jobs]]
-
     company = "LLC Indicative Engines"
 
     [jobs.title]
@@ -94,15 +98,18 @@
 
     [[jobs.bullets]]
     tags = ["cpp", "embedded", "aerospace"]
-    en   = "Developed *C++* firmware for an *STM32F407*-based liquid rocket engine test stand: sensor data acquisition, SD logging, and UART telemetry output"
-    ru   = "Разработал прошивку на *C++* для стенда испытания ЖРД на базе *STM32F407*: сбор данных с датчиков, логирование на SD-карту и вывод телеметрии по UART"
+    [jobs.bullets.text]
+    en = "Developed *C++* firmware for an *STM32F407*-based liquid rocket engine test stand: sensor data acquisition, SD logging, and UART telemetry output"
+    ru = "Разработал прошивку на *C++* для стенда испытания ЖРД на базе *STM32F407*: сбор данных с датчиков, логирование на SD-карту и вывод телеметрии по UART"
 
     [[jobs.bullets]]
     tags = ["python", "math", "aerospace"]
-    en   = "Implemented deorbit re-entry time calculation software in *Python/NumPy*"
-    ru   = "Разработал ПО расчёта времени повторного входа в атмосферу при сходе с орбиты на *Python/NumPy*"
+    [jobs.bullets.text]
+    en = "Implemented deorbit re-entry time calculation software in *Python/NumPy*"
+    ru = "Разработал ПО расчёта времени повторного входа в атмосферу при сходе с орбиты на *Python/NumPy*"
 
     [[jobs.bullets]]
     tags = ["mgmt", "aerospace"]
-    en   = "Won grant competition by *PJSC RSC Energia* and accelerator program by *PJSC Gazprom Neft*"
-    ru   = "Выиграл грантовый конкурс *ПАО РКК «Энергия»* и акселераторную программу *ПАО «Газпром Нефть»*"
+    [jobs.bullets.text]
+    en = "Won grant competition by *PJSC RSC Energia* and accelerator program by *PJSC Gazprom Neft*"
+    ru = "Выиграл грантовый конкурс *ПАО РКК «Энергия»* и акселераторную программу *ПАО «Газпром Нефть»*"

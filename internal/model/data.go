@@ -57,8 +57,7 @@ type Job struct {
 
 type Bullet struct {
 	Meta
-	En   		string   	`toml:"en"`
-	Ru   		string   	`toml:"ru"`
+	Text 		I18n 		`toml:"text"`
 }
 
 // projects.toml
