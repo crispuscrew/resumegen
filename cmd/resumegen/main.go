@@ -30,14 +30,24 @@ func main() {
 		var pages float64
 		output, pages = render.Render(cfg, data, profile, appDirPath)
 		if !guard.TrimIsNeeded(pages, cfg.Render.PageLimit) { break }
-		data = trim.TrimLowest(data)
+		data = trim.TrimLowest(data, cfg.Render.MinElements)
 	}
-	fmt.Printf("All is done, your output here -> %s", output)
+	fmt.Printf("All is done, your output here -> %s\n", output)
 }
 
 func userChoise(msg string, defaultVal bool) (bool) {
 	var input string
-	if defaultVal { msg += " [Y/n]" } else { msg += " [y/N]"}
+	var colorOn = os.Getenv("NO_COLOR") == "" && func() bool {
+		fi, _ := os.Stdout.Stat()
+		return (fi.Mode() & os.ModeCharDevice) != 0
+	}()
+	green 	:= func(s string) string {if colorOn { return "\033[1;32m" + s + "\033[0m" }; return s}
+	red 	:= func(s string) string {if colorOn { return "\033[1;31m" + s + "\033[0m" }; return s}
+	if defaultVal { 
+		msg += " [" + green("Y") + "/n]" 
+	} else { 
+		msg += " [y/" + red("N") + "]"
+	}
 
 	println(msg)
 	_, err := fmt.Scanln(&input)

@@ -1,7 +1,7 @@
-# Project entries use the same schema as experience (title, date, subtitle, detail, bullets).
+# Project entries use the same schema as jobs (title, date, subtitle, detail, bullets).
 # date is typically empty for personal projects.
 # subtitle: tech stack label. detail: repo URL — shown on the right.
-# Bullet tags and job-level tags work identically to experience.toml.
+# Bullet tags and job-level tags work identically to jobs.toml.
 
 [[projects]]
 tags     = ["go"]
@@ -11,22 +11,19 @@ subtitle = "Go, TUI, PostgreSQL"
 detail   = "github.com/crispuscrew/pgxray"
 
     [[projects.bullets]]
+    tags = ["go"]
     en   = "Keyboard-driven read-only TUI for exploring PostgreSQL, designed to run on the server and accessed over SSH — no port forwarding or local client setup"
     ru   = "Клавиатурный read-only TUI для работы с PostgreSQL прямо на сервере: доступ через SSH без проброса портов и локальной настройки"
-    [projects.bullets.tags]
-    tags = ["go"]
 
     [[projects.bullets]]
+    tags = ["go"]
     en   = "Component-based *Bubble Tea v2* architecture: schema browser and live table data viewer"
     ru   = "Компонентная архитектура на *Bubble Tea v2*: браузер схем и просмотр данных таблиц"
-    [projects.bullets.tags]
-    tags = ["go"]
 
     [[projects.bullets]]
+    tags = ["go"]
     en   = "All queries run in *REPEATABLE READ* read-only transactions — consistent snapshot with no risk of accidental mutation"
     ru   = "Все запросы в *REPEATABLE READ* read-only транзакции — консистентный снимок без риска случайной мутации"
-    [projects.bullets.tags]
-    tags = ["go"]
 
 
 [[projects]]
@@ -37,13 +34,11 @@ subtitle = "Ansible, DevOps"
 detail   = "github.com/crispuscrew/amnezia-ansible"
 
     [[projects.bullets]]
+    tags = ["devops"]
     en   = "Ansible playbook for automated *AmneziaWireGuard* VPN provisioning in Docker: idempotent per-client key and config generation, stable IPs across re-deploys"
     ru   = "Ansible-плейбук для развёртывания *AmneziaWireGuard* VPN в Docker: идемпотентная генерация ключей и конфигов для каждого клиента, стабильные IP при повторных деплоях"
-    [projects.bullets.tags]
-    tags = ["devops"]
 
     [[projects.bullets]]
+    tags = ["devops"]
     en   = "Multi-distro support (Debian, RedHat, Arch, Alpine) — from bare VPS to running VPN in a single command"
     ru   = "Поддержка нескольких дистрибутивов (Debian, RedHat, Arch, Alpine) — от чистого VPS до работающего VPN одной командой"
-    [projects.bullets.tags]
-    tags = ["devops"]

@@ -3,4 +3,9 @@ output_dir      = "output"
 typst_bin       = "typst" # Assumes typst is in PATH. Change if you want to specify a custom location.
 
 [render]
-page_limit      = 1
+page_limit      = 1.0 # Max number of pages to render. Set to 0 for no limit.
+
+[render.min_elements]
+job_bullets     = 1
+project_bullets = 1
+skill_cats      = 1

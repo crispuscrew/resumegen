@@ -4,8 +4,7 @@
 // Run `resumegen <profile>` to regenerate and compile.
 
 #import "template.typ": *
-#import "data_gen.typ": r-lang, r-name, r-contacts, r-summary,
-                        r-jobs, r-projects, r-skills, r-education
+#import "data_gen.typ": r-lang, r-name, r-contacts, r-summary, r-jobs, r-projects, r-skills, r-edu
 
 #show: resume-init
 
@@ -73,6 +72,8 @@
 // ============================================================================
 
 #section(t("Education", "Образование"))
-#for edu in r-education {
+#for edu in r-edu {
   entry(edu.title, edu.location, edu.degree, edu.date)
 }
+
+#context [#metadata(here().position()) <end-marker>]

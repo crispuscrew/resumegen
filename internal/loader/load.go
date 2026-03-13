@@ -27,7 +27,7 @@ func loadData(fsys fs.FS, dataDir string) (model.ResumeData, error) {
 	if err != nil {return model.ResumeData{}, err}
 	data.Header = header
 
-	jobs, err 		:= load[jobsFile](		fsys, dataDir + "/experience.toml")
+	jobs, err 		:= load[jobsFile](		fsys, dataDir + "/jobs.toml")
 	if err != nil {return model.ResumeData{}, err}
 	data.Jobs = jobs.Jobs
 

@@ -44,7 +44,7 @@ type Contact struct {
 	Href  string `toml:"href"`
 }
 
-// experience.toml
+// jobs.toml
 
 type Job struct {
 	Meta

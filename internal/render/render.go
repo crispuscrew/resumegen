@@ -12,6 +12,8 @@ import (
 	"os"
 	"os/exec"
 	"errors"
+	"strconv"
+	"strings"
 )
 
 func Render(cfg model.Config, data model.ResumeData, profile model.Profile, appDirPath string) (string, float64) {
@@ -19,16 +21,18 @@ func Render(cfg model.Config, data model.ResumeData, profile model.Profile, appD
 	if err != nil { log.Fatalf("Datagen typ error: %v", err); return "", 0.0}
 
 	outPath, pages, err := compile(datagen, appDirPath, cfg, profile)
-	if err != nil { log.Fatalf("Cannot resolve path: %v", err); return "", 0.0}
+	if err != nil { log.Fatalf("Cannot resolve path to rendered path: %v", err); return "", 0.0}
 	return outPath, pages
 }
 
-const (                                      
+const (
+	dirPerm  fs.FileMode = 0o755 // rwxr-xr-x                                          
     filePerm fs.FileMode = 0o644 // rw-r--r--
 )
 
 func compile(dataGen []byte, appDirPath string, cfg model.Config, profile model.Profile) (string, float64, error) {
 	dataGenPath := filepath.Join(appDirPath, "templates", "data_gen.typ")
+
 	err := os.WriteFile(dataGenPath, dataGen, filePerm)
 	if err != nil {return "", 0.0, err}
 	defer func() { _ = os.Remove(dataGenPath) }()
@@ -36,7 +40,12 @@ func compile(dataGen []byte, appDirPath string, cfg model.Config, profile model.
 	outPath := filepath.Join(appDirPath, cfg.Paths.OutputDir, profile.Output)
 	typPath := filepath.Join(appDirPath, "templates", "resume.typ")
 
-	err = exec.Command(cfg.Paths.TypstBin, "compile", typPath, outPath).Run()
+	err = os.MkdirAll(filepath.Dir(outPath), dirPerm)
+	if err != nil { return "", 0.0, err }
+
+	cmd := exec.Command(cfg.Paths.TypstBin, "compile", typPath, outPath)
+	cmd.Stderr = os.Stderr
+	err = cmd.Run()
 	if err != nil {return "", 0.0, err}
 
 	pages, err := pageFloatCount(typPath, cfg)
@@ -45,23 +54,27 @@ func compile(dataGen []byte, appDirPath string, cfg model.Config, profile model.
 }
 
 func pageFloatCount(pathToTyp string, cfg model.Config) (float64, error) {
-	type typstPos struct {
-		Page int     `json:"page"`
-		Y    float64 `json:"y"`
-	}
 	out, err := exec.Command(cfg.Paths.TypstBin, "query",
 			pathToTyp, "<end-marker>", "--field", "value",
 		).Output()
 	if err != nil {return 0.0, err}
 
+	type typstPos struct {
+		Page int     	`json:"page"`
+		X    string 	`json:"x"`
+		Y    string 	`json:"y"`
+	}
 	var positions []typstPos
 	if err = json.Unmarshal(out, &positions); err != nil { return 0, err }
 	if len(positions) == 0 { return 0, errors.New("end-marker not found") }
 
 	pos := positions[0]
+	y, err := strconv.ParseFloat(strings.TrimSuffix(pos.Y, "pt"), 64)
+	if err != nil { return 0.0, err }
+
 	const pageHeight = 792
 	// pageHeight in pt for us-letter = 792
-	return float64(pos.Page - 1) + pos.Y / pageHeight, nil 
+	return float64(pos.Page - 1) + y / pageHeight, nil 
 }
 
 func build(data model.ResumeData, profile model.Profile) ([]byte, error) {
@@ -69,6 +82,7 @@ func build(data model.ResumeData, profile model.Profile) ([]byte, error) {
 
 	fmt.Fprintf(&buf, "#let r-lang = %q\n", profile.Lang)
 	fmt.Fprintf(&buf, "#let r-name = %q\n", data.Header.Name)
+	fmt.Fprintf(&buf, "#let r-summary = [%s]\n", data.Header.Summary.Lang(profile.Lang))
 
 	//contacts
 	buf.WriteString("#let r-contacts = (\n")
@@ -77,6 +91,7 @@ func build(data model.ResumeData, profile model.Profile) ([]byte, error) {
 			fmt.Fprintf(&buf, "	(value : %q, href : %q), \n", contact.Value, contact.Href)
 		}
 	}
+	buf.WriteString(")\n")
 
 	//jobs
 	buf.WriteString("#let r-jobs = (\n")
@@ -90,7 +105,7 @@ func build(data model.ResumeData, profile model.Profile) ([]byte, error) {
 			if bullet.Reason != model.Included {continue}
 			text := bullet.En
 			if profile.Lang == "ru" { text = bullet.Ru }
-			fmt.Fprintf(&buf, "		%q,", text)
+			fmt.Fprintf(&buf, "\n		[%s],", text)
 		}
 		buf.WriteString(")),\n")
 	}
@@ -107,7 +122,7 @@ func build(data model.ResumeData, profile model.Profile) ([]byte, error) {
 			if bullet.Reason != model.Included {continue}
 			text := bullet.En
 			if profile.Lang == "ru" { text = bullet.Ru }
-			fmt.Fprintf(&buf, "		%q,", text)
+			fmt.Fprintf(&buf, "\n		[%s],", text)
 		}
 		buf.WriteString(")),\n")
 	}
@@ -121,22 +136,20 @@ func build(data model.ResumeData, profile model.Profile) ([]byte, error) {
 		fmt.Fprintf(&buf, "	(category : %q, items : (", skillsCat.Name.Lang(profile.Lang))
 		for _, skill := range skillsCat.Items {
 			if skill.Reason != model.Included {continue}
-			fmt.Fprintf(&buf, "%q,", skill.Name)
+			fmt.Fprintf(&buf, "[%s],", skill.Name)
 		}
 		buf.WriteString(")),\n")
 	}
 	buf.WriteString(")\n")
 
 	//edu
-	buf.WriteString("#let r-education = (\n")
+	buf.WriteString("#let r-edu = (\n")
 	for _, edu := range data.Edu {
 		fmt.Fprintf(&buf, "	(title : %q, degree : %q, location : %q, date : %q),\n",
 			edu.Title.Lang(profile.Lang), edu.Degree.Lang(profile.Lang),
 			edu.Location.Lang(profile.Lang), edu.Date.Lang(profile.Lang))
 	}
 	buf.WriteString(")\n")
-	
-	buf.WriteString("#context [#metadata(here().position()) <end-marker>]")
 
 	return buf.Bytes(), nil
 }

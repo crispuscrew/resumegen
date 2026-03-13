@@ -29,7 +29,7 @@ func scoreAndFilter[T any, PT interface {
 	for i := range items {
 		pMeta := PT(&items[i]).GetMeta()
 		*pMeta = scoreMatchingTag(*pMeta, profileTags)
-		if pMeta.Score == 0 {pMeta.Reason = model.Filtered}
+		if pMeta.Score == 0 && len(pMeta.Tags) > 0 {pMeta.Reason = model.Filtered}
 	}
 	return items
 }

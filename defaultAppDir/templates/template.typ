@@ -52,7 +52,7 @@
 
 // ─── Skill row ────────────────────────────────────────────────────────────────
 
-#let skill(cat, val) = {
-  text(size: 9.5pt)[*#cat*: #val]
-  linebreak()
+#let skill(cat, items) = {
+    text(size: 9.5pt)[*#cat*: #items.join(", ")]
+    linebreak()
 }
