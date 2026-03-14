@@ -25,5 +25,5 @@ value = "github.com/crispuscrew"
 href  = "https://github.com/crispuscrew"
 
 [summary]
-en = "Systems software engineer with 3+ years of experience in embedded and robotics domains. Currently developing in Go and C/C++ at a robotics company, with a focus on Go backend and systems engineering. Background in ARM Linux, embedded systems programming, and cross-team coordination."
+en = "Software engineer with embedded and robotics background, transitioning focus to Go backend. Production experience building internal services in Go; systems depth in ARM Linux, STM32, and real-time constraints"
 ru = "Системный разработчик (#box[Go, C/C++]), 3+ лет в embedded и робототехнике. Разрабатывал производительные компоненты реального времени в крупных кодовых базах; нацелен на Go-бэкенд и системную разработку."

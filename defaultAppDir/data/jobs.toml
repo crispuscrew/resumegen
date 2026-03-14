@@ -30,16 +30,16 @@
     ru = "Рефакторил и расширял *Qt/QML*-комплекс управления робототехническими комплексами (2M+ строк): QML-экраны и C++-интеграции в команде из 7 человек"
 
     [[jobs.bullets]]
-    tags = ["mgmt"]
-    [jobs.bullets.text]
-    en = "Regularly deputized for the team lead, managing delivery planning and task distribution across the team"
-    ru = "Регулярно исполнял обязанности тимлида: планировал поставки и распределял задачи по команде"
-
-    [[jobs.bullets]]
     tags = ["go", "devops"]
     [jobs.bullets.text]
     en = "Designed and implemented an internal *artifact storage service* in Go: REST API, Redis for metadata, Docker volume as file store, consumed by a React frontend - replaced manual binary distribution"
     ru = "Разработал внутренний *сервис хранения артефактов* на Go: REST API, Redis, Docker-том, React-фронтенд - заменил ручную дистрибуцию бинарей"
+
+    [[jobs.bullets]]
+    tags = ["mgmt"]
+    [jobs.bullets.text]
+    en = "Regularly deputized for the team lead, managing delivery planning and task distribution across the team"
+    ru = "Регулярно исполнял обязанности тимлида: планировал поставки и распределял задачи по команде"
 
     [[jobs.bullets]]
     tags = ["embedded-linux", "devops", "robotics"]
