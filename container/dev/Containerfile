@@ -1,0 +1,12 @@
+FROM golang:1.24-alpine
+
+RUN apk add --no-cache curl && \
+    TYPST_VER=0.13.1 && \
+    curl -fsSL "https://github.com/typst/typst/releases/download/v${TYPST_VER}/typst-x86_64-unknown-linux-musl.tar.xz" \
+    | tar -xJ --strip-components=1 -C /usr/local/bin typst-x86_64-unknown-linux-musl/typst
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+# for better caching

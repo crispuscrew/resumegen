@@ -1,0 +1,29 @@
+name = "Ruslan Gabzetdinov"
+
+# Text fields support Typst inline markup: *bold*, _italic_, #link("url")[text], #box[...].
+# They are rendered as Typst content blocks, so standard Typst inline syntax works anywhere.
+
+# Contacts: if lang is set, shown only for that language. If absent/empty, always shown.
+# value/href can be plain strings (language-independent) or bilingual tables.
+
+[[contacts]]
+value = "gabzetdinov@proton.me"
+href  = "mailto:gabzetdinov@proton.me"
+
+[[contacts]]
+lang  = "en"
+value = "linkedin.com/in/gabzetdinovri"
+href  = "https://linkedin.com/in/gabzetdinovri"
+
+[[contacts]]
+lang  = "ru"
+value = "t.me/gabzetdinov_job"
+href  = "https://t.me/gabzetdinov_job"
+
+[[contacts]]
+value = "github.com/crispuscrew"
+href  = "https://github.com/crispuscrew"
+
+[summary]
+en = "Systems software engineer with 3+ years of experience in embedded and robotics domains. Currently developing in Go and C/C++ at a robotics company, with a focus on Go backend and systems engineering. Background in ARM Linux, embedded systems programming, and cross-team coordination."
+ru = "Системный разработчик (#box[Go, C/C++]), 3+ лет в embedded и робототехнике. Разрабатывал производительные компоненты реального времени в крупных кодовых базах; нацелен на Go-бэкенд и системную разработку."

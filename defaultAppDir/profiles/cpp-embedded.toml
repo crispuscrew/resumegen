@@ -1,0 +1,4 @@
+# highest priority first, lowest last 
+tags   = ["cpp", "embedded", "embedded-linux", "aerospace", "robotics", "arch", "gui", "qt"]
+lang   = "en"
+output = "cpp-embedded.pdf"

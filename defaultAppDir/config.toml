@@ -1,0 +1,15 @@
+[paths]
+output_dir      = "output"
+typst_bin       = "typst"   # Assumes typst is in PATH. Change if you want to specify a custom location.
+
+[score]
+skill_priority  = 7         # Higher means skills are more important in the scoring. Adjust based on your preference.
+
+[render]
+page_limit      = 1.0       # Max number of pages. Trim stage removes lowest-scored bullets until this limit is met.
+page_height_pt  = 841.89    # Page height in points. A4 = 841.89, US Letter = 792. Must match the paper setting in template.typ.
+
+[render.min_elements]
+job_bullets     = 1         # Min included bullets a job must have, otherwise the whole job is trimmed.
+project_bullets = 1         # Min included bullets a project must have, otherwise the whole project is trimmed.
+skill_items     = 1         # Min included items a skill category must have, otherwise the whole category is trimmed.

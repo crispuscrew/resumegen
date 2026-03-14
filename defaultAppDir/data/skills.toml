@@ -1,0 +1,107 @@
+# Each category groups related skill items.
+# Item tags work the same as bullet tags: at least one must match the active profile.
+# A category with zero visible items is omitted entirely.
+# Item names are tech names - language-independent strings, no markup needed.
+
+[[categories]]
+
+    [categories.name]
+    en = "Languages"
+    ru = "Языки программирования"
+
+    [[categories.items]]
+    name = "Go"
+    tags = ["go"]
+
+    [[categories.items]]
+    name = "C/C++"
+    tags = ["cpp", "embedded", "qt"]
+
+    [[categories.items]]
+    name = "Python"
+    tags = ["python", "math", "backend"]
+
+    [[categories.items]]
+    name = "SQL"
+    tags = ["go"]
+
+    [[categories.items]]
+    name = "Dart"
+    tags = ["flutter"]
+
+
+[[categories]]
+
+    [categories.name]
+    en = "Technologies"
+    ru = "Технологии"
+
+    [[categories.items]]
+    name = "Qt/QML"
+    tags = ["cpp", "gui", "qt"]
+
+    [[categories.items]]
+    name = "ROS"
+    tags = ["cpp", "robotics"]
+
+    [[categories.items]]
+    name = "Flutter"
+    tags = ["flutter", "gui"]
+
+    [[categories.items]]
+    name = "WebSocket"
+    tags = ["backend", "robotics", "flutter"]
+
+    [[categories.items]]
+    name = "ARM Embedded Linux"
+    tags = ["embedded-linux"]
+
+    [[categories.items]]
+    name = "Ansible"
+    tags = ["devops"]
+
+
+[[categories]]
+
+    [categories.name]
+    en = "Databases"
+    ru = "Базы данных"
+
+    [[categories.items]]
+    name = "PostgreSQL"
+    tags = ["go"]
+
+    [[categories.items]]
+    name = "Redis"
+    tags = ["go"]
+
+    [[categories.items]]
+    name = "SQLite"
+    tags = ["go", "cpp"]
+
+
+[[categories]]
+
+    [categories.name]
+    en = "Developer Tools"
+    ru = "Инструменты"
+
+    [[categories.items]]
+    name = "Git"
+    tags = ["go", "cpp", "embedded", "robotics", "mgmt"]
+
+    [[categories.items]]
+    name = "GitHub Actions"
+    tags = ["go", "cpp", "devops"]
+
+    [[categories.items]]
+    name = "GitLab CI"
+    tags = ["go", "cpp", "devops"]
+
+    [[categories.items]]
+    name = "Docker / Podman"
+    tags = ["go", "devops"]
+
+    [[categories.items]]
+    name = "Linux"
+    tags = ["go", "cpp", "embedded"]
