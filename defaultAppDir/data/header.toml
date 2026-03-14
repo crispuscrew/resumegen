@@ -1,5 +1,8 @@
 name = "Ruslan Gabzetdinov"
 
+# Text fields support Typst inline markup: *bold*, _italic_, #link("url")[text], #box[...].
+# They are rendered as Typst content blocks, so standard Typst inline syntax works anywhere.
+
 # Contacts: if lang is set, shown only for that language. If absent/empty, always shown.
 # value/href can be plain strings (language-independent) or bilingual tables.
 
@@ -9,8 +12,8 @@ href  = "mailto:gabzetdinov@proton.me"
 
 [[contacts]]
 lang  = "en"
-value = "t.me/gabzetdinov_job"
-href  = "https://t.me/gabzetdinov_job"
+value = "linkedin.com/in/gabzetdinovri"
+href  = "https://linkedin.com/in/gabzetdinovri"
 
 [[contacts]]
 lang  = "ru"

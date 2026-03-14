@@ -1,7 +1,7 @@
 # Each category groups related skill items.
 # Item tags work the same as bullet tags: at least one must match the active profile.
 # A category with zero visible items is omitted entirely.
-# Item names are tech names — language-independent strings, no markup needed.
+# Item names are tech names - language-independent strings, no markup needed.
 
 [[categories]]
 

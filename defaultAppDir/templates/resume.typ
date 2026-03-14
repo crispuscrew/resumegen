@@ -1,4 +1,4 @@
-// resume.typ — main document.
+// resume.typ - main document.
 //
 // Data is supplied by the Go tool via data_gen.typ (auto-generated, do not edit).
 // Run `resumegen <profile>` to regenerate and compile.
@@ -38,10 +38,12 @@
 //  Experience
 // ============================================================================
 
-#section(t("Experience", "Опыт работы"))
-#for job in r-jobs {
-  entry(job.title, job.date, job.company, job.location,
-    items: job.bullets.map(b => (text: b,)))
+#if r-jobs.len() > 0 {
+  section(t("Experience", "Опыт работы"))
+  for job in r-jobs {
+    entry(job.title, job.date, job.company, job.location,
+      items: job.bullets.map(b => (text: b,)))
+  }
 }
 
 // ============================================================================
@@ -60,12 +62,14 @@
 //  Technical Skills
 // ============================================================================
 
-#section(t("Technical Skills", "Технические навыки"))
-#block(above: 0pt, below: 0pt,
-  for s in r-skills {
-    skill(s.category, s.items)
-  }
-)
+#if r-skills.len() > 0 {
+  section(t("Technical Skills", "Технические навыки"))
+  block(above: 0pt, below: 0pt,
+    for s in r-skills {
+      skill(s.category, s.items)
+    }
+  )
+}
 
 // ============================================================================
 //  Education

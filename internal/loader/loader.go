@@ -4,7 +4,7 @@ import (
 	"github.com/crispuscrew/resumegen/internal/model"
 
 	"errors"
-	"path/filepath"
+	"path"
 	"os"
 	"io/fs"
 	"log"
@@ -18,7 +18,7 @@ func LoadConfiguration(appDirPath, profileName string, userChoise func(msg strin
 	appDirFs := os.DirFS(resolvedPath)
 
 
-	notFound := func(what string) error { return appDirSmthNotFound(what, appDirPath, userChoise) }
+	notFound := func(what string) error { return appDirSmthNotFound(what, resolvedPath, userChoise) }
 	tryLoad := func(err error, what string) (rerun bool) {
 		if err == nil { return false }
 		if errors.Is(err, fs.ErrNotExist) {
@@ -32,7 +32,7 @@ func LoadConfiguration(appDirPath, profileName string, userChoise func(msg strin
 		cfg, err := loadConfig(appDirFs, "config.toml")
 		if tryLoad(err, "config.toml") { continue } 
 
-		profile, err := loadProfile(appDirFs, filepath.Join("profiles", profileName+".toml"))       
+		profile, err := loadProfile(appDirFs, path.Join("profiles", profileName+".toml"))       
 		if tryLoad(err, "profile") { continue }
 
 		data, err := loadData(appDirFs, "data")

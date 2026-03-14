@@ -12,6 +12,7 @@ import (
 	"strings"
 	"os"
 	"path/filepath"
+	"log"
 )
 
 var (                                                                 
@@ -23,14 +24,15 @@ func main() {
 	flag.Parse()
 
 	cfg, data, profile, appDirPath := loader.LoadConfiguration(*appDirPath, *profileName, userChoise)
-	data = score.Score(data, profile.Tags)
+	data = score.Score(data, profile.Tags, cfg.Score)
 
 	var output string
 	for {
-		var pages float64
+		var pages float64; var trimmed bool
 		output, pages = render.Render(cfg, data, profile, appDirPath)
 		if !guard.TrimIsNeeded(pages, cfg.Render.PageLimit) { break }
-		data = trim.TrimLowest(data, cfg.Render.MinElements)
+		data, trimmed = trim.TrimLowest(data, cfg.Render.MinElements)
+		if !trimmed { log.Fatalf("Cannot trim anymore, but page limit is still not met. Please check your data and profile settings.") }
 	}
 	fmt.Printf("All is done, your output here -> %s\n", output)
 }
@@ -38,7 +40,8 @@ func main() {
 func userChoise(msg string, defaultVal bool) (bool) {
 	var input string
 	var colorOn = os.Getenv("NO_COLOR") == "" && func() bool {
-		fi, _ := os.Stdout.Stat()
+		fi, err := os.Stdout.Stat()
+		if err != nil { log.Fatal(err) }
 		return (fi.Mode() & os.ModeCharDevice) != 0
 	}()
 	green 	:= func(s string) string {if colorOn { return "\033[1;32m" + s + "\033[0m" }; return s}

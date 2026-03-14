@@ -1,9 +1,14 @@
 package model
 
+import "log"
+
 type I18n map[string]string
 func (i I18n) Lang(lang string) string {
 	if v, ok := i[lang]; ok { return v }
-	return i["en"] // fallback
+	if i["en"] == "" { // fallback to English if available
+		log.Fatalf("Missing translation for language '%s' and no English fallback provided: %v", lang, i) 
+	}
+	return i["en"]
 }
 
 // ResumeData is the full in-memory representation of all resume content.

@@ -18,10 +18,10 @@ import (
 
 func Render(cfg model.Config, data model.ResumeData, profile model.Profile, appDirPath string) (string, float64) {
 	datagen, err := build(data, profile)
-	if err != nil { log.Fatalf("Datagen typ error: %v", err); return "", 0.0}
+	if err != nil { log.Fatalf("Datagen typ error: %v", err) }
 
 	outPath, pages, err := compile(datagen, appDirPath, cfg, profile)
-	if err != nil { log.Fatalf("Cannot resolve path to rendered path: %v", err); return "", 0.0}
+	if err != nil { log.Fatalf("Cannot resolve path to rendered path: %v", err) }
 	return outPath, pages
 }
 
@@ -31,7 +31,8 @@ const (
 )
 
 func compile(dataGen []byte, appDirPath string, cfg model.Config, profile model.Profile) (string, float64, error) {
-	dataGenPath := filepath.Join(appDirPath, "templates", "data_gen.typ")
+	dataGenPath := filepath.Join(appDirPath, "templates", "data_gen.typ") 
+	// may cause race condition if multiple renders at the same time, but i don't give a shit
 
 	err := os.WriteFile(dataGenPath, dataGen, filePerm)
 	if err != nil {return "", 0.0, err}
@@ -72,9 +73,7 @@ func pageFloatCount(pathToTyp string, cfg model.Config) (float64, error) {
 	y, err := strconv.ParseFloat(strings.TrimSuffix(pos.Y, "pt"), 64)
 	if err != nil { return 0.0, err }
 
-	const pageHeight = 792
-	// pageHeight in pt for us-letter = 792
-	return float64(pos.Page - 1) + y / pageHeight, nil 
+	return float64(pos.Page - 1) + y / cfg.Render.PageHeightPt, nil 
 }
 
 func build(data model.ResumeData, profile model.Profile) ([]byte, error) {

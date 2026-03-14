@@ -4,13 +4,14 @@ import (
 	"github.com/crispuscrew/resumegen/internal/model"
 )
 
-func TrimLowest(data model.ResumeData, minElements model.MinElements) model.ResumeData {
+func TrimLowest(data model.ResumeData, minElements model.MinElements) (model.ResumeData, bool) {
 	min := minIncluded(model.FlatNested(data))
+	if (min == nil) { return data, false }
+	
 	min.Reason = model.Trimmed
-
 	data = trimEmpty(data, minElements)
 
-	return data
+	return data, true
 }
 
 func minIncluded(metas []*model.Meta) *model.Meta {
@@ -24,6 +25,7 @@ func minIncluded(metas []*model.Meta) *model.Meta {
 
 func trimEmpty(data model.ResumeData, minElements model.MinElements) model.ResumeData {
 	for i, job := range data.Jobs {
+		if job.Reason != model.Included { continue }
 		jobBullets := 0
 		for _, bullet := range job.Bullets {
 			if bullet.Reason == model.Included { jobBullets++ }
@@ -32,6 +34,7 @@ func trimEmpty(data model.ResumeData, minElements model.MinElements) model.Resum
 	}
 
 	for i, project := range data.Projects {
+		if project.Reason != model.Included { continue }
 		projectBullets := 0
 		for _, bullet := range project.Bullets {
 			if bullet.Reason == model.Included { projectBullets++ }
@@ -40,11 +43,12 @@ func trimEmpty(data model.ResumeData, minElements model.MinElements) model.Resum
 	}
 
 	for i, skillCat := range data.SkillCats {
+		if skillCat.Reason != model.Included { continue }
 		skillBullets := 0
 		for _, skill := range skillCat.Items {
 			if skill.Reason == model.Included { skillBullets++ }
 		}
-		if skillBullets < minElements.SkillCats { data.SkillCats[i].Reason = model.Trimmed }
+		if skillBullets < minElements.SkillItems { data.SkillCats[i].Reason = model.Trimmed }
 	}
 	return data
 }

@@ -4,7 +4,7 @@ import (
 	"github.com/crispuscrew/resumegen/internal/model"
 )
 
-func Score(data model.ResumeData, profileTags []string) model.ResumeData {
+func Score(data model.ResumeData, profileTags []string, priority model.Score) model.ResumeData {
 	data.Jobs = scoreAndFilter[model.Job, *model.Job](data.Jobs, profileTags)
 	for i := range data.Jobs {
 		data.Jobs[i].Bullets = scoreAndFilter[model.Bullet, *model.Bullet](data.Jobs[i].Bullets, profileTags)
@@ -18,8 +18,17 @@ func Score(data model.ResumeData, profileTags []string) model.ResumeData {
 	data.SkillCats = scoreAndFilter[model.SkillCat, *model.SkillCat](data.SkillCats, profileTags)
 	for i := range data.SkillCats {
 		data.SkillCats[i].Items = scoreAndFilter[model.SkillItem, *model.SkillItem](data.SkillCats[i].Items, profileTags)
+		data.SkillCats[i].Items = addPriority[model.SkillItem, *model.SkillItem](data.SkillCats[i].Items, priority.SkillPriority)
 	}
 	return data
+}
+
+func addPriority[T any, PT interface {
+	*T
+	model.HasMeta
+}](items []T, priority int) []T {
+	for i := range items { PT(&items[i]).GetMeta().Score += priority }
+	return items
 }
 
 func scoreAndFilter[T any, PT interface {

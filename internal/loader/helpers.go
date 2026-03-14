@@ -25,10 +25,13 @@ func copyDefaultAppDir(appDirPath string, userChoise func(msg string, defaultVal
 
 		dst := filepath.Join(appDirPath, path)
 		if d.IsDir() { return os.MkdirAll(dst, dirPerm) }
-		if _, err := os.Stat(dst); err == nil {
+		_, err = os.Stat(dst)
+		if err == nil {
 			if !userChoise(fmt.Sprintf("File %s already exists. Do you want to overwrite it?", dst), false) {
 				return nil
 			}
+		} else if !errors.Is(err, os.ErrNotExist) {
+			return err
 		}
 
 		data, err := fs.ReadFile(sub, path)
@@ -39,10 +42,10 @@ func copyDefaultAppDir(appDirPath string, userChoise func(msg string, defaultVal
 }
 
 func resolvePath(path string) (string, error) {
-	if strings.HasPrefix(path, "~") {
+	if strings.HasPrefix(path, "~/") {
 		home, err := os.UserHomeDir()
 		if err != nil { return "", err }
-		path = filepath.Join(home, path[1:])
+		path = filepath.Join(home, path[2:])
 	}
 	return filepath.Abs(path)
 }

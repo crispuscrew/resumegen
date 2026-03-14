@@ -2,7 +2,7 @@
 
 #let resume-init(body) = {
   set page(
-    paper:  "us-letter",
+    paper:  "a4",
     margin: (top: 0.5in, bottom: 0.5in, x: 0.5in),
   )
   set text(font: "New Computer Modern", size: 11pt)

@@ -8,6 +8,7 @@
 # They are written into data_gen.typ as content blocks: [string].
 
 [[jobs]]
+    tags    = ["cpp", "go", "devops", "robotics"]
     company = "LLC Gumich RTK"
 
     [jobs.title]
@@ -37,8 +38,8 @@
     [[jobs.bullets]]
     tags = ["go", "devops"]
     [jobs.bullets.text]
-    en = "Designed and implemented an internal *artifact storage service* in Go: REST API, Redis for metadata, Docker volume as file store, consumed by a React frontend — replaced manual binary distribution"
-    ru = "Разработал внутренний *сервис хранения артефактов* на Go: REST API, Redis, Docker-том, React-фронтенд — заменил ручную дистрибуцию бинарей"
+    en = "Designed and implemented an internal *artifact storage service* in Go: REST API, Redis for metadata, Docker volume as file store, consumed by a React frontend - replaced manual binary distribution"
+    ru = "Разработал внутренний *сервис хранения артефактов* на Go: REST API, Redis, Docker-том, React-фронтенд - заменил ручную дистрибуцию бинарей"
 
     [[jobs.bullets]]
     tags = ["embedded-linux", "devops", "robotics"]
@@ -46,8 +47,15 @@
     en = "Developed a USB-over-IP relay on *Orange Pi* (ARM Linux) for the SDR subsystem, achieving *80 MB/s* sustained I/Q throughput"
     ru = "Разработал USB-over-IP ретранслятор на *Orange Pi* (ARM Linux) для SDR-подсистемы с устойчивой пропускной способностью *80 МБ/с* по I/Q"
 
+    [[jobs.bullets]]
+    tags = ["cpp", "embedded"]
+    [jobs.bullets.text]
+    en = "Implemented CAN bus driver for encoder feedback on *STM32F103* microcontroller"
+    ru = "Реализовал драйвер CAN-шины для обратной связи по энкодеру на микроконтроллере *STM32F103*"
+
 
 [[jobs]]
+    tags    = ["cpp", "robotics", "flutter", "embedded"]
     company = "LLC Ground Avionics"
 
     [jobs.title]
@@ -69,12 +77,6 @@
     ru = "Спроектировал архитектуру системы и разработал *Flutter*-интерфейс оператора с собственным *WebSocket*-протоколом для интеграции с ROS"
 
     [[jobs.bullets]]
-    tags = ["cpp", "embedded"]
-    [jobs.bullets.text]
-    en = "Implemented CAN bus driver for encoder feedback on *STM32F103* microcontroller"
-    ru = "Реализовал драйвер CAN-шины для обратной связи по энкодеру на микроконтроллере *STM32F103*"
-
-    [[jobs.bullets]]
     tags = ["python", "robotics"]
     [jobs.bullets.text]
     en = "Developed a ROS-compatible aerodrome tug tractor simulator in *Python/Pygame* for hardware-software integration testing"
@@ -82,6 +84,7 @@
 
 
 [[jobs]]
+    tags    = ["cpp", "embedded", "aerospace", "python"]
     company = "LLC Indicative Engines"
 
     [jobs.title]
