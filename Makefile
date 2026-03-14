@@ -50,10 +50,10 @@ clean:
 
 help:
 	@echo "Usage:"
-	@echo "  make build    — build binary to ./bin/resumegen"
-	@echo "  make run      — run built binary"
-	@echo "  make test     — run tests"
-	@echo "  make lint     — run golangci-lint"
-	@echo "  make tidy     — go mod tidy"
-	@echo "  make rebuild  — force rebuild all container images"
-	@echo "  make clean    — remove build artifacts"
+	@echo "  make build    - build binary to ./bin/resumegen"
+	@echo "  make run      - run built binary"
+	@echo "  make test     - run tests"
+	@echo "  make lint     - run golangci-lint"
+	@echo "  make tidy     - go mod tidy"
+	@echo "  make rebuild  - force rebuild all container images"
+	@echo "  make clean    - remove build artifacts"
