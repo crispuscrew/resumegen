@@ -15,14 +15,17 @@ import (
 	"log"
 )
 
-var (                                                                 
+var (                       
+	version 	= "dev" // set by build process
+	versionFlag = flag.Bool("version", false, "print version and exit")
 	appDirPath 	= flag.String("path", defaultAppDir(), "specific path to application directory")
 	profileName = flag.String("profile", "default", "profile name to use")
 )
 
 func main() {
 	flag.Parse()
-
+	if *versionFlag { fmt.Printf("resumegen version: %s\n", version); return }
+	
 	cfg, data, profile, appDirPath := loader.LoadConfiguration(*appDirPath, *profileName, userChoise)
 	data = score.Score(data, profile.Tags, cfg.Score)
 
