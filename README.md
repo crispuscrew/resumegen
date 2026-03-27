@@ -212,10 +212,11 @@ make clean    # remove build artifacts
 
 ## Plans
 
+- Name, companies and etc in i18n
+- Transfer from typst to smth embedded in this binary
 - Automated tests
 - Chronological or manual ordering of bullets and entries
 - Verbose mode for debugging filter and trim decisions
-- **Self-contained Docker/Podman builder** - run `resumegen` with no local dependencies: Typst bundled inside the container, mount your data directory, get the PDF out
 
 ## P.S.
 
