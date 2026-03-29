@@ -3,15 +3,15 @@ package render
 import (
 	"github.com/crispuscrew/resumegen/internal/model"
 
-	"log"
-	"encoding/json"
 	"bytes"
+	"encoding/json"
+	"errors"
 	"fmt"
 	"io/fs"
-	"path/filepath"
+	"log"
 	"os"
 	"os/exec"
-	"errors"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -80,8 +80,8 @@ func build(data model.ResumeData, profile model.Profile) ([]byte, error) {
 	var buf bytes.Buffer
 
 	fmt.Fprintf(&buf, "#let r-lang = %q\n", profile.Lang)
-	fmt.Fprintf(&buf, "#let r-name = %q\n", data.Header.Name)
-	fmt.Fprintf(&buf, "#let r-summary = [%s]\n", data.Header.Summary.Lang(profile.Lang))
+	fmt.Fprintf(&buf, "#let r-name = %q\n", data.Header.Name.Lang(profile.Lang, "Header-Name"))
+	fmt.Fprintf(&buf, "#let r-summary = [%s]\n", data.Header.Summary.Lang(profile.Lang, "Header-Summary"))
 
 	//contacts
 	buf.WriteString("#let r-contacts = (\n")
@@ -98,11 +98,13 @@ func build(data model.ResumeData, profile model.Profile) ([]byte, error) {
 		if job.Reason != model.Included {continue}
 
 		fmt.Fprintf(&buf, "	(title : %q, date : %q, company : %q, location : %q, bullets : (",
-			job.Title.Lang(profile.Lang), job.Date.Lang(profile.Lang),
-			job.Company, job.Location.Lang(profile.Lang))
+			job.Title.Lang(profile.Lang, "Job-Title"), 
+			job.Date.Lang(profile.Lang, "Job-Date"),
+			job.Company.Lang(profile.Lang, "Job-Company"), 
+			job.Location.Lang(profile.Lang, "Job-Location"))
 		for _, bullet := range job.Bullets {
 			if bullet.Reason != model.Included {continue}
-			text := bullet.Text.Lang(profile.Lang)
+			text := bullet.Text.Lang(profile.Lang, "Job-Bullet-Text")
 			fmt.Fprintf(&buf, "\n		[%s],", text)
 		}
 		buf.WriteString(")),\n")
@@ -115,10 +117,13 @@ func build(data model.ResumeData, profile model.Profile) ([]byte, error) {
 		if project.Reason != model.Included {continue}
 
 		fmt.Fprintf(&buf, "	(title : %q, date : %q, subtitle : %q, detail : %q, bullets : (",
-			project.Title, project.Date, project.Subtitle, project.Detail)
+			project.Title.Lang(profile.Lang, "Proj-Title"), 
+			project.Date.Lang(profile.Lang, "Proj-Date"), 
+			project.Subtitle.Lang(profile.Lang, "Proj-Subtitle"), 
+			project.Detail.Lang(profile.Lang, "Proj-Detail"))
 		for _, bullet := range project.Bullets {
 			if bullet.Reason != model.Included {continue}
-			text := bullet.Text.Lang(profile.Lang)
+			text := bullet.Text.Lang(profile.Lang, "Proj-Bullet-Text")
 			fmt.Fprintf(&buf, "\n		[%s],", text)
 		}
 		buf.WriteString(")),\n")
@@ -130,10 +135,10 @@ func build(data model.ResumeData, profile model.Profile) ([]byte, error) {
 	for _, skillsCat := range data.SkillCats {
 		if skillsCat.Reason != model.Included {continue}
 
-		fmt.Fprintf(&buf, "	(category : %q, items : (", skillsCat.Name.Lang(profile.Lang))
+		fmt.Fprintf(&buf, "	(category : %q, items : (", skillsCat.Name.Lang(profile.Lang, "SkillCat-Name"))
 		for _, skill := range skillsCat.Items {
 			if skill.Reason != model.Included {continue}
-			fmt.Fprintf(&buf, "[%s],", skill.Name)
+			fmt.Fprintf(&buf, "[%s],", skill.Name.Lang(profile.Lang, "Skill-Name"))
 		}
 		buf.WriteString(")),\n")
 	}
@@ -143,8 +148,10 @@ func build(data model.ResumeData, profile model.Profile) ([]byte, error) {
 	buf.WriteString("#let r-edu = (\n")
 	for _, edu := range data.Edu {
 		fmt.Fprintf(&buf, "	(title : %q, degree : %q, location : %q, date : %q),\n",
-			edu.Title.Lang(profile.Lang), edu.Degree.Lang(profile.Lang),
-			edu.Location.Lang(profile.Lang), edu.Date.Lang(profile.Lang))
+			edu.Title.Lang(profile.Lang, "Edu-Title"), 
+			edu.Degree.Lang(profile.Lang, "Edu-Degree"),
+			edu.Location.Lang(profile.Lang, "Edu-Location"), 
+			edu.Date.Lang(profile.Lang, "Edu-Date"))
 	}
 	buf.WriteString(")\n")
 

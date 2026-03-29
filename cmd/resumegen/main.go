@@ -1,22 +1,23 @@
 package main
 
 import (
-	"github.com/crispuscrew/resumegen/internal/loader"
-	"github.com/crispuscrew/resumegen/internal/score"
-	"github.com/crispuscrew/resumegen/internal/render"
 	"github.com/crispuscrew/resumegen/internal/guard"
+	"github.com/crispuscrew/resumegen/internal/loader"
+	"github.com/crispuscrew/resumegen/internal/render"
+	"github.com/crispuscrew/resumegen/internal/score"
 	"github.com/crispuscrew/resumegen/internal/trim"
 
-	"fmt"
 	"flag"
-	"strings"
+	"fmt"
+	"log"
 	"os"
 	"path/filepath"
-	"log"
+	"strings"
 )
 
 var (                       
 	version 	= "dev" // set by build process
+	lang 		= flag.String("lang", "", "override config language")
 	versionFlag = flag.Bool("version", false, "print version and exit")
 	appDirPath 	= flag.String("path", defaultAppDir(), "specific path to application directory")
 	profileName = flag.String("profile", "default", "profile name to use")
@@ -28,6 +29,7 @@ func main() {
 	
 	cfg, data, profile, appDirPath := loader.LoadConfiguration(*appDirPath, *profileName, userChoise)
 	data = score.Score(data, profile.Tags, cfg.Score)
+	if *lang != "" { profile.Lang = *lang }
 
 	var output string
 	for {

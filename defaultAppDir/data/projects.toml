@@ -4,46 +4,62 @@
 # Bullet tags and job-level tags work identically to jobs.toml.
 
 [[projects]]
-tags     = ["go"]
-title    = "pgxray"
-date     = ""
-subtitle = "Go, TUI, PostgreSQL"
-detail   = "github.com/crispuscrew/pgxray"
+tags = ["go"]
 
-    [[projects.bullets]]
-    tags = ["go"]
-    [projects.bullets.text]
-    en = "Keyboard-driven read-only TUI for exploring PostgreSQL, designed to run on the server and accessed over SSH - no port forwarding or local client setup"
-    ru = "Клавиатурный read-only TUI для работы с PostgreSQL прямо на сервере: доступ через SSH без проброса портов и локальной настройки"
+[projects.detail]
+en = "github.com/crispuscrew/pgxray"
 
-    [[projects.bullets]]
-    tags = ["go"]
-    [projects.bullets.text]
-    en = "Component-based *Bubble Tea v2* architecture: schema browser and live table data viewer"
-    ru = "Компонентная архитектура на *Bubble Tea v2*: браузер схем и просмотр данных таблиц"
+[projects.title]
+en = "pgxray"
 
-    [[projects.bullets]]
-    tags = ["go"]
-    [projects.bullets.text]
-    en = "All queries run in *REPEATABLE READ* read-only transactions - consistent snapshot with no risk of accidental mutation"
-    ru = "Все запросы в *REPEATABLE READ* read-only транзакции - консистентный снимок без риска случайной мутации"
+[projects.date]
+en = ""
+
+[projects.subtitle]
+en = "Go, TUI, PostgreSQL"
+
+[[projects.bullets]]
+tags = ["go"]
+[projects.bullets.text]
+en = "Keyboard-driven read-only TUI for exploring PostgreSQL, designed to run on the server and accessed over SSH - no port forwarding or local client setup"
+ru = "Клавиатурный read-only TUI для работы с PostgreSQL прямо на сервере: доступ через SSH без проброса портов и локальной настройки"
+
+[[projects.bullets]]
+tags = ["go"]
+[projects.bullets.text]
+en = "Component-based *Bubble Tea v2* architecture: schema browser and live table data viewer"
+ru = "Компонентная архитектура на *Bubble Tea v2*: браузер схем и просмотр данных таблиц"
+
+[[projects.bullets]]
+tags = ["go"]
+[projects.bullets.text]
+en = "All queries run in *REPEATABLE READ* read-only transactions - consistent snapshot with no risk of accidental mutation"
+ru = "Все запросы в *REPEATABLE READ* read-only транзакции - консистентный снимок без риска случайной мутации"
 
 
 [[projects]]
-tags     = ["devops"]
-title    = "amnezia-ansible"
-date     = ""
-subtitle = "Ansible, DevOps"
-detail   = "github.com/crispuscrew/amnezia-ansible"
+tags = ["devops"]
 
-    [[projects.bullets]]
-    tags = ["devops"]
-    [projects.bullets.text]
-    en = "Ansible playbook for automated *AmneziaWireGuard* VPN provisioning in Docker: idempotent per-client key and config generation, stable IPs across re-deploys"
-    ru = "Ansible-плейбук для развёртывания *AmneziaWireGuard* VPN в Docker: идемпотентная генерация ключей и конфигов для каждого клиента, стабильные IP при повторных деплоях"
+[projects.detail]
+en = "github.com/crispuscrew/amnezia-ansible"
 
-    [[projects.bullets]]
-    tags = ["devops"]
-    [projects.bullets.text]
-    en = "Multi-distro support (Debian, RedHat, Arch, Alpine) - from bare VPS to running VPN in a single command"
-    ru = "Поддержка нескольких дистрибутивов (Debian, RedHat, Arch, Alpine) - от чистого VPS до работающего VPN одной командой"
+[projects.title]
+en = "amnezia-ansible"
+
+[projects.date]
+en = ""
+
+[projects.subtitle]
+en = "Ansible, DevOps"
+
+[[projects.bullets]]
+tags = ["devops"]
+[projects.bullets.text]
+en = "Ansible playbook for automated *AmneziaWireGuard* VPN provisioning in Docker: idempotent per-client key and config generation, stable IPs across re-deploys"
+ru = "Ansible-плейбук для развёртывания *AmneziaWireGuard* VPN в Docker: идемпотентная генерация ключей и конфигов для каждого клиента, стабильные IP при повторных деплоях"
+
+[[projects.bullets]]
+tags = ["devops"]
+[projects.bullets.text]
+en = "Multi-distro support (Debian, RedHat, Arch, Alpine) - from bare VPS to running VPN in a single command"
+ru = "Поддержка нескольких дистрибутивов (Debian, RedHat, Arch, Alpine) - от чистого VPS до работающего VPN одной командой"

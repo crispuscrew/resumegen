@@ -212,7 +212,6 @@ make clean    # remove build artifacts
 
 ## Plans
 
-- Name, companies and etc in i18n
 - Transfer from typst to smth embedded in this binary
 - Automated tests
 - Chronological or manual ordering of bullets and entries

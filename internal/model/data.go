@@ -3,12 +3,11 @@ package model
 import "log"
 
 type I18n map[string]string
-func (i I18n) Lang(lang string) string {
+func (i I18n) Lang(lang, field string) string {
 	if v, ok := i[lang]; ok { return v }
-	if i["en"] == "" { // fallback to English if available
-		log.Fatalf("Missing translation for language '%s' and no English fallback provided: %v", lang, i) 
-	}
-	return i["en"]
+	if v, ok := i["en"]; ok { return v }
+	log.Fatalf("Missing translation: field=%q lang=%q map=%v", field, lang, i)
+	return ""
 }
 
 // ResumeData is the full in-memory representation of all resume content.
@@ -37,9 +36,9 @@ func (m *Meta) GetMeta() *Meta { return m }
 
 // header.toml
 type Header struct {
-	Name     string    `toml:"name"`
-	Contacts []Contact `toml:"contacts"`
-	Summary  I18n      `toml:"summary"`
+	Name     I18n		`toml:"name"`
+	Contacts []Contact 	`toml:"contacts"`
+	Summary  I18n      	`toml:"summary"`
 }
 
 // Contact.Lang is optional: if set, the contact is shown only for that language.
@@ -56,7 +55,7 @@ type Job struct {
 	Bullets   	[]Bullet 	`toml:"bullets"`
 	Title		I18n     	`toml:"title"`
 	Date		I18n     	`toml:"date"`
-	Company  	string   	`toml:"company"`
+	Company  	I18n		`toml:"company"`
 	Location 	I18n     	`toml:"location"`
 }
 
@@ -70,10 +69,10 @@ type Bullet struct {
 type Project struct {
 	Meta
 	Bullets   	[]Bullet 	`toml:"bullets"`
-	Title    	string   	`toml:"title"`
-	Date     	string   	`toml:"date"`
-	Subtitle 	string   	`toml:"subtitle"`
-	Detail   	string   	`toml:"detail"`
+	Title    	I18n   		`toml:"title"`
+	Date		I18n   		`toml:"date"`
+	Subtitle 	I18n   		`toml:"subtitle"`
+	Detail   	I18n   		`toml:"detail"`
 }
 
 // education.toml
@@ -95,7 +94,7 @@ type SkillCat struct {
 
 type SkillItem struct {
 	Meta
-	Name 		string   	`toml:"name"`
+	Name 		I18n   		`toml:"name"`
 }
 
 func FlatTopLevel(data ResumeData) []*Meta {                                                                                              

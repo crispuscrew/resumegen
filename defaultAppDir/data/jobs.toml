@@ -9,7 +9,10 @@
 
 [[jobs]]
 tags = ["cpp", "go", "devops", "robotics"]
-company = "LLC Gumich RTK"
+
+[jobs.company]
+en = "LLC Gumich RTK"
+ru = "ООО Гумич РТК"
 
 [jobs.title]
 en = "Software Engineer"
@@ -62,7 +65,10 @@ ru = "Разработал USB-over-IP ретранслятор на *Orange Pi*
 
 [[jobs]]
 tags = ["cpp", "robotics", "flutter", "embedded"]
-company = "LLC Ground Avionics"
+
+[jobs.company]
+en = "LLC Ground Avionics"
+ru = "ООО Граунд Авионикс"
 
 [jobs.title]
 en = "Software Engineer (Contract)"
@@ -91,7 +97,10 @@ ru = "Разработал ROS-совместимый симулятор тяг�
 
 [[jobs]]
 tags = ["cpp", "embedded", "aerospace", "python"]
-company = "LLC Indicative Engines"
+
+[jobs.company]
+en = "LLC Indicative Engines"
+ru = "ООО Определяющие двигатели"
 
 [jobs.title]
 en = "CAE / Software Engineer"

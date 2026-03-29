@@ -10,24 +10,29 @@
     ru = "Языки программирования"
 
     [[categories.items]]
-    name = "Go"
     tags = ["go"]
+    [categories.items.name]
+    en = "Go"
 
     [[categories.items]]
-    name = "C/C++"
     tags = ["cpp", "embedded", "qt"]
+    [categories.items.name]
+    en = "C/C++"
 
     [[categories.items]]
-    name = "Python"
     tags = ["python", "math", "backend"]
+    [categories.items.name]
+    en = "Python"
 
     [[categories.items]]
-    name = "SQL"
     tags = ["go"]
+    [categories.items.name]
+    en = "SQL"
 
     [[categories.items]]
-    name = "Dart"
     tags = ["flutter"]
+    [categories.items.name]
+    en = "Dart"
 
 
 [[categories]]
@@ -37,28 +42,34 @@
     ru = "Технологии"
 
     [[categories.items]]
-    name = "Qt/QML"
     tags = ["cpp", "gui", "qt"]
+    [categories.items.name]
+    en = "Qt/QML"
 
     [[categories.items]]
-    name = "ROS"
     tags = ["cpp", "robotics"]
+    [categories.items.name]
+    en = "ROS"
 
     [[categories.items]]
-    name = "Flutter"
     tags = ["flutter", "gui"]
+    [categories.items.name]
+    en = "Flutter"
 
     [[categories.items]]
-    name = "WebSocket"
     tags = ["backend", "robotics", "flutter"]
+    [categories.items.name]
+    en = "WebSocket"
 
     [[categories.items]]
-    name = "ARM Embedded Linux"
     tags = ["embedded-linux"]
+    [categories.items.name]
+    en = "ARM Embedded Linux"
 
     [[categories.items]]
-    name = "Ansible"
     tags = ["devops"]
+    [categories.items.name]
+    en = "Ansible"
 
 
 [[categories]]
@@ -68,16 +79,19 @@
     ru = "Базы данных"
 
     [[categories.items]]
-    name = "PostgreSQL"
     tags = ["go"]
+    [categories.items.name]
+    en = "PostgreSQL"
 
     [[categories.items]]
-    name = "Redis"
     tags = ["go"]
+    [categories.items.name]
+    en = "Redis"
 
     [[categories.items]]
-    name = "SQLite"
     tags = ["go", "cpp"]
+    [categories.items.name]
+    en = "SQLite"
 
 
 [[categories]]
@@ -87,21 +101,26 @@
     ru = "Инструменты"
 
     [[categories.items]]
-    name = "Git"
     tags = ["go", "cpp", "embedded", "robotics", "mgmt"]
+    [categories.items.name]
+    en = "Git"
 
     [[categories.items]]
-    name = "GitHub Actions"
     tags = ["go", "cpp", "devops"]
+    [categories.items.name]
+    en = "GitHub Actions"
 
     [[categories.items]]
-    name = "GitLab CI"
     tags = ["go", "cpp", "devops"]
+    [categories.items.name]
+    en = "GitLab CI"
 
     [[categories.items]]
-    name = "Docker / Podman"
     tags = ["go", "devops"]
+    [categories.items.name]
+    en = "Docker / Podman"
 
     [[categories.items]]
-    name = "Linux"
     tags = ["go", "cpp", "embedded"]
+    [categories.items.name]
+    en = "Linux"

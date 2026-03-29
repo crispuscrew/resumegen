@@ -1,4 +1,6 @@
-name = "Ruslan Gabzetdinov"
+[name]
+en = "Ruslan Gabzetdinov"
+ru = "Руслан Габзетдинов"
 
 # Text fields support Typst inline markup: *bold*, _italic_, #link("url")[text], #box[...].
 # They are rendered as Typst content blocks, so standard Typst inline syntax works anywhere.
@@ -8,21 +10,21 @@ name = "Ruslan Gabzetdinov"
 
 [[contacts]]
 value = "gabzetdinov@proton.me"
-href  = "mailto:gabzetdinov@proton.me"
+href = "mailto:gabzetdinov@proton.me"
 
 [[contacts]]
-lang  = "en"
+lang = "en"
 value = "linkedin.com/in/gabzetdinovri"
-href  = "https://linkedin.com/in/gabzetdinovri"
+href = "https://linkedin.com/in/gabzetdinovri"
 
 [[contacts]]
-lang  = "ru"
+lang = "ru"
 value = "t.me/gabzetdinov_job"
-href  = "https://t.me/gabzetdinov_job"
+href = "https://t.me/gabzetdinov_job"
 
 [[contacts]]
 value = "github.com/crispuscrew"
-href  = "https://github.com/crispuscrew"
+href = "https://github.com/crispuscrew"
 
 [summary]
 en = "Software engineer with 3+ years in robotics systems, expanding into Go microservices and utilities. Experience with ARM Linux, Qt/Flutter, gRPC/protobuf, and real-time constraints"
