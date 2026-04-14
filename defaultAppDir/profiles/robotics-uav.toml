@@ -1,0 +1,4 @@
+# highest priority first, lowest last 
+tags   = ["robotics", "uav", "cpp", "embedded", "embedded-linux", "aerospace", "arch", "gui", "qt"]
+lang   = "en"
+output = "robotics-uav.pdf"

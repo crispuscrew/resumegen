@@ -10,7 +10,7 @@
     ru = "Языки программирования"
 
     [[categories.items]]
-    tags = ["go"]
+    tags = ["go", "robotics"]
     [categories.items.name]
     en = "Go"
 
@@ -20,7 +20,7 @@
     en = "C/C++"
 
     [[categories.items]]
-    tags = ["python", "math", "backend"]
+    tags = ["python", "math", "backend", "robotics"]
     [categories.items.name]
     en = "Python"
 
@@ -47,12 +47,12 @@
     en = "Qt/QML"
 
     [[categories.items]]
-    tags = ["cpp", "robotics"]
+    tags = ["robotics"]
     [categories.items.name]
     en = "ROS"
 
     [[categories.items]]
-    tags = ["flutter", "gui"]
+    tags = ["flutter"]
     [categories.items.name]
     en = "Flutter"
 

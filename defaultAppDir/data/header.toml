@@ -27,5 +27,5 @@ value = "github.com/crispuscrew"
 href = "https://github.com/crispuscrew"
 
 [summary]
-en = "Software engineer with 3+ years in robotics systems, expanding into Go microservices and utilities. Experience with ARM Linux, Qt/Flutter, gRPC/protobuf, and real-time constraints"
-ru = "Инженер-программист с 3+ летним опытом в робототехнических системах, развиваюсь в Go-микросервисах и утилитах. Опыт в ARM Linux, Qt/Flutter, gRPC/protobuf и системах реального времени"
+en = "Go engineer with a background in systems and C++ embedded/robotics. Built production gRPC/protobuf services, REST backends, and TUI tooling"
+ru = "Go-инженер с опытом в системном программировании и C++ embedded/робототехнике. Разрабатывал production gRPC/protobuf-сервисы, REST-бэкенды и TUI-утилиты"
