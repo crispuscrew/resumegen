@@ -21,8 +21,8 @@ en = ""
 [[projects.bullets]]
 tags = ["go", "robotics", "uav", "embedded-linux"]
 [projects.bullets.text]
-en = "Building a DIY digital NVG helmet on *RK3588* (Orange Pi 5B): dual CVBS thermal cameras fused with a NIR stream, *RKNN/YOLOv8n* person detection on the 6 TOPS NPU — targeting *<100 ms* end-to-end latency, primary language Go"
-ru = "Разрабатываю DIY цифровой ПНВ на *RK3588* (Orange Pi 5B): два CVBS тепловизора и NIR-камера с sensor fusion, детекция людей *RKNN/YOLOv8n* на 6 TOPS NPU — цель *<100 мс* сквозной задержки, основной язык Go"
+en = "Building a DIY digital NVG helmet on *RK3588* (Orange Pi 5B): dual CVBS thermal cameras fused with a NIR stream, *RKNN/YOLOv8n* person detection on the 6 TOPS NPU - targeting *`<100 ms`* end-to-end latency, primary language Go"
+ru = "Разрабатываю DIY цифровой ПНВ на *RK3588* (Orange Pi 5B): два CVBS тепловизора и NIR-камера с sensor fusion, детекция людей *RKNN/YOLOv8n* на 6 TOPS NPU - цель *`<100 мс`* сквозной задержки, основной язык Go"
 
 [[projects.bullets]]
 tags = ["robotics", "uav", "embedded-linux"]
