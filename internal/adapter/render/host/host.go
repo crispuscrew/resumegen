@@ -13,6 +13,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/crispuscrew/resumegen/internal/adapter/render/sanitize"
 	"github.com/crispuscrew/resumegen/internal/domain"
 )
 
@@ -32,7 +33,11 @@ type Renderer struct {
 // invokes `typst compile` to produce the PDF, then `typst query` to determine
 // the rendered page count. Returns the absolute PDF path and the page count.
 func (r Renderer) Render(ctx context.Context, data domain.ResumeData, profile domain.Profile, cfg domain.Config) (string, float64, error) {
-	src, err := BuildTypstSource(data, profile)
+	mode := sanitize.Strict
+	if cfg.Render.ForceUnsafe {
+		mode = sanitize.Permissive
+	}
+	src, err := BuildTypstSource(data, profile, mode)
 	if err != nil {
 		return "", 0, fmt.Errorf("build typst source: %w", err)
 	}

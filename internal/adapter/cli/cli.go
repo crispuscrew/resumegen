@@ -33,6 +33,7 @@ func Run(d Deps) {
 		versionFlag = flag.Bool("version", false, "print version and exit")
 		appDirPath  = flag.String("path", defaultAppDir(), "specific path to application directory")
 		profileName = flag.String("profile", "default", "profile name to use")
+		force       = flag.Bool("force", false, "render even if a bullet has malformed markup or a disallowed URL (sanitizer falls back to literal text)")
 	)
 	flag.Parse()
 
@@ -58,6 +59,7 @@ func Run(d Deps) {
 	outPath, err := gen.Generate(context.Background(), usecase.GenerateInput{
 		ProfileName:  *profileName,
 		LangOverride: *lang,
+		ForceUnsafe:  *force,
 	})
 	if err != nil {
 		log.Fatalf("%v", err)

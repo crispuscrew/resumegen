@@ -8,10 +8,10 @@
 )
 #let r-jobs = (
 	(title : "Software Engineer", date : "Jan. 2025 – Present", company : "LLC Gumich RTK", location : "Moscow, Russia", bullets : (
-		[Built a Go microservice that auto-generates *protobuf* schemas from MAVLink C++ headers at build time and bridges *gRPC* ↔ MAVLink v2 (proprietary): sustains *12k RPC/s* peak on Orange Pi as part of a swarm/mesh multi-vehicle platform],
+		[Built a Go microservice that auto-generates *protobuf* schemas from MAVLink C++ headers at build time and bridges *gRPC* ↔ MAVLink v2 \(proprietary\): sustains *12k RPC/s* peak on Orange Pi as part of a swarm/mesh multi-vehicle platform],
 		[Refactored and extended a 2M+ LOC *Qt/QML* ground control station for robotic systems: custom QML screens and C++ integrations in a 7-person team],
 		[Designed and implemented an internal *artifact storage service* in Go: REST API, Redis for metadata, Docker volume as file store, consumed by a React frontend - replaced manual binary distribution],
-		[Developed a USB-over-IP relay on *Orange Pi* (ARM Linux) for the SDR subsystem, achieving *80 MB/s* sustained I/Q throughput],)),
+		[Developed a USB-over-IP relay on *Orange Pi* \(ARM Linux\) for the SDR subsystem, achieving *80 MB/s* sustained I/Q throughput],)),
 	(title : "Software Engineer (Contract)", date : "Sep. 2024 – Jan. 2025", company : "LLC Ground Avionics", location : "Moscow, Russia", bullets : (
 		[Designed system architecture and developed the *Flutter* operator interface with a custom *WebSocket* protocol for real-time ROS integration],)),
 	(title : "CAE / Software Engineer", date : "Mar. 2023 – Aug. 2024", company : "LLC Indicative Engines", location : "Sarov / Moscow, Russia", bullets : (
@@ -19,14 +19,14 @@
 )
 #let r-projects = (
 	(title : "HAVEN", date : "", subtitle : "Go, GStreamer, ARM Linux, RKNN", detail : "", bullets : (
-		[Building a DIY digital NVG helmet on *RK3588* (Orange Pi 5B): dual CVBS thermal cameras fused with a NIR stream, *RKNN/YOLOv8n* person detection on the 6 TOPS NPU - targeting *`<100 ms`* end-to-end latency, primary language Go],)),
+		[Building a DIY digital NVG helmet on *RK3588* \(Orange Pi 5B\): dual CVBS thermal cameras fused with a NIR stream, *RKNN/YOLOv8n* person detection on the 6 TOPS NPU - targeting *`<100 ms`* end-to-end latency, primary language Go],)),
 	(title : "pgxray", date : "", subtitle : "Go, TUI, PostgreSQL", detail : "github.com/crispuscrew/pgxray", bullets : (
 		[Keyboard-driven read-only TUI for exploring PostgreSQL, designed to run on the server and accessed over SSH - no port forwarding or local client setup],
 		[Component-based *Bubble Tea v2* architecture: schema browser and live table data viewer],
 		[All queries run in *REPEATABLE READ* read-only transactions - consistent snapshot with no risk of accidental mutation],)),
 	(title : "amnezia-ansible", date : "", subtitle : "Ansible, DevOps", detail : "github.com/crispuscrew/amnezia-ansible", bullets : (
 		[Ansible playbook for automated *AmneziaWireGuard* VPN provisioning in Docker: idempotent per-client key and config generation, stable IPs across re-deploys],
-		[Multi-distro support (Debian, RedHat, Arch, Alpine) - from bare VPS to running VPN in a single command],)),
+		[Multi-distro support \(Debian, RedHat, Arch, Alpine\) - from bare VPS to running VPN in a single command],)),
 )
 #let r-skills = (
 	(category : "Languages", items : ([Go],[C/C++],[Python],[SQL],)),

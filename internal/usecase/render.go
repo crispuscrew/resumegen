@@ -21,6 +21,7 @@ type Generator struct {
 type GenerateInput struct {
 	ProfileName  string
 	LangOverride string // "" leaves the profile's lang untouched
+	ForceUnsafe  bool   // OR-combined with cfg.Render.ForceUnsafe
 }
 
 // Generate runs the full pipeline and returns the absolute path to the rendered PDF.
@@ -32,6 +33,7 @@ func (g *Generator) Generate(ctx context.Context, in GenerateInput) (string, err
 	if in.LangOverride != "" {
 		profile.Lang = in.LangOverride
 	}
+	cfg.Render.ForceUnsafe = cfg.Render.ForceUnsafe || in.ForceUnsafe
 
 	data = Score(data, profile.Tags, cfg.Score)
 

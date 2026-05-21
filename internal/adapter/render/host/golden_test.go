@@ -11,6 +11,7 @@ import (
 
 	"github.com/crispuscrew/resumegen"
 	"github.com/crispuscrew/resumegen/internal/adapter/render/host"
+	"github.com/crispuscrew/resumegen/internal/adapter/render/sanitize"
 	"github.com/crispuscrew/resumegen/internal/adapter/tomlrepo"
 	"github.com/crispuscrew/resumegen/internal/usecase"
 )
@@ -44,7 +45,7 @@ func TestBuildTypstSource_DefaultAppdir_Golden(t *testing.T) {
 	}
 	data = usecase.Score(data, profile.Tags, cfg.Score)
 
-	got, err := host.BuildTypstSource(data, profile)
+	got, err := host.BuildTypstSource(data, profile, sanitize.Strict)
 	if err != nil {
 		t.Fatalf("build: %v", err)
 	}

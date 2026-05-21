@@ -21,6 +21,12 @@ type Render struct {
 	PageLimit    float64     `toml:"page_limit"`
 	PageHeightPt float64     `toml:"page_height_pt"`
 	MinElements  MinElements `toml:"min_elements"`
+
+	// ForceUnsafe switches the sanitizer to permissive mode: malformed
+	// markup or disallowed URL schemes no longer fail the render — the
+	// offending bullet is emitted as Typst-escaped literal text instead.
+	// CLI: --force. Default false (strict).
+	ForceUnsafe bool `toml:"force_unsafe"`
 }
 
 type MinElements struct {
