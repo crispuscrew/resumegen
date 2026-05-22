@@ -1,0 +1,36 @@
+# resumegen render container — produces a sandboxed Typst runtime.
+# Built locally on first containerized render; never pulled from a registry.
+# See internal/adapter/container/image.go for how it is invoked.
+#
+# MAINTAINER: when updating, bump all three together:
+#   ALPINE_DIGEST  — pinned digest of docker.io/library/alpine:3.20 (verify with `skopeo inspect ...`)
+#   TYPST_VERSION  — Typst release tag (without the leading "v")
+#   TYPST_SHA256   — sha256 of typst-x86_64-unknown-linux-musl.tar.xz from the matching GitHub release
+#
+# To verify a Typst release sha256 by hand:
+#   curl -fsSLO https://github.com/typst/typst/releases/download/v${V}/typst-x86_64-unknown-linux-musl.tar.xz
+#   sha256sum typst-x86_64-unknown-linux-musl.tar.xz
+
+ARG ALPINE_DIGEST=sha256:0a4eaa0eecf5f8c050e5bba433f58c052be7587ee8af3e8b3910ef9ab5fbe9f5
+ARG TYPST_VERSION=0.13.0
+ARG TYPST_SHA256=0000000000000000000000000000000000000000000000000000000000000000
+
+FROM docker.io/library/alpine@${ALPINE_DIGEST} AS dl
+ARG TYPST_VERSION
+ARG TYPST_SHA256
+RUN apk add --no-cache curl xz \
+ && curl -fsSLo /tmp/typst.tar.xz \
+    "https://github.com/typst/typst/releases/download/v${TYPST_VERSION}/typst-x86_64-unknown-linux-musl.tar.xz" \
+ && echo "${TYPST_SHA256}  /tmp/typst.tar.xz" | sha256sum -c - \
+ && mkdir /out \
+ && tar -xJf /tmp/typst.tar.xz -C /out --strip-components=1 \
+    typst-x86_64-unknown-linux-musl/typst
+
+FROM docker.io/library/alpine@${ALPINE_DIGEST}
+COPY --from=dl /out/typst /usr/local/bin/typst
+# Typst may try to write a cache (package downloads etc.); HOME=/tmp routes it
+# to the tmpfs the caller mounts at runtime.
+ENV HOME=/tmp \
+    XDG_CACHE_HOME=/tmp
+WORKDIR /work
+ENTRYPOINT ["/usr/local/bin/typst"]

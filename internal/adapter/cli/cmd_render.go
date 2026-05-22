@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/crispuscrew/resumegen/internal/adapter/appdir"
-	"github.com/crispuscrew/resumegen/internal/adapter/render/host"
+	"github.com/crispuscrew/resumegen/internal/adapter/container"
 	"github.com/crispuscrew/resumegen/internal/adapter/tomlrepo"
 	"github.com/crispuscrew/resumegen/internal/usecase"
 )
@@ -50,11 +50,20 @@ func (cmdRender) Run(ctx context.Context, deps Deps, args []string) error {
 		}
 	}
 
+	eng, engOk := container.Detector{}.Detect()
 	gen := usecase.Generator{
 		Config:    cfgSource,
 		Profiles:  tomlrepo.NewProfileRepo(workspaceFS),
 		Resumes:   tomlrepo.NewResumeRepo(workspaceFS),
-		Renderer:  host.Renderer{Appdir: res.Dir},
+		Renderer: renderRouter{
+			appdir:    res.Dir,
+			engine:    eng,
+			engineOK:  engOk,
+			image:     container.ImageTag(deps.Version),
+			cfile:     deps.ContainerfileRend,
+			runner:    container.ExecRunner{},
+			bannerOut: os.Stderr,
+		},
 		Bootstrap: appdir.Bootstrap{Skeleton: deps.Skeleton, Target: res.Dir, Choice: UserChoice},
 	}
 

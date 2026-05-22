@@ -75,20 +75,26 @@ func queryPages(ctx context.Context, typstBin, typPath string, pageHeightPt floa
 	if err != nil {
 		return 0, err
 	}
+	return ParseQueryPages(out, pageHeightPt)
+}
 
+// ParseQueryPages parses the JSON emitted by `typst query <typ> <end-marker>
+// --field value` and converts the end-marker's page/y position into a
+// fractional page count. Exported so adapters that run typst out-of-process
+// (e.g. inside a container) can reuse the same parser.
+func ParseQueryPages(raw []byte, pageHeightPt float64) (float64, error) {
 	type typstPos struct {
 		Page int    `json:"page"`
 		X    string `json:"x"`
 		Y    string `json:"y"`
 	}
 	var positions []typstPos
-	if err := json.Unmarshal(out, &positions); err != nil {
+	if err := json.Unmarshal(raw, &positions); err != nil {
 		return 0, err
 	}
 	if len(positions) == 0 {
 		return 0, errors.New("end-marker not found")
 	}
-
 	pos := positions[0]
 	y, err := strconv.ParseFloat(strings.TrimSuffix(pos.Y, "pt"), 64)
 	if err != nil {

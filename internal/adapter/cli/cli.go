@@ -11,12 +11,14 @@ import (
 	"strings"
 )
 
-// Deps is the runtime context injected by main: the build version string
-// and the embedded skeleton filesystem used for first-run bootstrap and
-// for the `init` / `extract` subcommands.
+// Deps is the runtime context injected by main: the build version string,
+// the embedded skeleton filesystem used for first-run bootstrap and the
+// `init` / `extract` subcommands, and the embedded Containerfile used to
+// build the local render image on demand (slice 4).
 type Deps struct {
-	Version  string
-	Skeleton fs.FS
+	Version           string
+	Skeleton          fs.FS
+	ContainerfileRend []byte
 }
 
 func defaultAppDir() string {

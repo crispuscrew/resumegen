@@ -16,5 +16,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("embedded skeleton: %v", err)
 	}
-	cli.Run(cli.Deps{Version: version, Skeleton: skeleton})
+	cli.Run(cli.Deps{
+		Version:           version,
+		Skeleton:          skeleton,
+		ContainerfileRend: resumegen.ContainerfileRender,
+	})
 }

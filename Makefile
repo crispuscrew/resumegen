@@ -1,15 +1,17 @@
-RUNTIME    := $(shell which podman 2>/dev/null || which docker)
-BINARY     := resumegen
-CMD        := ./cmd/resumegen
-BUILD_DIR  := ./bin
-IMAGE_DEV  := resumegen-dev
-IMAGE_LINT := resumegen-lint
-IMAGE_TEST := resumegen-test
-RUN_DEV    := $(RUNTIME) run --rm
-TEST_PKG   ?= ./...
-GATE       ?= 50
+RUNTIME      := $(shell which podman 2>/dev/null || which docker)
+BINARY       := resumegen
+CMD          := ./cmd/resumegen
+BUILD_DIR    := ./bin
+IMAGE_DEV    := resumegen-dev
+IMAGE_LINT   := resumegen-lint
+IMAGE_TEST   := resumegen-test
+RENDER_VER   ?= dev
+IMAGE_RENDER := localhost/resumegen-render:$(RENDER_VER)
+RUN_DEV      := $(RUNTIME) run --rm
+TEST_PKG     ?= ./...
+GATE         ?= 50
 
-.PHONY: build run lint tidy clean test coverage coverage-gate rebuild help
+.PHONY: build run lint tidy clean test coverage coverage-gate rebuild help container-image
 
 .DEFAULT_GOAL := help
 
@@ -55,6 +57,9 @@ rebuild:  ## force rebuild all container images
 	$(RUNTIME) build -f container/dev/Containerfile -t $(IMAGE_DEV) . && \
 	$(RUNTIME) build -f container/lint/Containerfile -t $(IMAGE_LINT) . && \
 	$(RUNTIME) build -f container/test/Containerfile -t $(IMAGE_TEST) .
+
+container-image:  ## build the local render image (slice 4, opt-in render backend)
+	$(RUNTIME) build -f container/render/Containerfile -t $(IMAGE_RENDER) container/render/
 
 clean:  ## remove build artifacts
 	rm -rf $(BUILD_DIR)
