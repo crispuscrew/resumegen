@@ -47,3 +47,26 @@ type Renderer interface {
 type Bootstrap interface {
 	EnsureWorkspace(ctx context.Context, hint string) error
 }
+
+// WorkspaceRepo reads and writes the .resumegen/workspace.toml marker that
+// identifies a directory as a resumegen workspace. dir is the workspace root
+// (not the marker path); implementations append the marker subpath.
+type WorkspaceRepo interface {
+	Load(ctx context.Context, dir string) (domain.Workspace, error)
+	Save(ctx context.Context, dir string, ws domain.Workspace) error
+}
+
+// SkeletonExtractor copies files from an embedded skeleton FS to host paths.
+// Used by `init` and the `extract` subcommands. Implementations never
+// overwrite existing destination files.
+type SkeletonExtractor interface {
+	// ListSubtree returns skeleton-relative file paths (e.g.
+	// "templates/resume.typ") for every file under subtree. The leading
+	// subtree segment is preserved in the returned paths so callers can use
+	// them for both source lookup and destination writes.
+	ListSubtree(ctx context.Context, subtree string) ([]string, error)
+	// ExtractFile copies srcPath (a path inside the skeleton FS) to dst on
+	// the host filesystem. Returns (true, nil) on copy, (false, nil) when
+	// dst already exists (skip), or a non-nil error.
+	ExtractFile(ctx context.Context, srcPath, dst string) (copied bool, err error)
+}

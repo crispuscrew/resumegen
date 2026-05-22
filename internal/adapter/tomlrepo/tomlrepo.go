@@ -16,8 +16,21 @@ import (
 	"github.com/crispuscrew/resumegen/internal/usecase"
 )
 
-// NewConfigSource returns a usecase.ConfigSource backed by fsys.
-func NewConfigSource(fsys fs.FS) usecase.ConfigSource { return configSource{fsys} }
+// NewConfigSource returns a usecase.ConfigSource that reads config.toml from
+// fsys with no overlay. Equivalent to NewLayeredConfigSource(fsys, nil).
+func NewConfigSource(fsys fs.FS) usecase.ConfigSource {
+	return layeredConfigSource{global: fsys}
+}
+
+// NewLayeredConfigSource composes a base config FS with an optional workspace
+// overlay FS. When overlay is non-nil, its config.toml is decoded on top of
+// the base config; absent keys fall through to the base values. Missing files
+// are tolerated as long as at least one FS yields a config.toml — that gives
+// the caller fine-grained control over which appdir the marker bootstrap runs
+// against.
+func NewLayeredConfigSource(base, overlay fs.FS) usecase.ConfigSource {
+	return layeredConfigSource{global: base, workspace: overlay}
+}
 
 // NewProfileRepo returns a usecase.ProfileRepo backed by fsys. Profiles live
 // under profiles/<name>.toml.
@@ -27,10 +40,54 @@ func NewProfileRepo(fsys fs.FS) usecase.ProfileRepo { return profileRepo{fsys} }
 // under data/{header,jobs,projects,education,skills}.toml.
 func NewResumeRepo(fsys fs.FS) usecase.ResumeRepo { return resumeRepo{fsys} }
 
-type configSource struct{ fsys fs.FS }
+type layeredConfigSource struct {
+	global    fs.FS
+	workspace fs.FS // nil = no overlay
+}
 
-func (c configSource) Load(ctx context.Context) (domain.Config, error) {
-	return load[domain.Config](c.fsys, "config.toml")
+func (l layeredConfigSource) Load(_ context.Context) (domain.Config, error) {
+	var cfg domain.Config
+	var (
+		gotGlobal, gotOverlay bool
+	)
+
+	if l.global != nil {
+		ok, err := decodeInto(&cfg, l.global, "config.toml")
+		if err != nil {
+			return domain.Config{}, err
+		}
+		gotGlobal = ok
+	}
+
+	if l.workspace != nil {
+		ok, err := decodeInto(&cfg, l.workspace, "config.toml")
+		if err != nil {
+			return domain.Config{}, err
+		}
+		gotOverlay = ok
+	}
+
+	if !gotGlobal && !gotOverlay {
+		return domain.Config{}, fmt.Errorf("%w: config.toml", usecase.ErrWorkspaceMissing)
+	}
+	return cfg, nil
+}
+
+// decodeInto reads path from fsys and unmarshals it on top of dst. Returns
+// (true, nil) on success, (false, nil) when the file does not exist, and
+// (false, err) for any other failure.
+func decodeInto(dst *domain.Config, fsys fs.FS, path string) (bool, error) {
+	raw, err := fs.ReadFile(fsys, path)
+	if err != nil {
+		if errors.Is(err, fs.ErrNotExist) {
+			return false, nil
+		}
+		return false, fmt.Errorf("read %s: %w", path, err)
+	}
+	if err := toml.Unmarshal(raw, dst); err != nil {
+		return false, fmt.Errorf("parse %s: %w", path, err)
+	}
+	return true, nil
 }
 
 type profileRepo struct{ fsys fs.FS }

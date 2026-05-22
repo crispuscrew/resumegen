@@ -1,70 +1,22 @@
-// Package cli wires command-line flags, the user-prompt helper, and adapter
-// graph construction. The binary entrypoint calls Run.
+// Package cli wires command-line flags, subcommand dispatch, and the
+// user-prompt helper. The binary entrypoint constructs Deps and calls Run
+// (defined in router.go).
 package cli
 
 import (
-	"context"
-	"flag"
 	"fmt"
 	"io/fs"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/crispuscrew/resumegen/internal/adapter/appdir"
-	"github.com/crispuscrew/resumegen/internal/adapter/render/host"
-	"github.com/crispuscrew/resumegen/internal/adapter/tomlrepo"
-	"github.com/crispuscrew/resumegen/internal/usecase"
 )
 
-// Deps is the runtime context injected by main: the build version string and
-// the embedded skeleton filesystem used for first-run bootstrap.
+// Deps is the runtime context injected by main: the build version string
+// and the embedded skeleton filesystem used for first-run bootstrap and
+// for the `init` / `extract` subcommands.
 type Deps struct {
 	Version  string
 	Skeleton fs.FS
-}
-
-// Run parses flags and either prints the version or dispatches the resume
-// generation use case.
-func Run(d Deps) {
-	var (
-		lang        = flag.String("lang", "", "override config language")
-		versionFlag = flag.Bool("version", false, "print version and exit")
-		appDirPath  = flag.String("path", defaultAppDir(), "specific path to application directory")
-		profileName = flag.String("profile", "default", "profile name to use")
-		force       = flag.Bool("force", false, "render even if a bullet has malformed markup or a disallowed URL (sanitizer falls back to literal text)")
-	)
-	flag.Parse()
-
-	if *versionFlag {
-		fmt.Printf("resumegen version: %s\n", d.Version)
-		return
-	}
-
-	resolved, err := appdir.Resolve(*appDirPath)
-	if err != nil {
-		log.Fatalf("Cannot resolve path: %v", err)
-	}
-
-	fsys := os.DirFS(resolved)
-	gen := usecase.Generator{
-		Config:    tomlrepo.NewConfigSource(fsys),
-		Profiles:  tomlrepo.NewProfileRepo(fsys),
-		Resumes:   tomlrepo.NewResumeRepo(fsys),
-		Renderer:  host.Renderer{Appdir: resolved},
-		Bootstrap: appdir.Bootstrap{Skeleton: d.Skeleton, Target: resolved, Choice: UserChoice},
-	}
-
-	outPath, err := gen.Generate(context.Background(), usecase.GenerateInput{
-		ProfileName:  *profileName,
-		LangOverride: *lang,
-		ForceUnsafe:  *force,
-	})
-	if err != nil {
-		log.Fatalf("%v", err)
-	}
-	fmt.Printf("All is done, your output here -> %s\n", outPath)
 }
 
 func defaultAppDir() string {

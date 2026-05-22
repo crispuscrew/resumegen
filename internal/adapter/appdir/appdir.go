@@ -22,9 +22,76 @@ const (
 // destructive action. Returning true approves; false declines.
 type UserChoice func(msg string, defaultVal bool) bool
 
-// Resolve expands a leading ~/ and converts the path to an absolute one.
-func Resolve(path string) (string, error) {
-	if strings.HasPrefix(path, "~/") {
+// ResolutionSource tells callers which rule picked the active workspace
+// directory. Useful for `config path`-style diagnostics and for tests.
+type ResolutionSource int
+
+const (
+	// SourceFlag means the caller passed a non-empty userPath (--path).
+	SourceFlag ResolutionSource = iota
+	// SourceWalkUp means a `.resumegen/workspace.toml` marker was found by
+	// walking up from cwd.
+	SourceWalkUp
+	// SourceDefault means neither --path nor a marker was found; the global
+	// default appdir is used.
+	SourceDefault
+)
+
+// Resolution is the outcome of ResolveActive: the absolute workspace
+// directory and how it was chosen.
+type Resolution struct {
+	Dir       string
+	Source    ResolutionSource
+	HasMarker bool
+}
+
+// ResolveActive picks the active workspace directory. Order:
+//
+//  1. userPath if non-empty (treated as the explicit --path flag value)
+//  2. walk-up from cwd looking for a `.resumegen/workspace.toml` marker
+//  3. defaultPath
+//
+// All three are run through ExpandAbs so the returned Dir is always
+// absolute. The directory may not exist yet in cases (1) and (3); the
+// caller's Bootstrap adapter handles creation. In case (2) the directory is
+// guaranteed to contain a marker (HasMarker == true). HasMarker may also be
+// true for cases (1) and (3) if the chosen directory happens to contain a
+// marker — useful for the config overlay decision.
+func ResolveActive(userPath, cwd, defaultPath string) (Resolution, error) {
+	if userPath != "" {
+		abs, err := ExpandAbs(userPath)
+		if err != nil {
+			return Resolution{}, err
+		}
+		return Resolution{Dir: abs, Source: SourceFlag, HasMarker: isWorkspace(abs)}, nil
+	}
+	if cwd != "" {
+		absCwd, err := ExpandAbs(cwd)
+		if err != nil {
+			return Resolution{}, err
+		}
+		if dir, ok := WalkUp(absCwd); ok {
+			return Resolution{Dir: dir, Source: SourceWalkUp, HasMarker: true}, nil
+		}
+	}
+	abs, err := ExpandAbs(defaultPath)
+	if err != nil {
+		return Resolution{}, err
+	}
+	return Resolution{Dir: abs, Source: SourceDefault, HasMarker: isWorkspace(abs)}, nil
+}
+
+// ExpandAbs expands a leading ~ or ~/ to the user's home directory and then
+// converts the result to an absolute path. Used wherever a user-facing path
+// is read from a flag or argument.
+func ExpandAbs(path string) (string, error) {
+	if path == "~" {
+		home, err := os.UserHomeDir()
+		if err != nil {
+			return "", err
+		}
+		path = home
+	} else if strings.HasPrefix(path, "~/") {
 		home, err := os.UserHomeDir()
 		if err != nil {
 			return "", err
