@@ -36,6 +36,55 @@ type Render struct {
 	// The container backend uses rootless podman if available, falling back
 	// to docker. See ContainerMode for the parsed form.
 	UseContainer string `toml:"use_container"`
+
+	// StripMetadata enables an opt-in qpdf post-process that empties the
+	// rendered PDF's /Author, /Creator, /Producer, /CreationDate, /ModDate.
+	// Default false — existing users without qpdf installed are unaffected.
+	StripMetadata bool `toml:"strip_metadata"`
+
+	// StrictInput enables opt-in input validation at load time (§4.2 step 1).
+	// NUL bytes are rejected regardless; when true, control characters (except
+	// \n and \t), invalid UTF-8, and the per-field-class byte limits below are
+	// enforced too. Default false, so existing v1.0 data loads unchanged.
+	StrictInput bool `toml:"strict_input"`
+
+	// Limits holds per-field-class byte limits, enforced only when StrictInput
+	// is true. Any zero field falls back to its default (see Limits.withDefaults).
+	Limits Limits `toml:"limits"`
+}
+
+// Limits are per-field-class byte limits enforced when Render.StrictInput is
+// true. A zero field means "use the default" (see withDefaults).
+type Limits struct {
+	Short      int `toml:"short"`       // names, titles, dates, company, location, tags
+	BulletText int `toml:"bullet_text"` // bullet text and the header summary
+	Notes      int `toml:"notes"`       // application notes (v1.5); reserved
+	URLOrPath  int `toml:"url_or_path"` // contact hrefs and path-like fields
+}
+
+// Default per-field-class byte limits (DESIGN §4.2 step 1).
+const (
+	defaultLimitShort      = 256
+	defaultLimitBulletText = 4096
+	defaultLimitNotes      = 65536
+	defaultLimitURLOrPath  = 2048
+)
+
+// withDefaults returns a copy of l with each zero field replaced by its default.
+func (l Limits) withDefaults() Limits {
+	if l.Short == 0 {
+		l.Short = defaultLimitShort
+	}
+	if l.BulletText == 0 {
+		l.BulletText = defaultLimitBulletText
+	}
+	if l.Notes == 0 {
+		l.Notes = defaultLimitNotes
+	}
+	if l.URLOrPath == 0 {
+		l.URLOrPath = defaultLimitURLOrPath
+	}
+	return l
 }
 
 // ContainerMode is the parsed form of Render.UseContainer.

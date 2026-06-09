@@ -10,11 +10,12 @@ import (
 
 // Generator orchestrates the load → score → render → trim pipeline.
 type Generator struct {
-	Config    ConfigSource
-	Profiles  ProfileRepo
-	Resumes   ResumeRepo
-	Renderer  Renderer
-	Bootstrap Bootstrap
+	Config        ConfigSource
+	Profiles      ProfileRepo
+	Resumes       ResumeRepo
+	Renderer      Renderer
+	PostProcessor PDFPostProcessor // optional; nil skips post-processing
+	Bootstrap     Bootstrap
 }
 
 // GenerateInput captures user-supplied parameters for one render run.
@@ -35,6 +36,10 @@ func (g *Generator) Generate(ctx context.Context, in GenerateInput) (string, err
 	}
 	cfg.Render.ForceUnsafe = cfg.Render.ForceUnsafe || in.ForceUnsafe
 
+	if err := domain.ValidateInput(data, cfg.Render.StrictInput, cfg.Render.Limits); err != nil {
+		return "", fmt.Errorf("input validation: %w", err)
+	}
+
 	data = Score(data, profile.Tags, cfg.Score)
 
 	for {
@@ -47,6 +52,11 @@ func (g *Generator) Generate(ctx context.Context, in GenerateInput) (string, err
 			return "", err
 		}
 		if !need {
+			if cfg.Render.StripMetadata && g.PostProcessor != nil {
+				if err := g.PostProcessor.Strip(ctx, outPath); err != nil {
+					return "", fmt.Errorf("strip metadata: %w", err)
+				}
+			}
 			return outPath, nil
 		}
 		var trimmed bool

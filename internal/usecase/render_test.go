@@ -166,3 +166,67 @@ func TestGenerate_PropagatesNonMissingConfigError(t *testing.T) {
 		t.Fatal("expected error to bubble up")
 	}
 }
+
+type fakePostProcessor struct {
+	calls   int
+	lastPDF string
+	err     error
+}
+
+func (f *fakePostProcessor) Strip(_ context.Context, pdfPath string) error {
+	f.calls++
+	f.lastPDF = pdfPath
+	return f.err
+}
+
+func stripGenerator(strip bool, pp usecase.PDFPostProcessor) usecase.Generator {
+	return usecase.Generator{
+		Config:        &fakeConfig{cfg: domain.Config{Render: domain.Render{PageLimit: 1.0, StripMetadata: strip}}},
+		Profiles:      &fakeProfile{p: domain.Profile{Lang: "en"}},
+		Resumes:       &fakeResume{},
+		Renderer:      &fakeRenderer{pages: []float64{0.5}, out: "/tmp/x.pdf"},
+		PostProcessor: pp,
+		Bootstrap:     &fakeBootstrap{},
+	}
+}
+
+func TestGenerate_StripMetadata_InvokedWhenEnabled(t *testing.T) {
+	pp := &fakePostProcessor{}
+	g := stripGenerator(true, pp)
+	out, err := g.Generate(context.Background(), usecase.GenerateInput{ProfileName: "default"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if pp.calls != 1 {
+		t.Errorf("Strip called %d times, want 1", pp.calls)
+	}
+	if pp.lastPDF != out {
+		t.Errorf("Strip got %q, want final out path %q", pp.lastPDF, out)
+	}
+}
+
+func TestGenerate_StripMetadata_SkippedWhenDisabled(t *testing.T) {
+	pp := &fakePostProcessor{}
+	g := stripGenerator(false, pp)
+	if _, err := g.Generate(context.Background(), usecase.GenerateInput{ProfileName: "default"}); err != nil {
+		t.Fatal(err)
+	}
+	if pp.calls != 0 {
+		t.Errorf("Strip called %d times, want 0 when strip_metadata=false", pp.calls)
+	}
+}
+
+func TestGenerate_StripMetadata_ErrorPropagates(t *testing.T) {
+	pp := &fakePostProcessor{err: errors.New("qpdf boom")}
+	g := stripGenerator(true, pp)
+	if _, err := g.Generate(context.Background(), usecase.GenerateInput{ProfileName: "default"}); err == nil {
+		t.Fatal("expected strip error to propagate")
+	}
+}
+
+func TestGenerate_StripMetadata_NilProcessorIsNoOp(t *testing.T) {
+	g := stripGenerator(true, nil)
+	if _, err := g.Generate(context.Background(), usecase.GenerateInput{ProfileName: "default"}); err != nil {
+		t.Fatalf("nil PostProcessor with strip_metadata=true should be a no-op, got %v", err)
+	}
+}

@@ -8,14 +8,17 @@ import (
 
 	"github.com/crispuscrew/resumegen/internal/adapter/appdir"
 	"github.com/crispuscrew/resumegen/internal/adapter/container"
+	"github.com/crispuscrew/resumegen/internal/adapter/render/qpdf"
 	"github.com/crispuscrew/resumegen/internal/adapter/tomlrepo"
 	"github.com/crispuscrew/resumegen/internal/usecase"
 )
 
 type cmdRender struct{}
 
-func (cmdRender) Name() string     { return "render" }
-func (cmdRender) Synopsis() string { return "Render a profile (also the default when no subcommand is given)" }
+func (cmdRender) Name() string { return "render" }
+func (cmdRender) Synopsis() string {
+	return "Render a profile (also the default when no subcommand is given)"
+}
 
 func (cmdRender) Run(ctx context.Context, deps Deps, args []string) error {
 	flags := flag.NewFlagSet("render", flag.ContinueOnError)
@@ -52,9 +55,9 @@ func (cmdRender) Run(ctx context.Context, deps Deps, args []string) error {
 
 	eng, engOk := container.Detector{}.Detect()
 	gen := usecase.Generator{
-		Config:    cfgSource,
-		Profiles:  tomlrepo.NewProfileRepo(workspaceFS),
-		Resumes:   tomlrepo.NewResumeRepo(workspaceFS),
+		Config:   cfgSource,
+		Profiles: tomlrepo.NewProfileRepo(workspaceFS),
+		Resumes:  tomlrepo.NewResumeRepo(workspaceFS),
 		Renderer: renderRouter{
 			appdir:    res.Dir,
 			engine:    eng,
@@ -64,7 +67,8 @@ func (cmdRender) Run(ctx context.Context, deps Deps, args []string) error {
 			runner:    container.ExecRunner{},
 			bannerOut: os.Stderr,
 		},
-		Bootstrap: appdir.Bootstrap{Skeleton: deps.Skeleton, Target: res.Dir, Choice: UserChoice},
+		PostProcessor: qpdf.Stripper{},
+		Bootstrap:     appdir.Bootstrap{Skeleton: deps.Skeleton, Target: res.Dir, Choice: UserChoice},
 	}
 
 	outPath, err := gen.Generate(ctx, usecase.GenerateInput{

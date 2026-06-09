@@ -40,6 +40,13 @@ type Renderer interface {
 	Render(ctx context.Context, data domain.ResumeData, profile domain.Profile, cfg domain.Config) (outPath string, pages float64, err error)
 }
 
+// PDFPostProcessor optionally rewrites a freshly rendered PDF in place (e.g.
+// qpdf metadata stripping). The orchestrator invokes it once — after the trim
+// loop has settled on the final PDF — and only when enabled by config.
+type PDFPostProcessor interface {
+	Strip(ctx context.Context, pdfPath string) error
+}
+
 // Bootstrap copies embedded defaults into the workspace on first run.
 // hint identifies which file triggered the call (e.g., "config.toml").
 // Returning nil means the workspace is now ready and the caller should retry;
