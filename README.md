@@ -25,17 +25,14 @@ resumegen
 ```
 
 On first launch you will be prompted to copy the default configuration to `~/.config/resumegen/`.
+Prefer a self-contained, git-versionable setup? Run `resumegen init` in a directory instead — see
+**Workspaces** below.
 
 ### 4. Fill in your data
 
-```
-~/.config/resumegen/data/
-├── header.toml     ← name, contacts, summary
-├── jobs.toml       ← work experience
-├── projects.toml   ← side projects
-├── education.toml  ← degrees
-└── skills.toml     ← skill categories
-```
+Edit the five TOML files under `~/.config/resumegen/data/`: `header.toml` (name,
+contacts, summary), `jobs.toml` (work experience), `projects.toml` (side projects),
+`education.toml` (degrees), and `skills.toml` (skill categories).
 
 ### 5. Set up a profile
 
@@ -64,7 +61,12 @@ resumegen [--profile <name>] [--path <appdir>]
 | Flag | Default | Description |
 |------|---------|-------------|
 | `--profile` | `default` | Profile name to use (matches `profiles/<name>.toml`) |
-| `--path` | `~/.config/resumegen` | Path to the application directory |
+| `--path` | walk-up, then `~/.config/resumegen` | Path to the application directory (see [Workspaces](#workspaces)) |
+| `--lang` | from profile | Override the output language |
+| `--force` | off | Render even if a bullet has malformed markup or a disallowed URL — the sanitizer falls back to literal text (see [Security & hardening](#security--hardening)) |
+| `--version` | — | Print version and exit |
+
+Subcommands: `resumegen init` (bootstrap a workspace), `resumegen template extract`, `resumegen prompt extract`.
 
 Output PDF is written to `<appdir>/output/<profile.output>`.
 
@@ -84,6 +86,34 @@ Output PDF is written to `<appdir>/output/<profile.output>`.
 │   └── skills.toml
 └── templates/           # Typst templates (auto-managed)
 ```
+
+## Workspaces
+
+Instead of the single global `~/.config/resumegen/`, you can keep a self-contained,
+git-versionable appdir anywhere — useful for tracking your resume data alongside other
+projects, or keeping separate sets.
+
+```sh
+resumegen init my-resume      # creates my-resume/ with a .resumegen/ marker + example data
+cd my-resume
+resumegen --profile default   # discovered automatically by walking up from the CWD
+```
+
+`init` writes a `.resumegen/` marker that enables **walk-up discovery**: run `resumegen`
+from anywhere inside the tree and it finds the workspace. Resolution order is `--path` >
+nearest `.resumegen/` marker above the CWD > the default `~/.config/resumegen/`. A workspace
+`config.toml` is layered on top of the global one when both exist (workspace wins).
+
+| `init` flag | Effect |
+|-------------|--------|
+| (default) / `--with-example` | Marker + example data and profiles |
+| `--bare` | Marker only; no data |
+| `--full-example` | Also extract templates and prompts for editing |
+| `--name`, `--description` | Metadata written into the marker |
+
+`init` is idempotent and never overwrites existing files. To override a bundled default
+selectively, use `resumegen template extract [name...]` or `resumegen prompt extract <name>` —
+these copy the embedded default into your appdir, where it then shadows the built-in.
 
 ## Profiles
 
@@ -183,6 +213,61 @@ page_height_pt = 841.89   # must match the paper size in template.typ (A4 = 841.
 job_bullets     = 1   # a job with fewer included bullets than this is dropped entirely
 project_bullets = 1   # same for projects
 skill_items     = 1   # a skill category with fewer included items than this is dropped entirely
+```
+
+## Security & hardening
+
+resumegen takes a careful stance toward the data it renders and the PDFs it produces.
+All of the following except the sanitizer are **opt-in and off by default**, so v1.0
+output is unchanged unless you enable them in `[render]`.
+
+### Markup sanitizer (always on)
+
+Content fields are passed through a Typst sanitizer before rendering. Only an allowlist of
+inline markup survives — `*bold*`, `_italic_`, raw/code spans, and links — and link URLs are
+validated against an allowed-scheme list. A bullet with malformed markup or a disallowed URL
+fails the render by default. Pass `--force` to render anyway: the offending content is emitted
+as Typst-escaped literal text instead of being interpreted.
+
+### Containerized render — `use_container`
+
+Run Typst inside a throwaway rootless container instead of the host binary. The engine probe
+order is podman, then docker, and the container runs locked down:
+`--read-only --network=none --cap-drop=ALL --security-opt=no-new-privileges` as your own UID/GID
+(plus `--userns=keep-id` on podman).
+
+```toml
+[render]
+use_container = "auto"   # ""/"false" = host (default) · "true" = require an engine · "auto" = engine if present, else host
+```
+
+With `"auto"`, a missing engine or failed image build falls back to the host renderer and prints
+a one-line `rendering: host (...)` banner on stderr. Host mode is byte-identical to v1.0.
+
+### PDF metadata stripping — `strip_metadata`
+
+After rendering, rebuild the PDF through `qpdf` to empty its `/Author`, `/Creator`, `/Producer`,
+`/CreationDate`, and `/ModDate`. Requires `qpdf` on `PATH`.
+
+```toml
+[render]
+strip_metadata = true
+```
+
+### Strict input validation — `strict_input`
+
+NUL bytes in your data are **always** rejected. Turning on `strict_input` additionally rejects
+control characters (except newline and tab), invalid UTF-8, and fields that exceed per-class byte
+limits — catching corrupt or hostile data before it reaches the renderer.
+
+```toml
+[render]
+strict_input = true
+
+[render.limits]      # optional; these are the defaults
+short       = 256    # names, titles, dates, company, location, tags
+bullet_text = 4096   # bullet text and the header summary
+url_or_path = 2048   # contact hrefs and path-like fields
 ```
 
 ## Build from source
