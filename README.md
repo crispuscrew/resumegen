@@ -298,7 +298,6 @@ make clean    # remove build artifacts
 ## Plans
 
 - Transfer from typst to smth embedded in this binary
-- Automated tests
 - Chronological or manual ordering of bullets and entries
 - Verbose mode for debugging filter and trim decisions
 
