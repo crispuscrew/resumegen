@@ -1,4 +1,4 @@
 # highest priority first, lowest last 
-tags   = ["go", "backend", "arch", "devops", "refactoring", "cpp", "gui", "flutter", "python", "math", "mgmt"]
-lang   = "en"
+tags = ["go", "backend", "devops", "cpp"]
+lang = "en"
 output = "default.pdf"

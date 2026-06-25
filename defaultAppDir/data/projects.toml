@@ -4,46 +4,90 @@
 # Bullet tags and job-level tags work identically to jobs.toml.
 
 [[projects]]
-tags     = ["go"]
-title    = "pgxray"
-date     = ""
-subtitle = "Go, TUI, PostgreSQL"
-detail   = "github.com/crispuscrew/pgxray"
+tags = ["go", "robotics", "uav", "embedded-linux"]
 
-    [[projects.bullets]]
-    tags = ["go"]
-    [projects.bullets.text]
-    en = "Keyboard-driven read-only TUI for exploring PostgreSQL, designed to run on the server and accessed over SSH - no port forwarding or local client setup"
-    ru = "Клавиатурный read-only TUI для работы с PostgreSQL прямо на сервере: доступ через SSH без проброса портов и локальной настройки"
+[projects.title]
+en = "HAVEN"
 
-    [[projects.bullets]]
-    tags = ["go"]
-    [projects.bullets.text]
-    en = "Component-based *Bubble Tea v2* architecture: schema browser and live table data viewer"
-    ru = "Компонентная архитектура на *Bubble Tea v2*: браузер схем и просмотр данных таблиц"
+[projects.date]
+en = ""
 
-    [[projects.bullets]]
-    tags = ["go"]
-    [projects.bullets.text]
-    en = "All queries run in *REPEATABLE READ* read-only transactions - consistent snapshot with no risk of accidental mutation"
-    ru = "Все запросы в *REPEATABLE READ* read-only транзакции - консистентный снимок без риска случайной мутации"
+[projects.subtitle]
+en = "Go, GStreamer, ARM Linux, RKNN"
+
+[projects.detail]
+en = ""
+
+[[projects.bullets]]
+tags = ["go", "robotics", "uav", "embedded-linux"]
+[projects.bullets.text]
+en = "Building a DIY digital NVG helmet on *RK3588* (Orange Pi 5B): dual CVBS thermal cameras fused with a NIR stream, *RKNN/YOLOv8n* person detection on the 6 TOPS NPU - targeting *`<100 ms`* end-to-end latency, primary language Go"
+ru = "Разрабатываю DIY цифровой ПНВ на *RK3588* (Orange Pi 5B): два CVBS тепловизора и NIR-камера с sensor fusion, детекция людей *RKNN/YOLOv8n* на 6 TOPS NPU - цель *`<100 мс`* сквозной задержки, основной язык Go"
+
+[[projects.bullets]]
+tags = ["robotics", "uav", "embedded-linux"]
+[projects.bullets.text]
+en = "Assembled hardware platform and built a custom *Armbian* image for RK3588; validated UVC capture from dual *JsMini640* thermal cameras via MS2107 CVBS→USB adapters"
+ru = "Собрал аппаратную платформу и кастомный образ *Armbian* для RK3588; подтвердил UVC-захват с двух тепловизоров *JsMini640* через адаптеры MS2107 CVBS→USB"
 
 
 [[projects]]
-tags     = ["devops"]
-title    = "amnezia-ansible"
-date     = ""
-subtitle = "Ansible, DevOps"
-detail   = "github.com/crispuscrew/amnezia-ansible"
+tags = ["go"]
 
-    [[projects.bullets]]
-    tags = ["devops"]
-    [projects.bullets.text]
-    en = "Ansible playbook for automated *AmneziaWireGuard* VPN provisioning in Docker: idempotent per-client key and config generation, stable IPs across re-deploys"
-    ru = "Ansible-плейбук для развёртывания *AmneziaWireGuard* VPN в Docker: идемпотентная генерация ключей и конфигов для каждого клиента, стабильные IP при повторных деплоях"
+[projects.detail]
+en = "github.com/crispuscrew/pgxray"
 
-    [[projects.bullets]]
-    tags = ["devops"]
-    [projects.bullets.text]
-    en = "Multi-distro support (Debian, RedHat, Arch, Alpine) - from bare VPS to running VPN in a single command"
-    ru = "Поддержка нескольких дистрибутивов (Debian, RedHat, Arch, Alpine) - от чистого VPS до работающего VPN одной командой"
+[projects.title]
+en = "pgxray"
+
+[projects.date]
+en = ""
+
+[projects.subtitle]
+en = "Go, TUI, PostgreSQL"
+
+[[projects.bullets]]
+tags = ["go"]
+[projects.bullets.text]
+en = "Keyboard-driven read-only TUI for exploring PostgreSQL, designed to run on the server and accessed over SSH - no port forwarding or local client setup"
+ru = "Клавиатурный read-only TUI для работы с PostgreSQL прямо на сервере: доступ через SSH без проброса портов и локальной настройки"
+
+[[projects.bullets]]
+tags = ["go"]
+[projects.bullets.text]
+en = "Component-based *Bubble Tea v2* architecture: schema browser and live table data viewer"
+ru = "Компонентная архитектура на *Bubble Tea v2*: браузер схем и просмотр данных таблиц"
+
+[[projects.bullets]]
+tags = ["go"]
+[projects.bullets.text]
+en = "All queries run in *REPEATABLE READ* read-only transactions - consistent snapshot with no risk of accidental mutation"
+ru = "Все запросы в *REPEATABLE READ* read-only транзакции - консистентный снимок без риска случайной мутации"
+
+
+[[projects]]
+tags = ["devops"]
+
+[projects.detail]
+en = "github.com/crispuscrew/amnezia-ansible"
+
+[projects.title]
+en = "amnezia-ansible"
+
+[projects.date]
+en = ""
+
+[projects.subtitle]
+en = "Ansible, DevOps"
+
+[[projects.bullets]]
+tags = ["devops"]
+[projects.bullets.text]
+en = "Ansible playbook for automated *AmneziaWireGuard* VPN provisioning in Docker: idempotent per-client key and config generation, stable IPs across re-deploys"
+ru = "Ansible-плейбук для развёртывания *AmneziaWireGuard* VPN в Docker: идемпотентная генерация ключей и конфигов для каждого клиента, стабильные IP при повторных деплоях"
+
+[[projects.bullets]]
+tags = ["devops"]
+[projects.bullets.text]
+en = "Multi-distro support (Debian, RedHat, Arch, Alpine) - from bare VPS to running VPN in a single command"
+ru = "Поддержка нескольких дистрибутивов (Debian, RedHat, Arch, Alpine) - от чистого VPS до работающего VPN одной командой"

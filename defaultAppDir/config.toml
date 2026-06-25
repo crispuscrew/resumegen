@@ -9,7 +9,18 @@ skill_priority  = 7         # Higher means skills are more important in the scor
 page_limit      = 1.0       # Max number of pages. Trim stage removes lowest-scored bullets until this limit is met.
 page_height_pt  = 841.89    # Page height in points. A4 = 841.89, US Letter = 792. Must match the paper setting in template.typ.
 
+# --- Optional hardening: all off by default; v1.0 output is unchanged. See README "Security & hardening". ---
+# use_container  = "auto"   # ""/"false" host (default) | "true" require a container engine | "auto" container if present, else host
+# strip_metadata = true     # empty the PDF's /Author /Creator /Producer /CreationDate /ModDate via qpdf (qpdf must be installed)
+# strict_input   = true     # reject control chars, invalid UTF-8, and oversized fields when loading data (NUL is always rejected)
+
 [render.min_elements]
 job_bullets     = 1         # Min included bullets a job must have, otherwise the whole job is trimmed.
 project_bullets = 1         # Min included bullets a project must have, otherwise the whole project is trimmed.
 skill_items     = 1         # Min included items a skill category must have, otherwise the whole category is trimmed.
+
+# Per-field byte limits, applied only when strict_input = true. Omit a key to use its default.
+# [render.limits]
+# short       = 256         # names, titles, dates, company, location, tags
+# bullet_text = 4096        # bullet text and the header summary
+# url_or_path = 2048        # contact hrefs and path-like fields

@@ -1,4 +1,6 @@
-name = "Ruslan Gabzetdinov"
+[name]
+en = "Ruslan Gabzetdinov"
+ru = "Руслан Габзетдинов"
 
 # Text fields support Typst inline markup: *bold*, _italic_, #link("url")[text], #box[...].
 # They are rendered as Typst content blocks, so standard Typst inline syntax works anywhere.
@@ -8,22 +10,22 @@ name = "Ruslan Gabzetdinov"
 
 [[contacts]]
 value = "gabzetdinov@proton.me"
-href  = "mailto:gabzetdinov@proton.me"
+href = "mailto:gabzetdinov@proton.me"
 
 [[contacts]]
-lang  = "en"
+lang = "en"
 value = "linkedin.com/in/gabzetdinovri"
-href  = "https://linkedin.com/in/gabzetdinovri"
+href = "https://linkedin.com/in/gabzetdinovri"
 
 [[contacts]]
-lang  = "ru"
+lang = "ru"
 value = "t.me/gabzetdinov_job"
-href  = "https://t.me/gabzetdinov_job"
+href = "https://t.me/gabzetdinov_job"
 
 [[contacts]]
 value = "github.com/crispuscrew"
-href  = "https://github.com/crispuscrew"
+href = "https://github.com/crispuscrew"
 
 [summary]
-en = "Systems software engineer with 3+ years of experience in embedded and robotics domains. Currently developing in Go and C/C++ at a robotics company, with a focus on Go backend and systems engineering. Background in ARM Linux, embedded systems programming, and cross-team coordination."
-ru = "Системный разработчик (#box[Go, C/C++]), 3+ лет в embedded и робототехнике. Разрабатывал производительные компоненты реального времени в крупных кодовых базах; нацелен на Go-бэкенд и системную разработку."
+en = "Go engineer with a background in systems and C++ embedded/robotics. Built production gRPC/protobuf services, REST backends, and TUI tooling"
+ru = "Go-инженер с опытом в системном программировании и C++ embedded/робототехнике. Разрабатывал production gRPC/protobuf-сервисы, REST-бэкенды и TUI-утилиты"
