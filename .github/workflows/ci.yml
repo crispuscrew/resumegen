@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [dev, workflow, main]
+  push:
+    branches: [dev, workflow, main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test + coverage gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+
+      - name: Vet (both tag sets)
+        run: |
+          go vet ./...
+          go vet -tags notui ./...
+
+      - name: Build (both tag sets)
+        run: |
+          go build ./...
+          go build -tags notui ./...
+
+      - name: Test (both tag sets)
+        run: |
+          go test ./...
+          go test -tags notui ./...
+
+      - name: Coverage gate
+        env:
+          GATE: 65
+        run: sh scripts/coverage-gate.sh
+
+  lint:
+    name: golangci-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+
+      - uses: golangci/golangci-lint-action@v9
+        with:
+          version: v2.12.2

@@ -1,0 +1,33 @@
+[name]
+en = "Ivan Petrov"
+ru = "Иван Петров"
+
+# Text fields support Typst inline markup: *bold*, _italic_, #link("url")[text], #box[...].
+# They are rendered as Typst content blocks, so standard Typst inline syntax works anywhere.
+
+# Contacts: if lang is set, shown only for that language. If absent/empty, always shown.
+# value/href can be plain strings (language-independent) or bilingual tables.
+#
+# Everything in this directory is placeholder data. Replace it with your own.
+
+[[contacts]]
+value = "ivan.petrov@example.com"
+href = "mailto:ivan.petrov@example.com"
+
+[[contacts]]
+lang = "en"
+value = "linkedin.com/in/yourprofile"
+href = "https://linkedin.com/in/yourprofile"
+
+[[contacts]]
+lang = "ru"
+value = "t.me/yourhandle"
+href = "https://t.me/yourhandle"
+
+[[contacts]]
+value = "github.com/yourhandle"
+href = "https://github.com/yourhandle"
+
+[summary]
+en = "Go engineer with a background in systems and C++ embedded/robotics. Built production gRPC/protobuf services, REST backends, and TUI tooling"
+ru = "Go-инженер с опытом в системном программировании и C++ embedded/робототехнике. Разрабатывал production gRPC/protobuf-сервисы, REST-бэкенды и TUI-утилиты"

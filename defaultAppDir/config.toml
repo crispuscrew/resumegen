@@ -1,0 +1,39 @@
+[paths]
+output_dir      = "output"
+typst_bin       = "typst"   # Assumes typst is in PATH. Change if you want to specify a custom location.
+
+[score]
+skill_priority  = 7         # Higher means skills are more important in the scoring. Adjust based on your preference.
+
+[render]
+page_limit      = 1.0       # Max number of pages. Trim stage removes lowest-scored bullets until this limit is met.
+page_height_pt  = 841.89    # Page height in points. A4 = 841.89, US Letter = 792. Must match the paper setting in template.typ.
+
+# --- Optional hardening: all off by default; v1.0 output is unchanged. See README "Security & hardening". ---
+# use_container  = "auto"   # ""/"false" host (default) | "true" require a container engine | "auto" container if present, else host
+# strip_metadata = true     # empty the PDF's /Author /Creator /Producer /CreationDate /ModDate via qpdf (qpdf must be installed)
+# strict_input   = true     # reject control chars, invalid UTF-8, and oversized fields when loading data (NUL is always rejected)
+
+# --- Optional LLM-ready outputs: off by default; the PDF is unchanged. See README "LLM-ready outputs". ---
+# emit_markdown  = true     # also write output/<profile>.md  - the filtered resume as Markdown, to paste into an LLM with a job description
+# emit_filtered  = true     # also write output/<profile>.filtered.toml - the exact post-filter data that went into the PDF
+
+[render.min_elements]
+job_bullets     = 1         # Min included bullets a job must have, otherwise the whole job is trimmed.
+project_bullets = 1         # Min included bullets a project must have, otherwise the whole project is trimmed.
+skill_items     = 1         # Min included items a skill category must have, otherwise the whole category is trimmed.
+
+# Per-field byte limits, applied only when strict_input = true. Omit a key to use its default.
+# [render.limits]
+# short       = 256         # names, titles, dates, company, location, tags
+# bullet_text = 4096        # bullet text and the header summary
+# url_or_path = 2048        # contact hrefs and path-like fields
+
+# --- Optional application tracker (v1.4): `resumegen apply …`. Both keys default when omitted. See README "Application tracker". ---
+# [tracker]
+# ghost_after_days          = 30  # lazily mark an active application "ghosted" after this many days with no activity (on read; no daemon)
+# followup_default_lag_days = 7   # when `apply followup` omits --due, set the due date this many days from today
+
+# --- Optional interactive TUI (v1.5): `resumegen tui`. See README "Interactive TUI". ---
+# [tui]
+# theme = "default"   # color palette; only "default" ships today (unknown values fall back to it)

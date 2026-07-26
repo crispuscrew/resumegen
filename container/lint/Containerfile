@@ -1,0 +1,10 @@
+FROM resumegen-dev
+
+# The golangci-lint binary is prefetched ON THE HOST by `make` (see the
+# _lint-blob target), sha256-verified, and COPY'd in — in-container downloads
+# proved unreliable on flaky VPN links (truncated transfers failed the
+# installer's checksum). Version pinned to match ci.yml's golangci-lint-action
+# (v2.12.2) so local lint and CI can never disagree; v2.0.2 also hard-errors on
+# this module since go.mod moved to `go 1.25.0`.
+COPY container/lint/blobs/golangci-lint /usr/local/bin/golangci-lint
+RUN golangci-lint version

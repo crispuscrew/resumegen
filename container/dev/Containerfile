@@ -1,0 +1,18 @@
+FROM golang:1.25-alpine
+
+# Keep TYPST_VER and TYPST_SHA256 in step with container/render/Containerfile:
+# this image runs the render integration tests, so a version skew between the
+# two silently tests a different typst than the sandbox ships.
+RUN apk add --no-cache curl && \
+    TYPST_VER=0.15.1 && \
+    TYPST_SHA256=a6d077d0a95eed5a2eba715b2dae06be954f624ccbf85758a03f389ded33118c && \
+    curl -fsSLo /tmp/typst.tar.xz "https://github.com/typst/typst/releases/download/v${TYPST_VER}/typst-x86_64-unknown-linux-musl.tar.xz" && \
+    echo "${TYPST_SHA256}  /tmp/typst.tar.xz" | sha256sum -c - && \
+    tar -xJf /tmp/typst.tar.xz --strip-components=1 -C /usr/local/bin typst-x86_64-unknown-linux-musl/typst && \
+    rm -f /tmp/typst.tar.xz
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+# for better caching

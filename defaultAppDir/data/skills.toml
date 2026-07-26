@@ -1,0 +1,126 @@
+# Each category groups related skill items.
+# Item tags work the same as bullet tags: at least one must match the active profile.
+# A category with zero visible items is omitted entirely.
+# Item names are tech names - language-independent strings, no markup needed.
+
+[[categories]]
+
+    [categories.name]
+    en = "Languages"
+    ru = "Языки программирования"
+
+    [[categories.items]]
+    tags = ["go", "robotics"]
+    [categories.items.name]
+    en = "Go"
+
+    [[categories.items]]
+    tags = ["cpp", "embedded", "qt"]
+    [categories.items.name]
+    en = "C/C++"
+
+    [[categories.items]]
+    tags = ["python", "math", "backend", "robotics"]
+    [categories.items.name]
+    en = "Python"
+
+    [[categories.items]]
+    tags = ["go"]
+    [categories.items.name]
+    en = "SQL"
+
+    [[categories.items]]
+    tags = ["flutter"]
+    [categories.items.name]
+    en = "Dart"
+
+
+[[categories]]
+
+    [categories.name]
+    en = "Technologies"
+    ru = "Технологии"
+
+    [[categories.items]]
+    tags = ["cpp", "gui", "qt"]
+    [categories.items.name]
+    en = "Qt/QML"
+
+    [[categories.items]]
+    tags = ["robotics"]
+    [categories.items.name]
+    en = "ROS"
+
+    [[categories.items]]
+    tags = ["flutter"]
+    [categories.items.name]
+    en = "Flutter"
+
+    [[categories.items]]
+    tags = ["backend", "robotics", "flutter"]
+    [categories.items.name]
+    en = "WebSocket"
+
+    [[categories.items]]
+    tags = ["embedded-linux"]
+    [categories.items.name]
+    en = "ARM Embedded Linux"
+
+    [[categories.items]]
+    tags = ["devops"]
+    [categories.items.name]
+    en = "Ansible"
+
+
+[[categories]]
+
+    [categories.name]
+    en = "Databases"
+    ru = "Базы данных"
+
+    [[categories.items]]
+    tags = ["go"]
+    [categories.items.name]
+    en = "PostgreSQL"
+
+    [[categories.items]]
+    tags = ["go"]
+    [categories.items.name]
+    en = "Redis"
+
+    [[categories.items]]
+    tags = ["go", "cpp"]
+    [categories.items.name]
+    en = "SQLite"
+
+
+[[categories]]
+
+    [categories.name]
+    en = "Developer Tools"
+    ru = "Инструменты"
+
+    [[categories.items]]
+    tags = ["go", "cpp", "embedded", "robotics", "mgmt"]
+    [categories.items.name]
+    en = "Git"
+
+    [[categories.items]]
+    tags = ["go", "cpp", "devops"]
+    [categories.items.name]
+    en = "GitHub Actions"
+
+    [[categories.items]]
+    tags = ["go", "cpp", "devops"]
+    [categories.items.name]
+    en = "GitLab CI"
+
+    [[categories.items]]
+    tags = ["go", "devops"]
+    [categories.items.name]
+    en = "Docker / Podman"
+
+    [[categories.items]]
+    tags = ["go", "cpp", "embedded"]
+    [categories.items.name]
+    en = "Linux"

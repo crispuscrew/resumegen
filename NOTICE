@@ -1,0 +1,28 @@
+resumegen
+Copyright 2026 Gabzetdinov Ruslan
+
+This product includes software developed by Gabzetdinov Ruslan.
+
+resumegen bundles no fonts and no PDF engine. It invokes Typst
+(https://typst.app, Apache License 2.0) as a separate program, and the PDFs
+it produces embed subsets of fonts that ship inside the Typst binary: New
+Computer Modern by Antonis Tsolomitis (GUST Font License), Libertinus Serif
+(SIL Open Font License 1.1), and DejaVu Sans Mono (Bitstream Vera /
+public-domain-derived license). All three licenses permit embedding in a
+document without placing conditions on that document, so a resume rendered by
+this tool carries no license obligation from the fonts.
+
+Third-party Go modules linked into the released binaries are listed with
+their full license texts in THIRD_PARTY_NOTICES.md.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
