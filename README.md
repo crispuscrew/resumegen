@@ -25,7 +25,7 @@ resumegen
 ```
 
 On first launch you will be prompted to copy the default configuration to `~/.config/resumegen/`.
-Prefer a self-contained, git-versionable setup? Run `resumegen init` in a directory instead — see
+Prefer a self-contained, git-versionable setup? Run `resumegen init` in a directory instead - see
 **Workspaces** below.
 
 ### 4. Fill in your data
@@ -63,10 +63,10 @@ resumegen [--profile <name>] [--path <appdir>]
 | `--profile` | `default` | Profile name to use (matches `profiles/<name>.toml`) |
 | `--path` | walk-up, then `~/.config/resumegen` | Path to the application directory (see [Workspaces](#workspaces)) |
 | `--lang` | from profile | Override the output language |
-| `--force` | off | Render even if a bullet has malformed markup or a disallowed URL — the sanitizer falls back to literal text (see [Security & hardening](#security--hardening)) |
-| `--version` | — | Print version and exit |
+| `--force` | off | Render even if a bullet has malformed markup or a disallowed URL - the sanitizer falls back to literal text (see [Security & hardening](#security--hardening)) |
+| `--version` | - | Print version and exit |
 
-Subcommands — run `resumegen help` for the full list:
+Subcommands - run `resumegen help` for the full list:
 
 | Command | What it does |
 |---------|--------------|
@@ -105,7 +105,7 @@ rejected with an error.
 ## Workspaces
 
 Instead of the single global `~/.config/resumegen/`, you can keep a self-contained,
-git-versionable appdir anywhere — useful for tracking your resume data alongside other
+git-versionable appdir anywhere - useful for tracking your resume data alongside other
 projects, or keeping separate sets.
 
 ```sh
@@ -127,7 +127,7 @@ nearest `.resumegen/` marker above the CWD > the default `~/.config/resumegen/`.
 | `--name`, `--description` | Metadata written into the marker |
 
 `init` is idempotent and never overwrites existing files. To override a bundled default
-selectively, use `resumegen template extract [name...]` or `resumegen prompt extract <name>` —
+selectively, use `resumegen template extract [name...]` or `resumegen prompt extract <name>` -
 these copy the embedded default into your appdir, where it then shadows the built-in.
 
 ## Profiles
@@ -161,7 +161,7 @@ Job-level `tags` control whether the entire position is shown. Bullet-level `tag
     ru = "Инженер-программист"
 
     [jobs.date]
-    en = "Jan. 2025 – Present"
+    en = "Jan. 2025 - Present"
 
     [jobs.location]
     en = "Berlin, Germany"
@@ -210,7 +210,7 @@ Education entries are always shown in full - no tag filtering.
     en = "Berlin, Germany"
 
     [edu.date]
-    en = "2020 – 2024"
+    en = "2020 - 2024"
 ```
 
 ## Page limit and trimming
@@ -235,7 +235,7 @@ skill_items     = 1   # a skill category with fewer included items than this is 
 Files that carry your data are created private by default: tracker entries
 (salary, contacts, notes), the `emit_markdown`/`emit_filtered` dumps, prompt
 `--output` files, and the generated Typst source are written `0600` (the tracker
-directory `0700`). Rendered PDFs stay `0644` — they're the artifact you send out.
+directory `0700`). Rendered PDFs stay `0644` - they're the artifact you send out.
 Note for SELinux users: the opt-in container render mounts your appdir with a
 `:Z` relabel.
 
@@ -246,12 +246,12 @@ output is unchanged unless you enable them in `[render]`.
 ### Markup sanitizer (always on)
 
 Content fields are passed through a Typst sanitizer before rendering. Only an allowlist of
-inline markup survives — `*bold*`, `_italic_`, raw/code spans, and links — and link URLs are
+inline markup survives (`*bold*`, `_italic_`, raw/code spans, and links) and link URLs are
 validated against an allowed-scheme list. A bullet with malformed markup or a disallowed URL
 fails the render by default. Pass `--force` to render anyway: the offending content is emitted
 as Typst-escaped literal text instead of being interpreted.
 
-### Containerized render — `use_container`
+### Containerized render - `use_container`
 
 Run Typst inside a throwaway rootless container instead of the host binary. The engine probe
 order is podman, then docker, and the container runs locked down:
@@ -266,7 +266,7 @@ use_container = "auto"   # ""/"false" = host (default) · "true" = require an en
 With `"auto"`, a missing engine or failed image build falls back to the host renderer and prints
 a one-line `rendering: host (...)` banner on stderr. Host mode is byte-identical to v1.0.
 
-### PDF metadata stripping — `strip_metadata`
+### PDF metadata stripping - `strip_metadata`
 
 After rendering, rebuild the PDF through `qpdf` to empty its `/Author`, `/Creator`, `/Producer`,
 `/CreationDate`, and `/ModDate`. Requires `qpdf` on `PATH`.
@@ -276,11 +276,11 @@ After rendering, rebuild the PDF through `qpdf` to empty its `/Author`, `/Creato
 strip_metadata = true
 ```
 
-### Strict input validation — `strict_input`
+### Strict input validation - `strict_input`
 
 NUL bytes in your data are **always** rejected. Turning on `strict_input` additionally rejects
 control characters (except newline and tab), invalid UTF-8, and fields that exceed per-class byte
-limits — catching corrupt or hostile data before it reaches the renderer.
+limits - catching corrupt or hostile data before it reaches the renderer.
 
 ```toml
 [render]
@@ -295,7 +295,7 @@ url_or_path = 2048   # contact hrefs and path-like fields
 ## LLM-ready outputs
 
 resumegen can write machine-readable siblings of the PDF so the *exact* resume it
-rendered — after tag filtering and page trimming — can be handed to an LLM. Both are
+rendered (after tag filtering and page trimming) can be handed to an LLM. Both are
 **opt-in and off by default**, and neither changes the PDF.
 
 ```toml
@@ -304,20 +304,20 @@ emit_markdown = true   # also write output/<profile>.md
 emit_filtered = true   # also write output/<profile>.filtered.toml
 ```
 
-- `<profile>.md` — the filtered resume as Markdown, grouped by job/project, one bullet
+- `<profile>.md` - the filtered resume as Markdown, grouped by job/project, one bullet
   per line, projected to the profile's language. It carries your authored inline markup
   (`*bold*`, `#link(...)`) as written, so it reads as plain prose.
-- `<profile>.filtered.toml` — the post-filter data: only the entities that made it into
+- `<profile>.filtered.toml` - the post-filter data: only the entities that made it into
   the PDF, with all languages intact. Useful for diffing what a profile actually shows.
 
 Recommended workflow: paste `output/<profile>.md` plus the job description into your own
 LLM (Claude, ChatGPT, …) and ask it to tailor your bullets. resumegen never calls an LLM
-itself — it only prepares the inputs.
+itself - it only prepares the inputs.
 
 ## Prompt templates
 
 resumegen ships a library of prompt templates that turn your resume plus a job
-description into a ready-to-paste LLM prompt. It never calls an LLM — it assembles
+description into a ready-to-paste LLM prompt. It never calls an LLM - it assembles
 the text and you paste it into your own Claude/ChatGPT.
 
 ```sh
@@ -332,22 +332,22 @@ A template is a Markdown file with TOML frontmatter (`prompts/<name>.md`). Its
 
 | Source | Fills from |
 |--------|-----------|
-| `data-dump` | `output/<profile>.md` — the v1.2 Markdown dump (enable `emit_markdown` and render first) |
+| `data-dump` | `output/<profile>.md` - the v1.2 Markdown dump (enable `emit_markdown` and render first) |
 | `jd-file` | a file passed with `--jd <path>` |
 | `flag` | a named flag, e.g. `--company`, `--role`, `--tone` |
 | `prompt` | asked interactively (skipped under `--no-input`) |
 | `stdin` | piped input, e.g. `echo "..." \| resumegen prompt run recruiter-reply` |
-| `app-id` | a field of a tracked application, via `--app <id>` (with `field = "jd"` it reads the application's JD file) — see [Application tracker](#application-tracker) |
+| `app-id` | a field of a tracked application, via `--app <id>` (with `field = "jd"` it reads the application's JD file) - see [Application tracker](#application-tracker) |
 
 With `--app <id>`, empty `company`/`role` flag inputs and empty `jd-file` inputs are
-filled from the tracked application automatically — so every bundled template works
+filled from the tracked application automatically - so every bundled template works
 straight off a tracked application: `resumegen prompt run cover-letter --app <id>`.
 Explicit flags always win.
 
 Bundled prompts: `analyze-jd`, `tailor-bullets`, `cover-letter`, `gap-report`,
 `interview-prep`, `recruiter-reply`, `salary-research`, `followup`,
 `rejection-analysis`. Copy one into your appdir with `resumegen prompt extract
-<name>` and edit it — your copy shadows the built-in and is never overwritten.
+<name>` and edit it - your copy shadows the built-in and is never overwritten.
 
 The bundled set is English, but prompts are just files and language-agnostic:
 drop your own `prompts/<name>.md` into your appdir in any language (a copy of the
@@ -371,7 +371,7 @@ resumegen prompt run analyze-jd --jd job.txt --json --no-input
 
 ## Application tracker
 
-Keep a flat file per job application under `applications/*.toml` — where you
+Keep a flat file per job application under `applications/*.toml` - where you
 applied, the artifacts you sent, and an append-only event log. It's local, offline,
 git-versionable, and never calls an LLM or the network; it only records.
 
@@ -398,7 +398,7 @@ drafting → applied → screen → interview → offer → accepted
 ```
 
 `ghosted` is applied **automatically** on read when a *submitted* application has
-had no activity for `ghost_after_days` (default 30) — there's no daemon, it just
+had no activity for `ghost_after_days` (default 30) - there's no daemon, it just
 happens the next time you `list`/`show`. Drafts never ghost (you can't be ghosted
 on an application you never sent). To close an application yourself, use
 `withdrawn`; `ghosted` can't be set by hand. Closed the wrong one? `apply reopen`
@@ -422,7 +422,7 @@ invalid transition, missing followup args), `2` a usage error (bad flag or date)
 
 ## Interactive TUI
 
-`resumegen tui` opens an interactive terminal UI over everything above — no new
+`resumegen tui` opens an interactive terminal UI over everything above - no new
 capability, just a front-end on the same commands. It needs a real terminal (it
 refuses to start on a pipe) and, like the rest of the tool, never touches the
 network.
@@ -431,7 +431,7 @@ network.
 resumegen tui
 ```
 
-Screens (switch with number keys `1`–`6`):
+Screens (switch with number keys `1`-`6`):
 
 | # | Screen | What it does |
 |---|--------|--------------|
@@ -454,7 +454,7 @@ experience.
 
 **Charm-free builds.** The TUI uses [bubbletea](https://github.com/charmbracelet/bubbletea);
 building with `go build -tags notui ./cmd/resumegen` produces a binary that links
-none of it (a `single-dependency` build) — `resumegen tui` then simply reports that
+none of it (a `single-dependency` build) - `resumegen tui` then simply reports that
 support was excluded and every other command works unchanged.
 
 **Config** (`[tui]`, optional):

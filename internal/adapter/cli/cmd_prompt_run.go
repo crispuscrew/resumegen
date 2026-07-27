@@ -10,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"golang.org/x/term"
 
@@ -157,6 +158,14 @@ func (rc resolveCtx) resolve(ctx context.Context, key string, spec prompt.InputS
 		// Nothing is piped and we mustn't block: honor --no-input instead of
 		// waiting on a terminal for EOF.
 		if rc.noInput && isTerminal(rc.stdin) {
+			return rc.requireOrDefault(key, spec, "")
+		}
+		// A non-TTY stdin can still block forever: a pipe held open by a
+		// supervisor, CI runner, or agent harness never reaches EOF. --no-input
+		// promises never to block, so wait only for the first byte. A real
+		// producer delivers it immediately; an idle pipe never does. Once data
+		// is there, read to EOF unbounded so a slow-but-real stream is safe.
+		if rc.noInput && !rc.stdinHasData() {
 			return rc.requireOrDefault(key, spec, "")
 		}
 		raw, err := io.ReadAll(rc.reader)
@@ -441,6 +450,35 @@ func scanFlag(args []string, name string) string {
 		}
 	}
 	return ""
+}
+
+// stdinFirstByteWait bounds how long --no-input waits for stdin to produce its
+// first byte before concluding nothing is piped. Only the first byte is
+// bounded, so a slow producer is never truncated.
+// Overridable so tests need not wait the real bound.
+var stdinFirstByteWait = 2 * time.Second
+
+// stdinHasData reports whether stdin yields at least one byte within
+// stdinFirstByteWait. Peek does not consume, so a later ReadAll still sees the
+// full stream.
+//
+// The peek runs in a goroutine because a blocked read on a pipe cannot be
+// cancelled: on timeout that goroutine stays parked until the process exits,
+// which is fine for a short-lived CLI and is the price of not hanging forever.
+func (rc resolveCtx) stdinHasData() bool {
+	type peekResult struct{ err error }
+	done := make(chan peekResult, 1) // buffered: the goroutine never blocks on send
+	go func() {
+		_, err := rc.reader.Peek(1)
+		done <- peekResult{err}
+	}()
+	select {
+	case r := <-done:
+		// EOF (closed pipe, /dev/null) means genuinely no input.
+		return r.err == nil
+	case <-time.After(stdinFirstByteWait):
+		return false
+	}
 }
 
 // isTerminal reports whether r is a real interactive terminal. A non-*os.File
