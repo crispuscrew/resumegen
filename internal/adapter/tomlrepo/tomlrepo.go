@@ -20,7 +20,7 @@ import (
 
 // ListProfiles returns the names (without the .toml suffix) of every
 // profiles/*.toml under fsys, sorted. A missing profiles/ directory yields an
-// empty list, not an error — a fresh appdir simply has no profiles yet.
+// empty list, not an error - a fresh appdir simply has no profiles yet.
 func ListProfiles(fsys fs.FS) ([]string, error) {
 	ents, err := fs.ReadDir(fsys, "profiles")
 	if err != nil {
@@ -31,7 +31,7 @@ func ListProfiles(fsys fs.FS) ([]string, error) {
 	}
 	var out []string
 	for _, e := range ents {
-		// Skip dirs, non-TOML, and dotfiles — an emacs lock file (`.#x.toml`,
+		// Skip dirs, non-TOML, and dotfiles - an emacs lock file (`.#x.toml`,
 		// a dangling symlink) or a bare `.toml` must not surface as a profile.
 		if e.IsDir() || !strings.HasSuffix(e.Name(), ".toml") || strings.HasPrefix(e.Name(), ".") {
 			continue
@@ -51,7 +51,7 @@ func NewConfigSource(fsys fs.FS) usecase.ConfigSource {
 // NewLayeredConfigSource composes a base config FS with an optional workspace
 // overlay FS. When overlay is non-nil, its config.toml is decoded on top of
 // the base config; absent keys fall through to the base values. Missing files
-// are tolerated as long as at least one FS yields a config.toml — that gives
+// are tolerated as long as at least one FS yields a config.toml - that gives
 // the caller fine-grained control over which appdir the marker bootstrap runs
 // against.
 func NewLayeredConfigSource(base, overlay fs.FS) usecase.ConfigSource {

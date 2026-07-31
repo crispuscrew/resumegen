@@ -6,8 +6,8 @@ import (
 
 // RenderMarkdown projects the visible resume into a Markdown document at the
 // profile's language. It is meant to be pasted into an LLM alongside a job
-// description, so it carries the human text — including the authored inline
-// markup (*bold*, #link(...)) — rather than the sanitizer's render output.
+// description, so it carries the human text - including the authored inline
+// markup (*bold*, #link(...)) - rather than the sanitizer's render output.
 //
 // Only Included entities appear and ordering matches the PDF (see
 // VisibleResume). Output is deterministic.
@@ -73,7 +73,7 @@ func RenderMarkdown(data ResumeData, profile Profile) []byte {
 	return []byte(b.String())
 }
 
-// heading joins a title with an optional secondary part as "title — second".
+// heading joins a title with an optional secondary part as "title - second".
 // Either part may be missing; the other stands alone.
 func heading(title, second string) string {
 	switch {
@@ -82,10 +82,10 @@ func heading(title, second string) string {
 	case second == "":
 		return title
 	}
-	return title + " — " + second
+	return title + " - " + second
 }
 
-// writeMeta emits a non-empty " · "-joined metadata line, if any part is set.
+// writeMeta emits a non-empty " | "-joined metadata line, if any part is set.
 func writeMeta(b *strings.Builder, parts ...string) {
 	var nonEmpty []string
 	for _, p := range parts {
@@ -94,7 +94,7 @@ func writeMeta(b *strings.Builder, parts ...string) {
 		}
 	}
 	if len(nonEmpty) > 0 {
-		b.WriteString(strings.Join(nonEmpty, " · ") + "\n")
+		b.WriteString(strings.Join(nonEmpty, " | ") + "\n")
 	}
 }
 

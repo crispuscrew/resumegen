@@ -94,7 +94,7 @@ func (m model) dataView() string {
 		return m.styl.errText.Render("error: " + d.err.Error())
 	}
 	if len(d.files) == 0 {
-		return m.styl.subtle.Render("no data files (data/*.toml) in this appdir — run `resumegen init` first.")
+		return m.styl.subtle.Render("no data files (data/*.toml) in this appdir - run `resumegen init` first.")
 	}
 	var b strings.Builder
 	b.WriteString(m.styl.label.Render("Data files") + "  " + m.styl.subtle.Render("(enter opens $EDITOR)") + "\n\n")

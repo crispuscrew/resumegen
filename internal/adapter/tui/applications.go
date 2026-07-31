@@ -261,7 +261,7 @@ func (m model) listView() string {
 		return m.styl.errText.Render("error: " + m.loadErr.Error())
 	}
 	if len(m.apps) == 0 {
-		return m.styl.subtle.Render("no applications yet — press n to create one.")
+		return m.styl.subtle.Render("no applications yet - press n to create one.")
 	}
 	vis := m.visibleApps()
 	var b strings.Builder
@@ -295,7 +295,7 @@ func (m model) detailView() string {
 	a := d.app
 	var b strings.Builder
 
-	b.WriteString(m.styl.title.Render(a.Company+" — "+a.Role) + "\n")
+	b.WriteString(m.styl.title.Render(a.Company+" - "+a.Role) + "\n")
 	b.WriteString(m.styl.subtle.Render(a.ID) + "\n\n")
 
 	b.WriteString(m.field("Status", string(a.Status)))
@@ -366,11 +366,11 @@ func (m model) detailView() string {
 	case detailNote:
 		b.WriteString("\n" + m.styl.label.Render("Add note") + "\n  " + d.input.View() + "\n")
 	case detailFollowupAction:
-		b.WriteString("\n" + m.styl.label.Render("Add followup — action") + "\n  " + d.input.View() + "\n")
+		b.WriteString("\n" + m.styl.label.Render("Add followup - action") + "\n  " + d.input.View() + "\n")
 	case detailFollowupDue:
-		b.WriteString("\n" + m.styl.label.Render("Add followup — due date") + "\n  " + d.input.View() + "\n")
+		b.WriteString("\n" + m.styl.label.Render("Add followup - due date") + "\n  " + d.input.View() + "\n")
 	case detailFollowupDone:
-		b.WriteString("\n" + m.styl.label.Render("Complete followup — number") + "\n  " + d.input.View() + "\n")
+		b.WriteString("\n" + m.styl.label.Render("Complete followup - number") + "\n  " + d.input.View() + "\n")
 	}
 	if d.flash != "" {
 		b.WriteString("\n" + m.styl.flash.Render("✓ "+d.flash) + "\n")
