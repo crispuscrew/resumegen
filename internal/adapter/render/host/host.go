@@ -80,8 +80,8 @@ func (r Renderer) Render(ctx context.Context, data domain.ResumeData, profile do
 //
 // Symlinks are resolved before comparing, because filepath.Abs is purely
 // lexical: with appdir/output symlinked elsewhere, a lexical check passes
-// while the file lands outside. Whoever can write config.toml - the guard's
-// own threat model - can also plant that symlink. The deepest existing
+// while the file lands outside. Whoever can write config.toml — the guard's
+// own threat model — can also plant that symlink. The deepest existing
 // ancestor is resolved, since the output directory usually does not exist yet.
 func EnsureContained(appdir, outPath string) error {
 	fail := func() error {

@@ -37,7 +37,7 @@ func TrimLowest(data domain.ResumeData, minElements domain.MinElements) (domain.
 //
 // It must run once after Score as well as inside the trim loop: scoring alone
 // can empty a parent whose own tag still matches the profile, and a resume that
-// already fits the page limit never enters the trim loop at all - leaving a
+// already fits the page limit never enters the trim loop at all — leaving a
 // heading with no bullets, or "Languages: " with no items, in the PDF.
 func TrimEmptyParents(data domain.ResumeData, minElements domain.MinElements) domain.ResumeData {
 	return trimEmpty(data, minElements)

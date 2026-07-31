@@ -11,7 +11,7 @@ type Config struct {
 }
 
 // TUI holds interactive terminal-UI settings (v1.5). The section is optional; an
-// absent [tui] leaves the default theme. Only "default" ships today - the key
+// absent [tui] leaves the default theme. Only "default" ships today — the key
 // exists so user-contributed palettes can be added without a config change.
 type TUI struct {
 	// Theme selects the color palette. "" or an unknown value resolve to the
@@ -32,7 +32,7 @@ func (t TUI) ResolvedTheme() string {
 }
 
 // Tracker holds the application-tracker settings (v1.4). Both keys default when
-// absent - an existing config with no [tracker] section stays valid. Zero means
+// absent — an existing config with no [tracker] section stays valid. Zero means
 // "use the default" (see Tracker.withDefaults).
 type Tracker struct {
 	// GhostAfterDays is the lazy-ghost threshold: an active application whose
@@ -45,7 +45,7 @@ type Tracker struct {
 	FollowupDefaultLagDays int `toml:"followup_default_lag_days"`
 }
 
-// Default tracker settings (SPEC section 8).
+// Default tracker settings (SPEC §8).
 const (
 	defaultGhostAfterDays         = 30
 	defaultFollowupDefaultLagDays = 7
@@ -68,7 +68,7 @@ const (
 
 // WithDefaults returns a copy of c with each operationally-required zero field
 // replaced by its skeleton default. Purely presentational or behavioral toggles
-// (emit_*, strict_input, score.skill_priority, ...) keep their zero values - only
+// (emit_*, strict_input, score.skill_priority, …) keep their zero values — only
 // keys whose absence breaks the pipeline are defaulted. Applied once at config
 // load, so every consumer sees effective values.
 func (c Config) WithDefaults() Config {
@@ -124,26 +124,26 @@ type Render struct {
 	MinElements  MinElements `toml:"min_elements"`
 
 	// ForceUnsafe switches the sanitizer to permissive mode: malformed
-	// markup or disallowed URL schemes no longer fail the render - the
+	// markup or disallowed URL schemes no longer fail the render — the
 	// offending bullet is emitted as Typst-escaped literal text instead.
 	// CLI: --force. Default false (strict).
 	ForceUnsafe bool `toml:"force_unsafe"`
 
 	// UseContainer selects the renderer backend. Valid values:
-	//   "" - host typst binary (v1.0 behavior; default; byte-equiv)
-	//   "false" - same as ""
-	//   "true" - require a container engine; fail loud if none found
-	//   "auto" - use container if engine present, else host
+	//   ""      — host typst binary (v1.0 behavior; default; byte-equiv)
+	//   "false" — same as ""
+	//   "true"  — require a container engine; fail loud if none found
+	//   "auto"  — use container if engine present, else host
 	// The container backend uses rootless podman if available, falling back
 	// to docker. See ContainerMode for the parsed form.
 	UseContainer string `toml:"use_container"`
 
 	// StripMetadata enables an opt-in qpdf post-process that empties the
 	// rendered PDF's /Author, /Creator, /Producer, /CreationDate, /ModDate.
-	// Default false - existing users without qpdf installed are unaffected.
+	// Default false — existing users without qpdf installed are unaffected.
 	StripMetadata bool `toml:"strip_metadata"`
 
-	// StrictInput enables opt-in input validation at load time (section 4.2 step 1).
+	// StrictInput enables opt-in input validation at load time (§4.2 step 1).
 	// NUL bytes are rejected regardless; when true, control characters (except
 	// \n and \t), invalid UTF-8, and the per-field-class byte limits below are
 	// enforced too. Default false, so existing v1.0 data loads unchanged.
@@ -153,12 +153,12 @@ type Render struct {
 	// is true. Any zero field falls back to its default (see Limits.withDefaults).
 	Limits Limits `toml:"limits"`
 
-	// EmitMarkdown writes <profile>.md - the filtered resume as Markdown, meant
+	// EmitMarkdown writes <profile>.md — the filtered resume as Markdown, meant
 	// for pasting into an LLM alongside a job description. Default false, so v1.1
 	// output is unchanged. Does not affect the PDF.
 	EmitMarkdown bool `toml:"emit_markdown"`
 
-	// EmitFiltered writes <profile>.filtered.toml - the post-filter resume data
+	// EmitFiltered writes <profile>.filtered.toml — the post-filter resume data
 	// (exactly the entities that went into the PDF). Default false. Does not
 	// affect the PDF.
 	EmitFiltered bool `toml:"emit_filtered"`
@@ -173,7 +173,7 @@ type Limits struct {
 	URLOrPath  int `toml:"url_or_path"` // contact hrefs and path-like fields
 }
 
-// Default per-field-class byte limits (DESIGN section 4.2 step 1).
+// Default per-field-class byte limits (DESIGN §4.2 step 1).
 const (
 	defaultLimitShort      = 256
 	defaultLimitBulletText = 4096

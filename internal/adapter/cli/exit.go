@@ -62,7 +62,7 @@ func positionalArgs(args []string, min int, usage string) (helped bool, err erro
 	return false, nil
 }
 
-// Exit-code discipline for machine callers (SPEC section 6a): 0 ok, 1 resolution
+// Exit-code discipline for machine callers (SPEC §6a): 0 ok, 1 resolution
 // error (unknown id, invalid transition, missing followup args), 2 usage error
 // (bad flag/date). Commands wrap their errors with usageErr/resolutionErr; the
 // router reads the code via exitCode. Errors without a wrapper default to 1.

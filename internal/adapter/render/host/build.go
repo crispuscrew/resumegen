@@ -11,7 +11,7 @@ import (
 
 // BuildTypstSource serializes scored resume data into the Typst `#let` block
 // consumed by templates/resume.typ. Every value emitted between `[...]`
-// content brackets passes through the sanitizer first - those are the
+// content brackets passes through the sanitizer first — those are the
 // injection-relevant positions. Values in string positions go through typstStr
 // literals and need no further escaping because their consumer is a Typst
 // string literal, never markup.

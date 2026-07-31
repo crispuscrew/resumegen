@@ -62,7 +62,7 @@ func TestRouter_Auto_FallsBackToHost_WhenNoEngine(t *testing.T) {
 	// Force the host path: in this test we want to confirm that the auto
 	// branch with no engine prints the host banner and routes to host. We
 	// stop short of actually running typst by passing a config that will
-	// cause host.Renderer to fail at compile time - we only assert on the
+	// cause host.Renderer to fail at compile time — we only assert on the
 	// banner content.
 	cfg := domain.Config{
 		Paths:  domain.Paths{OutputDir: "output", TypstBin: "/nonexistent/typst"},

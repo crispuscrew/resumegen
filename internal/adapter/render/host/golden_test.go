@@ -22,7 +22,7 @@ var updateGolden = flag.Bool("update-golden", false, "rewrite golden files inste
 
 // Exercises the full pure pipeline (load + score + build) against the embedded
 // default appdir and compares the generated typst source to a committed golden.
-// This is the byte-equivalence gate for v1.1 - the test must hold for v1.0
+// This is the byte-equivalence gate for v1.1 — the test must hold for v1.0
 // data + default profile.
 func TestBuildTypstSource_DefaultAppdir_Golden(t *testing.T) {
 	skeleton, err := fs.Sub(resumegen.Defaults, "defaultAppDir")

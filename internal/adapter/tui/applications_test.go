@@ -49,7 +49,7 @@ func TestList_FilterFlow(t *testing.T) {
 	seedNamed(t, store, "Beta", "Rust")
 	m := newTestModel(store)
 	m = drain(m, m.Init())
-	m = press(m, runeKey("2")) // -> applications list
+	m = press(m, runeKey("2")) // → applications list
 	if m.active != screenList || len(m.apps) != 2 {
 		t.Fatalf("not on list with 2 apps: active=%d n=%d", m.active, len(m.apps))
 	}
@@ -76,7 +76,7 @@ func TestList_FilterFlow(t *testing.T) {
 // TestList_FilterCursorSurvivesShrink is the regression test for the v1.5
 // recheck's crash: the cursor indexes the FILTERED view, and a reload that
 // shrinks the visible set (an action changed an app so it stops matching) must
-// clamp the cursor - enter/y on the stale index used to panic.
+// clamp the cursor — enter/y on the stale index used to panic.
 func TestList_FilterCursorSurvivesShrink(t *testing.T) {
 	store := newMemStore()
 	seedNamed(t, store, "Acme", "Go")

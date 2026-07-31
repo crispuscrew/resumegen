@@ -9,7 +9,7 @@ import (
 )
 
 // These tests PIN the apply --json wire format (the agent contract). If a
-// marshal here changes shape, that is a breaking change to scripted callers -
+// marshal here changes shape, that is a breaking change to scripted callers —
 // think before touching the expectations.
 
 func contractApp() domain.Application {

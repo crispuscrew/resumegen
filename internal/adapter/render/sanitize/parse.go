@@ -15,7 +15,7 @@ import (
 // but the URL is on a disallowed scheme) surface as ordinary errors.
 var errNotLink = errors.New("not a link")
 
-// parse converts input into a list of spans according to the DESIGN section 3.3
+// parse converts input into a list of spans according to the DESIGN §3.3
 // allowlist grammar. Composite spans (Bold/Italic/Link) keep their inner
 // raw content in Span.Text; the emitter re-parses that recursively, which
 // is how `*\`<100 ms\`*` round-trips correctly.
@@ -147,7 +147,7 @@ func parseLink(s string) (int, domain.Span, error) {
 
 // parseLegacyLink matches `#link("url")[text]` (v1 syntax). Anything that
 // passes the `#link("` prefix check but doesn't match the full shape is
-// a hard error - by the time we see that prefix, the user clearly
+// a hard error — by the time we see that prefix, the user clearly
 // intended a link.
 func parseLegacyLink(s string) (int, domain.Span, error) {
 	const prefix = `#link("`

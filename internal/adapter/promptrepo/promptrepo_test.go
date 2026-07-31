@@ -20,7 +20,7 @@ func embeddedSkeleton(t *testing.T) fs.FS {
 	return sk
 }
 
-// Every shipped prompt must parse - this guards the frontmatter/placeholder
+// Every shipped prompt must parse — this guards the frontmatter/placeholder
 // symmetry of the whole embedded corpus.
 func TestEmbeddedPrompts_AllParse(t *testing.T) {
 	repo := promptrepo.New(embeddedSkeleton(t), nil)

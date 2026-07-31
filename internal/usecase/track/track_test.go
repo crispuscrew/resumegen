@@ -178,7 +178,7 @@ func TestGet_LazyAutoGhosts(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// Read 40 days later: past the 30-day threshold with no activity -> auto-ghost.
+	// Read 40 days later: past the 30-day threshold with no activity → auto-ghost.
 	later := testNow.Add(40 * 24 * time.Hour)
 	tr := newTracker(store, later)
 	got, err := tr.Get(ctx, app.ID)

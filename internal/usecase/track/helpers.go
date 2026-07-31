@@ -9,7 +9,7 @@ import (
 )
 
 // buildID renders the stable identity <YYYY-MM-DD>_<company-slug>_<role-slug>,
-// where the date is the entry's creation day (SPEC section 2).
+// where the date is the entry's creation day (SPEC §2).
 // The date comes from domain.DayFloor so the ID lands on the caller's calendar
 // day; formatting now.UTC() directly would re-introduce the off-by-one that
 // DayFloor exists to prevent.

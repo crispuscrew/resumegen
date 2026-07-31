@@ -8,9 +8,9 @@ import (
 )
 
 // ValidateInput enforces input-safety rules over loaded resume data
-// (DESIGN section 4.2 step 1).
+// (DESIGN §4.2 step 1).
 //
-// NUL bytes are rejected regardless of strict - they have no legitimate use in
+// NUL bytes are rejected regardless of strict — they have no legitimate use in
 // resume data. When strict is true, the additional checks apply: control
 // characters other than \n and \t are rejected, every string must be valid
 // UTF-8, and the per-field-class byte limits are enforced. Zero fields in

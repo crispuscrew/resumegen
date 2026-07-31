@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# coverage-gate.sh - fail if coverage on domain+usecase falls below GATE.
+# coverage-gate.sh — fail if coverage on domain+usecase falls below GATE.
 # Measured packages match ROADMAP.md: ./internal/domain/... and ./internal/usecase/...
 set -eu
 

@@ -64,6 +64,6 @@ func (m model) configView() string {
 	for _, ln := range c.view.Lines {
 		b.WriteString(m.fieldWide(ln.Key, ln.Value))
 	}
-	b.WriteString("\n" + m.styl.subtle.Render("read-only - edit config.toml in your appdir to change these") + "\n")
+	b.WriteString("\n" + m.styl.subtle.Render("read-only — edit config.toml in your appdir to change these") + "\n")
 	return b.String()
 }

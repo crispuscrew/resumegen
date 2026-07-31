@@ -121,7 +121,7 @@ func promptShow(ctx context.Context, deps Deps, args []string) error {
 		return emitJSON(templateJSON(t))
 	}
 
-	fmt.Printf("%s - %s\n", t.Name, t.Description)
+	fmt.Printf("%s — %s\n", t.Name, t.Description)
 	if len(t.Inputs) > 0 {
 		fmt.Println("\nInputs:")
 		tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)

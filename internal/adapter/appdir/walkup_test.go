@@ -18,7 +18,7 @@ func TestWalkUp(t *testing.T) {
 		t.Fatalf("mkdir: %v", err)
 	}
 
-	// No marker anywhere -> not found.
+	// No marker anywhere → not found.
 	if dir, ok := appdir.WalkUp(deep); ok {
 		t.Fatalf("WalkUp before marker: got (%q, true), want (_, false)", dir)
 	}
@@ -41,7 +41,7 @@ func TestWalkUp(t *testing.T) {
 		t.Fatalf("WalkUp: got %q, want %q", gotDir, wantDir)
 	}
 
-	// Start exactly at the workspace directory -> still finds it.
+	// Start exactly at the workspace directory → still finds it.
 	if dir, ok := appdir.WalkUp(wantDir); !ok || dir != wantDir {
 		t.Fatalf("WalkUp at workspace: got (%q, %v), want (%q, true)", dir, ok, wantDir)
 	}
@@ -98,7 +98,7 @@ func TestResolveActive(t *testing.T) {
 	})
 
 	t.Run("default", func(t *testing.T) {
-		// CWD is outside any workspace; --path is empty -> fall back to default.
+		// CWD is outside any workspace; --path is empty → fall back to default.
 		outside := filepath.Join(root, "elsewhere")
 		if err := os.MkdirAll(outside, 0o755); err != nil {
 			t.Fatal(err)
