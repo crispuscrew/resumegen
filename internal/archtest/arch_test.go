@@ -14,7 +14,7 @@ import (
 
 const modulePath = "github.com/crispuscrew/resumegen"
 
-// Domain must not import any other package from this module — pure types only.
+// Domain must not import any other package from this module - pure types only.
 func TestDomain_NoProjectImports(t *testing.T) {
 	for file, imps := range collectImports(t, "../domain") {
 		for _, imp := range imps {
@@ -88,7 +88,7 @@ func collectImports(t *testing.T, dir string) map[string][]string {
 		t.Fatalf("walk %s: %v", dir, err)
 	}
 	if len(result) == 0 {
-		t.Fatalf("no .go files found under %s — test path is wrong", dir)
+		t.Fatalf("no .go files found under %s - test path is wrong", dir)
 	}
 	return result
 }
@@ -111,7 +111,7 @@ func TestCharm_OnlyInTUI(t *testing.T) {
 	}
 }
 
-// The TUI must reach data only through the injected use cases — importing a
+// The TUI must reach data only through the injected use cases - importing a
 // concrete sibling adapter (trackrepo, tomlrepo, ...) would bypass the Deps
 // seam that keeps it testable.
 func TestTUI_NoSiblingAdapterImports(t *testing.T) {
