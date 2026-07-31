@@ -12,7 +12,7 @@ func TestRenderMarkdown_StructureAndFiltering(t *testing.T) {
 
 	mustContain(t, md, "# Ada")
 	mustContain(t, md, "## Experience")
-	mustContain(t, md, "### Engineer — Acme")
+	mustContain(t, md, "### Engineer - Acme")
 	mustContain(t, md, "- kept")
 	mustContain(t, md, "## Skills")
 	mustContain(t, md, "- Languages: Go")

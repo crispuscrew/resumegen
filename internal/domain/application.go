@@ -4,12 +4,12 @@ import "time"
 
 // Application is one tracked job application: where you applied, what artifacts
 // went out, the current pipeline status, and an append-only event log. It is a
-// pure value — `time.Time` is permitted (archtest bans only IO stdlib), but the
+// pure value - `time.Time` is permitted (archtest bans only IO stdlib), but the
 // use case injects `now`; domain never reads the clock.
 //
 // The struct `toml:"..."` tags are metadata only; they do not import go-toml.
 // The trackrepo adapter owns marshal/unmarshal and the local-date/offset-
-// datetime mapping (DESIGN §7.1), mirroring how config.go carries tags but
+// datetime mapping (DESIGN section 7.1), mirroring how config.go carries tags but
 // tomlrepo does the loading.
 type Application struct {
 	ID          string       `toml:"id"`
@@ -23,7 +23,7 @@ type Application struct {
 	Status      Status       `toml:"status"`
 	SalaryRange string       `toml:"salary_range"`
 	Remote      bool         `toml:"remote"`
-	AppliedAt   time.Time    `toml:"applied_at"` // day-granularity (see trackrepo §3)
+	AppliedAt   time.Time    `toml:"applied_at"` // day-granularity (see trackrepo section 3)
 	Notes       string       `toml:"notes"`
 	Contacts    []AppContact `toml:"contacts"`
 	Followups   []Followup   `toml:"followups"`
@@ -47,7 +47,7 @@ type Followup struct {
 
 // AppContact is a person tied to an application (named to avoid colliding with
 // the resume-header Contact). Round-trips hand-edited entries; there is no
-// `apply contact` command in v1.4 (SPEC §10).
+// `apply contact` command in v1.4 (SPEC section 10).
 type AppContact struct {
 	Name        string    `toml:"name"`
 	Role        string    `toml:"role"`
@@ -112,7 +112,7 @@ func (a Application) NextFollowupDue() time.Time {
 // auto-ghosted: it is true iff a.Status is Active and the most recent activity
 // (latest event At, or AppliedAt when there are no events) is more than
 // ghostAfterDays days before now. It is pure and deterministic given now; the
-// use case applies the transition and persists (SPEC §4).
+// use case applies the transition and persists (SPEC section 4).
 func GhostDue(a Application, now time.Time, ghostAfterDays int) bool {
 	// Only submitted applications ghost: "ghosted" means the employer went
 	// silent after you applied. A stale draft was never sent, so it just stays

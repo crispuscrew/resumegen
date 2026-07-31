@@ -129,7 +129,7 @@ func (m model) onNewAppDone(msg newAppDoneMsg) (tea.Model, tea.Cmd) {
 		return m, nil
 	}
 	if m.active != screenNewApp {
-		// The user esc'd before the result landed; the entry exists on disk —
+		// The user esc'd before the result landed; the entry exists on disk -
 		// just refresh the list rather than yanking them into the detail view.
 		return m, m.loadApps()
 	}
@@ -151,7 +151,7 @@ func (m model) newAppView() string {
 		}
 		b.WriteString(cur + m.styl.subtle.Render(fmt.Sprintf("%-9s", newAppFields[i].key)) + " " + s.inputs[i].View() + "\n")
 	}
-	b.WriteString("\n" + m.styl.subtle.Render("created as drafting — press s on the new entry to advance its status") + "\n")
+	b.WriteString("\n" + m.styl.subtle.Render("created as drafting - press s on the new entry to advance its status") + "\n")
 	if s.busy {
 		b.WriteString("\n" + m.styl.badge.Render("● creating…") + "\n")
 	}

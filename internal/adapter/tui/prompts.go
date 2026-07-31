@@ -35,7 +35,7 @@ type promptsState struct {
 
 // capturing is true while the user is typing into the fill form, so global
 // navigation keys (digits, q, ?) are handed to the focused field instead. A
-// zero-input form (auto-run in flight) captures nothing — nav keys stay live.
+// zero-input form (auto-run in flight) captures nothing - nav keys stay live.
 func (p promptsState) capturing() bool { return p.phase == promptsFill && len(p.inputs) > 0 }
 
 func (p *promptsState) focusField(delta int) {
@@ -68,7 +68,7 @@ func buildPromptInputs(form PromptForm) ([]textinput.Model, []string) {
 			add(f.Key, fieldPlaceholder(f), f.Default)
 		case "jd-file":
 			// The field holds a PATH; a spec default is fallback CONTENT (CLI
-			// semantics), so it must not be pre-filled here — leaving the field
+			// semantics), so it must not be pre-filled here - leaving the field
 			// empty lets resolveFromValues apply the default as content.
 			add(f.Key, "path to a "+f.Key+" file", "")
 		case "data-dump":
@@ -372,7 +372,7 @@ func (m model) promptsFillView(p promptsState) string {
 	}
 	b.WriteString("\n")
 	if len(p.inputs) == 0 {
-		b.WriteString(m.styl.subtle.Render("no inputs needed — running…") + "\n")
+		b.WriteString(m.styl.subtle.Render("no inputs needed - running…") + "\n")
 	}
 	for i := range p.inputs {
 		cur := "  "

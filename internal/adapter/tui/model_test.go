@@ -75,8 +75,8 @@ func step(m model, msg tea.Msg) (model, tea.Cmd) {
 	return tm.(model), cmd
 }
 
-// drain executes a chain of single-message commands (loadApps → appsLoadedMsg,
-// transitionCmd → actionDoneMsg → loadApps → …) until the model settles. Slice 1
+// drain executes a chain of single-message commands (loadApps -> appsLoadedMsg,
+// transitionCmd -> actionDoneMsg -> loadApps -> …) until the model settles. Slice 1
 // never batches, so a linear loop is sufficient.
 func drain(m model, cmd tea.Cmd) model {
 	for i := 0; cmd != nil && i < 20; i++ {
@@ -117,12 +117,12 @@ func TestModel_LoadsAndNavigates(t *testing.T) {
 	if len(m.apps) != 1 {
 		t.Fatalf("want 1 app loaded, got %d", len(m.apps))
 	}
-	// dashboard → enter → list
+	// dashboard -> enter -> list
 	m = press(m, namedKey(tea.KeyEnter))
 	if m.active != screenList {
 		t.Fatalf("enter on dashboard should open list, active=%d", m.active)
 	}
-	// list → enter → detail
+	// list -> enter -> detail
 	m = press(m, namedKey(tea.KeyEnter))
 	if m.active != screenDetail {
 		t.Fatalf("enter on list should open detail, active=%d", m.active)
@@ -140,7 +140,7 @@ func TestModel_StatusTransitionAppendsEvent(t *testing.T) {
 	m = press(m, namedKey(tea.KeyEnter)) // list
 	m = press(m, namedKey(tea.KeyEnter)) // detail
 
-	// open status picker: drafting → [applied, withdrawn]
+	// open status picker: drafting -> [applied, withdrawn]
 	m = press(m, runeKey("s"))
 	if m.detail.mode != detailStatusPick {
 		t.Fatalf("'s' should open status picker, mode=%d", m.detail.mode)

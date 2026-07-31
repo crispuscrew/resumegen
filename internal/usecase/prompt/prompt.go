@@ -1,7 +1,7 @@
 // Package prompt is the prompt-template layer: it parses TOML-frontmatter +
 // Markdown templates, validates that their {{placeholder}} slots line up with
 // the inputs they declare, and substitutes resolved values to produce a
-// ready-to-paste LLM prompt. It performs no IO and calls no LLM — resolution
+// ready-to-paste LLM prompt. It performs no IO and calls no LLM - resolution
 // of input sources and delivery to sinks live in the adapter/CLI layer.
 package prompt
 
@@ -86,7 +86,7 @@ func Parse(raw []byte) (PromptTemplate, error) {
 			return PromptTemplate{}, fmt.Errorf("input %q has unknown source %q", key, spec.Source)
 		}
 		if spec.Source == SourceAppID && !validAppField(spec.Field) {
-			return PromptTemplate{}, fmt.Errorf("input %q: source %q requires field ∈ {company,role,status,source,notes,jd}, got %q", key, SourceAppID, spec.Field)
+			return PromptTemplate{}, fmt.Errorf("input %q: source %q requires field to be one of {company,role,status,source,notes,jd}, got %q", key, SourceAppID, spec.Field)
 		}
 	}
 	if err := checkSymmetry(t); err != nil {
