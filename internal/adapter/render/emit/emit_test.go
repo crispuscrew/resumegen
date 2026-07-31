@@ -123,7 +123,7 @@ type filteredShape struct {
 }
 
 // Runs the real embedded example data through score + emit, then checks the
-// filtered TOML is a fixed point: reload → re-marshal reproduces the file
+// filtered TOML is a fixed point: reload -> re-marshal reproduces the file
 // byte-for-byte, i.e. nothing the format can express was lost. Also pins that
 // computed Meta fields (Score, Reason) never leak into the output.
 func TestEmit_FilteredTOML_CorpusFixedPoint(t *testing.T) {
@@ -171,7 +171,7 @@ func TestEmit_FilteredTOML_CorpusFixedPoint(t *testing.T) {
 		t.Fatal(err)
 	}
 	if !bytes.Equal(emitted, remarshaled) {
-		t.Errorf("filtered toml is not a fixed point under reload+marshal — semantic loss:\n--- emitted ---\n%s\n--- remarshaled ---\n%s", emitted, remarshaled)
+		t.Errorf("filtered toml is not a fixed point under reload+marshal - semantic loss:\n--- emitted ---\n%s\n--- remarshaled ---\n%s", emitted, remarshaled)
 	}
 
 	v := domain.VisibleResume(data)
