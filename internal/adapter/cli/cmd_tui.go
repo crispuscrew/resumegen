@@ -127,7 +127,7 @@ func (cmdTUI) Run(ctx context.Context, deps Deps, args []string) error {
 			if err != nil {
 				return "", err
 			}
-			// Trim the synthetic fields like resolveFromValues trims regular ones -
+			// Trim the synthetic fields like resolveFromValues trims regular ones —
 			// a trailing space must not turn into "no data-dump at .../default .md".
 			profile := strings.TrimSpace(values["__profile"])
 			if profile == "" {
@@ -180,7 +180,7 @@ func listDataFiles(appdirDir string) ([]tui.DataFile, error) {
 
 func editCmd(path string) *exec.Cmd {
 	// Split so EDITOR="code -w" style values work; args after the program pass
-	// through. Fields of a whitespace-only EDITOR is empty - fall back to vi
+	// through. Fields of a whitespace-only EDITOR is empty — fall back to vi
 	// rather than panic on fields[0].
 	fields := strings.Fields(os.Getenv("EDITOR"))
 	if len(fields) == 0 {

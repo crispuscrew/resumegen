@@ -10,7 +10,7 @@ const (
 )
 
 // Meta is the scoring metadata embedded into Job/Project/Bullet/SkillCat/SkillItem.
-// Score and Reason are computed, never authored - they are excluded from TOML
+// Score and Reason are computed, never authored — they are excluded from TOML
 // so the filtered-TOML emitter doesn't leak them into its output.
 type Meta struct {
 	Tags   []string `toml:"tags"`

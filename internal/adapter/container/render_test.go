@@ -68,7 +68,7 @@ func TestRender_HappyPath(t *testing.T) {
 	if want := filepath.Join(appdir, "output", "out.pdf"); outPath != want {
 		t.Errorf("outPath = %q, want %q", outPath, want)
 	}
-	// page = (1-1) + 500/842 ~= 0.594
+	// page = (1-1) + 500/842 ≈ 0.594
 	if pages <= 0 || pages > 1 {
 		t.Errorf("pages = %v, want fractional (0,1)", pages)
 	}

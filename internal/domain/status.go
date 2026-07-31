@@ -3,7 +3,7 @@ package domain
 import "fmt"
 
 // Status is an application's position in the pipeline. The forward chain
-// (drafting->applied->screen->interview->offer->accepted) advances one step at a
+// (drafting→applied→screen→interview→offer→accepted) advances one step at a
 // time; the four terminal states have no outgoing transitions.
 type Status string
 
@@ -29,7 +29,7 @@ var forwardNext = map[Status]Status{
 	StatusOffer:     StatusAccepted,
 }
 
-// submitted reports whether s is a post-submission active state - the set from
+// submitted reports whether s is a post-submission active state — the set from
 // which `rejected` is reachable (applied and beyond, never drafting).
 func (s Status) submitted() bool {
 	switch s {
@@ -82,15 +82,15 @@ func (e *InvalidStatusError) Error() string {
 	return fmt.Sprintf("unknown status %q", e.Value)
 }
 
-// CanTransition returns nil if moving from->to is permitted, else a named error.
-// It is pure: it appends no events and never reads the clock - the use case
+// CanTransition returns nil if moving from→to is permitted, else a named error.
+// It is pure: it appends no events and never reads the clock — the use case
 // does that around it.
 //
-// Rules (DESIGN section 7.2):
+// Rules (DESIGN §7.2):
 //   - forward chain advances exactly one step (no skipping);
 //   - rejected only from a submitted state (applied and beyond), not drafting;
 //   - withdrawn from any active state (user-driven);
-//   - ghosted from any active state incl. drafting (auto only, section 4);
+//   - ghosted from any active state incl. drafting (auto only, §4);
 //   - terminal states have no outgoing transitions.
 func CanTransition(from, to Status) error {
 	if !from.Valid() {

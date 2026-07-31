@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// allowedSchemes is the closed set per DESIGN section 3.3. Anything else (file:,
+// allowedSchemes is the closed set per DESIGN §3.3. Anything else (file:,
 // javascript:, data:, ssh://, etc.) is rejected at parse time.
 var allowedSchemes = map[string]bool{
 	"http":   true,

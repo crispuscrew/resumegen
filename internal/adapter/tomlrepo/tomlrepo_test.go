@@ -47,7 +47,7 @@ func TestLayeredConfig_WorkspaceWinsPerKey(t *testing.T) {
 		t.Errorf("OutputDir: got %q, want %q (workspace should win)", cfg.Paths.OutputDir, "ws-output")
 	}
 	if cfg.Paths.TypstBin != "typst" {
-		t.Errorf("TypstBin: got %q, want %q (workspace silent -> global wins)", cfg.Paths.TypstBin, "typst")
+		t.Errorf("TypstBin: got %q, want %q (workspace silent → global wins)", cfg.Paths.TypstBin, "typst")
 	}
 	if cfg.Render.PageLimit != 2.0 {
 		t.Errorf("PageLimit: got %v, want 2.0", cfg.Render.PageLimit)
@@ -63,7 +63,7 @@ func TestLayeredConfig_WorkspaceWinsPerKey(t *testing.T) {
 // Missing workspace overlay file is a tolerated no-op: global values stay.
 func TestLayeredConfig_NoOverlayFile(t *testing.T) {
 	global := fstest.MapFS{"config.toml": &fstest.MapFile{Data: []byte(globalConfig)}}
-	workspace := fstest.MapFS{} // empty FS - no overlay file present
+	workspace := fstest.MapFS{} // empty FS — no overlay file present
 
 	cfg, err := tomlrepo.NewLayeredConfigSource(global, workspace).Load(context.Background())
 	if err != nil {
@@ -74,7 +74,7 @@ func TestLayeredConfig_NoOverlayFile(t *testing.T) {
 	}
 }
 
-// Both global and workspace missing -> workspace-missing sentinel.
+// Both global and workspace missing → workspace-missing sentinel.
 func TestLayeredConfig_BothMissing(t *testing.T) {
 	_, err := tomlrepo.NewLayeredConfigSource(fstest.MapFS{}, fstest.MapFS{}).Load(context.Background())
 	if !errors.Is(err, usecase.ErrWorkspaceMissing) {

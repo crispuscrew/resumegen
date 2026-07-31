@@ -95,7 +95,7 @@ func (m model) transitionCmd(id string, to domain.Status) tea.Cmd {
 	ctx, tr := m.deps.Ctx, m.deps.Tracker
 	return func() tea.Msg {
 		app, err := tr.Transition(ctx, id, to, "")
-		return actionDoneMsg{app: app, err: err, flash: "status -> " + string(to)}
+		return actionDoneMsg{app: app, err: err, flash: "status → " + string(to)}
 	}
 }
 
@@ -142,9 +142,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.apps = msg.apps
 			// Newest first for humans: IDs start with the creation date, so a
 			// descending ID sort is a descending date sort. (The CLI keeps
-			// ascending order - its output is a stable scripting contract.)
+			// ascending order — its output is a stable scripting contract.)
 			sort.Slice(m.apps, func(i, j int) bool { return m.apps[i].ID > m.apps[j].ID })
-			// The cursor indexes the FILTERED view, so clamp against it - a
+			// The cursor indexes the FILTERED view, so clamp against it — a
 			// reload can shrink the visible set while a filter is active.
 			if vis := m.visibleApps(); m.cursor >= len(vis) {
 				m.cursor = maxInt(0, len(vis)-1)
@@ -290,7 +290,7 @@ func (m model) isCapturing() bool {
 	return false
 }
 
-// switchTo changes the active screen and clears the transient flash - a
+// switchTo changes the active screen and clears the transient flash — a
 // confirmation belongs to the screen it was raised on. Every screen change
 // funnels through here or enter().
 func (m model) switchTo(s screen) model {

@@ -25,7 +25,7 @@ func TestLastActivityAndStaleDays(t *testing.T) {
 	if got := a.StaleDays(now); got != 5 {
 		t.Errorf("StaleDays = %d, want 5", got)
 	}
-	if got := a.StaleDays(base); got != 0 { // now before last activity -> clamped to 0
+	if got := a.StaleDays(base); got != 0 { // now before last activity → clamped to 0
 		t.Errorf("StaleDays negative guard = %d, want 0", got)
 	}
 }

@@ -1,6 +1,6 @@
 // Package sanitize closes the Typst code-injection vector by parsing
-// bullet-text markup through a fixed allowlist grammar (DESIGN section 3.3) and
-// re-emitting every span as escaped Typst (section 4.2 step 3). It is the
+// bullet-text markup through a fixed allowlist grammar (DESIGN §3.3) and
+// re-emitting every span as escaped Typst (§4.2 step 3). It is the
 // always-on layer between user-supplied i18n strings and the generated
 // Typst source.
 package sanitize
@@ -15,7 +15,7 @@ const (
 
 	// Permissive emits the offending input as Typst-escaped literal text
 	// (no formatting), so a single bad bullet doesn't fail the render.
-	// The whole input is escaped - partial formatting recovery is not a
+	// The whole input is escaped — partial formatting recovery is not a
 	// goal because security wins over UX here.
 	Permissive
 )

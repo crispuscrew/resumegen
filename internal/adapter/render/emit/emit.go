@@ -1,5 +1,5 @@
 // Package emit implements usecase.ResumeEmitter: it writes machine-readable
-// siblings of the rendered PDF - a Markdown dump and the filtered TOML - so the
+// siblings of the rendered PDF — a Markdown dump and the filtered TOML — so the
 // exact filtered resume can be fed to an LLM. The PDF itself is never touched.
 package emit
 

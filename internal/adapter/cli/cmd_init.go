@@ -104,7 +104,7 @@ func (cmdInit) Run(ctx context.Context, deps Deps, args []string) error {
 		return nil
 	}
 
-	// templates/ is required to render at all, so the default init includes it -
+	// templates/ is required to render at all, so the default init includes it —
 	// a workspace that can't render out of the box is a trap, not a starter.
 	subtrees := []string{"data", "profiles", "templates"}
 	if *fullExample {

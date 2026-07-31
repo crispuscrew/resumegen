@@ -8,7 +8,7 @@ import (
 
 // statusMenuOrder is the canonical ordering for status choices a user may pick
 // in a UI. It omits drafting (never a transition target) and ghosted (applied
-// automatically, never by hand - see Transition).
+// automatically, never by hand — see Transition).
 var statusMenuOrder = []domain.Status{
 	domain.StatusApplied,
 	domain.StatusScreen,
@@ -46,7 +46,7 @@ type Summary struct {
 
 // Summarize aggregates apps as of now. staleAfterDays <= 0 disables the stale
 // count (leaves StaleActive at 0). It reads only pure domain methods, so it is
-// deterministic given a fixed now - the TUI renders the result and computes
+// deterministic given a fixed now — the TUI renders the result and computes
 // nothing itself.
 func Summarize(apps []domain.Application, now time.Time, staleAfterDays int) Summary {
 	s := Summary{Total: len(apps), ByStatus: make(map[domain.Status]int)}
@@ -71,7 +71,7 @@ func Summarize(apps []domain.Application, now time.Time, staleAfterDays int) Sum
 // WARN about an active application, given the auto-ghost threshold. It is 3/4
 // of ghostAfterDays (min 1 day): warning at the ghost threshold itself is dead
 // by construction, because List auto-ghosts everything at/past that mark before
-// any summary runs - the warning must fire earlier to be actionable.
+// any summary runs — the warning must fire earlier to be actionable.
 func StaleWarnDays(ghostAfterDays int) int {
 	warn := ghostAfterDays * 3 / 4
 	if warn < 1 {

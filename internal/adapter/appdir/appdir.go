@@ -56,7 +56,7 @@ type Resolution struct {
 // caller's Bootstrap adapter handles creation. In case (2) the directory is
 // guaranteed to contain a marker (HasMarker == true). HasMarker may also be
 // true for cases (1) and (3) if the chosen directory happens to contain a
-// marker - useful for the config overlay decision.
+// marker — useful for the config overlay decision.
 func ResolveActive(userPath, cwd, defaultPath string) (Resolution, error) {
 	if userPath != "" {
 		abs, err := ExpandAbs(userPath)

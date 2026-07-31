@@ -1,4 +1,4 @@
-// --- Page & base typography ---
+// ─── Page & base typography ───────────────────────────────────────────────────
 
 #let resume-init(body) = {
   set page(
@@ -19,7 +19,7 @@
   body
 }
 
-// --- Section heading ---
+// ─── Section heading ──────────────────────────────────────────────────────────
 
 #let section(title) = block(
   above: 12pt,
@@ -33,10 +33,10 @@
   ),
 )
 
-// --- Two-row entry ---
-// a / b  ->  bold title        right-aligned date
-// c / d  ->  italic subtitle   right-aligned detail
-// items  ->  optional bullet list of (text: content) dicts
+// ─── Two-row entry ────────────────────────────────────────────────────────────
+// a / b  →  bold title        right-aligned date
+// c / d  →  italic subtitle   right-aligned detail
+// items  →  optional bullet list of (text: content) dicts
 
 #let entry(a, b, c, d, items: none) = {
   v(9pt, weak: true)
@@ -59,7 +59,7 @@
   }
 }
 
-// --- Skill row ---
+// ─── Skill row ────────────────────────────────────────────────────────────────
 
 #let skill(cat, items) = {
     text(size: 9.5pt)[*#cat*: #items.join(", ")]

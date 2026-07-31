@@ -21,13 +21,13 @@ func TestNewApp_CreateFlow(t *testing.T) {
 		t.Fatalf("'n' should open the creation form, active=%d", m.active)
 	}
 	m = press(m, runeKey("Acme Corp"))   // company
-	m = press(m, namedKey(tea.KeyEnter)) // -> role
+	m = press(m, namedKey(tea.KeyEnter)) // → role
 	m = press(m, runeKey("Go Engineer")) // role
-	m = press(m, namedKey(tea.KeyEnter)) // -> profile
+	m = press(m, namedKey(tea.KeyEnter)) // → profile
 	m = press(m, runeKey("go-backend"))  // profile
-	m = press(m, namedKey(tea.KeyEnter)) // -> source
-	m = press(m, namedKey(tea.KeyEnter)) // -> jd
-	m = press(m, namedKey(tea.KeyEnter)) // -> salary (last)
+	m = press(m, namedKey(tea.KeyEnter)) // → source
+	m = press(m, namedKey(tea.KeyEnter)) // → jd
+	m = press(m, namedKey(tea.KeyEnter)) // → salary (last)
 	m = press(m, namedKey(tea.KeyEnter)) // submit + drain result
 
 	if m.active != screenDetail {

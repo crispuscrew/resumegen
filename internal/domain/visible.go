@@ -5,7 +5,7 @@ package domain
 // skill item whose Reason is Included. Education is always shown in full, and
 // the header is never filtered. Ordering is preserved.
 //
-// This is the single source of truth for "what went into the PDF" - both the
+// This is the single source of truth for "what went into the PDF" — both the
 // Markdown emitter and the filtered-TOML emitter project from it, so they can
 // never drift from the render path's Reason == Included rule.
 func VisibleResume(data ResumeData) ResumeData {

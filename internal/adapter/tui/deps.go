@@ -1,7 +1,7 @@
 // Package tui is the interactive terminal front-end (v1.5). It is a pure
 // adapter: every state change routes through the same internal/usecase packages
 // the CLI uses, and no logic lives here that isn't just presentation. The whole
-// package is gated behind the `notui` build tag - under `-tags notui` only
+// package is gated behind the `notui` build tag — under `-tags notui` only
 // deps.go and run_notui.go compile, so the charm dependencies are linked out and
 // a single-binary build carries no TUI code.
 package tui
@@ -16,7 +16,7 @@ import (
 // Deps is the injected context a TUI run needs. The cli package owns appdir and
 // config resolution and constructs this; the TUI only renders and dispatches.
 // It is defined without a build constraint so cli can build it under both the
-// default and `notui` builds - only Run's implementation differs by tag.
+// default and `notui` builds — only Run's implementation differs by tag.
 //
 // The function fields let the TUI reuse the exact CLI/use-case logic (render,
 // prompt resolution, config layering) without duplicating any of it, keeping the
@@ -31,7 +31,7 @@ type Deps struct {
 	Tracker *track.Tracker
 	// StaleAfterDays is the dashboard's early-warning threshold: an active
 	// application with no activity for this many days is flagged as at risk.
-	// cli wires it BELOW GhostAfterDays (track.StaleWarnDays) - at or above the
+	// cli wires it BELOW GhostAfterDays (track.StaleWarnDays) — at or above the
 	// ghost threshold the warning could never fire, since List auto-ghosts
 	// everything past that mark before the dashboard counts.
 	StaleAfterDays int

@@ -8,7 +8,7 @@ import (
 	"github.com/crispuscrew/resumegen/internal/domain"
 )
 
-// Generator orchestrates the load -> score -> render -> trim pipeline.
+// Generator orchestrates the load → score → render → trim pipeline.
 type Generator struct {
 	Config        ConfigSource
 	Profiles      ProfileRepo

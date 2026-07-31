@@ -41,15 +41,15 @@ type Renderer interface {
 }
 
 // PDFPostProcessor optionally rewrites a freshly rendered PDF in place (e.g.
-// qpdf metadata stripping). The orchestrator invokes it once - after the trim
-// loop has settled on the final PDF - and only when enabled by config.
+// qpdf metadata stripping). The orchestrator invokes it once — after the trim
+// loop has settled on the final PDF — and only when enabled by config.
 type PDFPostProcessor interface {
 	Strip(ctx context.Context, pdfPath string) error
 }
 
 // ResumeEmitter writes machine-readable siblings of the rendered PDF (e.g. a
-// Markdown dump and the filtered TOML). The orchestrator invokes it once -
-// after the trim loop has settled on the final PDF - and only when at least one
+// Markdown dump and the filtered TOML). The orchestrator invokes it once —
+// after the trim loop has settled on the final PDF — and only when at least one
 // emit flag in cfg.Render is set. data is the final scored+trimmed value.
 type ResumeEmitter interface {
 	Emit(ctx context.Context, pdfPath string, data domain.ResumeData, profile domain.Profile, cfg domain.Config) error

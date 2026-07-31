@@ -82,7 +82,7 @@ func TestResolve_PromptNoInput(t *testing.T) {
 	if err != nil || got != "interested" {
 		t.Errorf("got %q err %v", got, err)
 	}
-	// required with no default -> error, never blocks
+	// required with no default → error, never blocks
 	_, err = rc.resolve(context.Background(), "context",
 		prompt.InputSpec{Source: prompt.SourcePrompt, Required: true})
 	if err == nil {
@@ -186,7 +186,7 @@ func TestResolve_AppID(t *testing.T) {
 	if err != nil || got != "we need Go" {
 		t.Fatalf("jd: got %q err %v", got, err)
 	}
-	// no --app given -> unset (required errors)
+	// no --app given → unset (required errors)
 	rc2 := resolveCtx{appdir: dir}
 	if _, err := rc2.resolve(context.Background(), "co",
 		prompt.InputSpec{Source: prompt.SourceAppID, Field: "company", Required: true}); err == nil {

@@ -1,6 +1,6 @@
 // Package track is the application-tracker use case: it builds application IDs,
 // enforces the pure status state machine, appends events, and applies lazy
-// auto-ghosting on read. It performs no IO and calls no LLM - persistence lives
+// auto-ghosting on read. It performs no IO and calls no LLM — persistence lives
 // behind the Store port (implemented by adapter/trackrepo) and `now` is injected
 // so the ghost/stale/date surface is deterministic under test.
 package track
@@ -94,7 +94,7 @@ func (t *Tracker) New(ctx context.Context, in NewInput) (domain.Application, err
 		SalaryRange: in.SalaryRange,
 		Remote:      in.Remote,
 		Status:      domain.StatusDrafting,
-		// AppliedAt stays zero until the entry actually reaches "applied" -
+		// AppliedAt stays zero until the entry actually reaches "applied" —
 		// a drafting entry has not been applied, so no date is shown for it.
 		Events: []domain.Event{
 			{At: now, Kind: "created", Note: ""},
@@ -159,7 +159,7 @@ func (t *Tracker) Transition(ctx context.Context, id string, to domain.Status, n
 		return domain.Application{}, err
 	}
 	if to == domain.StatusGhosted {
-		// ghosted is auto-only (SPEC section 1.1): the state machine permits the edge for
+		// ghosted is auto-only (SPEC §1.1): the state machine permits the edge for
 		// the lazy-ghost path, but a user cannot set it by hand.
 		return domain.Application{}, fmt.Errorf("ghosted is applied automatically after inactivity; use %q to close an application yourself", domain.StatusWithdrawn)
 	}
@@ -224,7 +224,7 @@ func (t *Tracker) AddNote(ctx context.Context, id, text string) (domain.Applicat
 
 // ghostIfDue applies the pure GhostDue rule: on a stale active entry it
 // transitions to ghosted, appends one "ghosted" event at now, and persists the
-// mutated file. Idempotent - a terminal entry is returned untouched.
+// mutated file. Idempotent — a terminal entry is returned untouched.
 func (t *Tracker) ghostIfDue(ctx context.Context, app domain.Application) (domain.Application, error) {
 	if !domain.GhostDue(app, t.now(), t.GhostAfterDays) {
 		return app, nil
