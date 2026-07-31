@@ -54,7 +54,7 @@ func TestBuildTypstSource_LockstepWithVisibleResume(t *testing.T) {
 			t.Fatalf("%s: build prefiltered: %v", name, err)
 		}
 		if !bytes.Equal(direct, prefiltered) {
-			t.Errorf("%s: VisibleResume and BuildTypstSource disagree on visibility — emitted files would not match the PDF", name)
+			t.Errorf("%s: VisibleResume and BuildTypstSource disagree on visibility - emitted files would not match the PDF", name)
 		}
 	}
 }

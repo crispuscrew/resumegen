@@ -258,7 +258,7 @@ func (rc resolveCtx) readDataDump(ctx context.Context, key string, spec prompt.I
 	raw, err := os.ReadFile(path)
 	if err != nil {
 		if spec.Required {
-			return "", fmt.Errorf("input %q: no data-dump at %s — enable [render] emit_markdown and render profile %q first", key, path, rc.profile)
+			return "", fmt.Errorf("input %q: no data-dump at %s - enable [render] emit_markdown and render profile %q first", key, path, rc.profile)
 		}
 		return spec.Default, nil
 	}
@@ -482,8 +482,8 @@ func (rc resolveCtx) stdinHasData() bool {
 }
 
 // isTerminal reports whether r is a real interactive terminal. A non-*os.File
-// reader (test buffer, pipe) — and a char device that is not a TTY, like
-// /dev/null — is never a terminal.
+// reader (test buffer, pipe) - and a char device that is not a TTY, like
+// /dev/null - is never a terminal.
 func isTerminal(r io.Reader) bool {
 	f, ok := r.(*os.File)
 	if !ok {
