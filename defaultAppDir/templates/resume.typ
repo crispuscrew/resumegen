@@ -1,83 +1,59 @@
-// resume.typ - main document.
-//
-// Data is supplied by the Go tool via data_gen.typ (auto-generated, do not edit).
-// Run `resumegen <profile>` to regenerate and compile.
-
+// Data is supplied via data_gen.typ (auto-generated, do not edit).
 #import "template.typ": *
 #import "data_gen.typ": r-lang, r-name, r-contacts, r-summary, r-jobs, r-projects, r-skills, r-edu
 
 #show: resume-init
+#set text(lang: r-lang)
+#set document(title: r-name + " - Resume")
 
-// --- i18n ---
+#let translate(english, russian) = if r-lang == "ru" { russian } else { english }
 
-#let t(en, ru) = if r-lang == "ru" { ru } else { en }
-
-// ============================================================================
-//  Header
-// ============================================================================
-
-#align(center)[
-  #text(size: 22pt, weight: "bold", smallcaps(r-name)) \
-  #v(2pt)
-  #text(size: 10pt)[
-    #for (idx, c) in r-contacts.enumerate() {
-      if idx > 0 [ #h(4pt) | #h(4pt) ]
-      if c.href == "" { c.value } else { link(c.href)[#c.value] }
+// Contact details are visible body text, not a page header or icon labels.
+#title(r-name)
+#if r-contacts.len() > 0 {
+  block(width: 100%, above: 0pt, below: 2pt, align(center, text(size: 10pt)[
+    #for (index, contact) in r-contacts.enumerate() {
+      if index > 0 [#h(4pt)|#h(4pt)]
+      if contact.href == "" { contact.value } else { link(contact.href)[#contact.value] }
     }
-  ]
-]
+  ]))
+}
 
-// ============================================================================
-//  Summary
-// ============================================================================
-
-#section(t("Summary", "О себе"))
-#block(above: 0pt, below: 0pt, text(size: 10pt, r-summary))
-
-// ============================================================================
-//  Experience
-// ============================================================================
+#if r-summary != [] {
+  section(translate("Summary", "О себе"))
+  block(above: 0pt, below: 0pt, text(size: 10pt, r-summary))
+}
 
 #if r-jobs.len() > 0 {
-  section(t("Experience", "Опыт работы"))
+  section(translate("Work Experience", "Опыт работы"))
   for job in r-jobs {
     entry(job.title, job.date, job.company, job.location,
-      items: job.bullets.map(b => (text: b,)))
+      items: job.bullets.map(bullet => (text: bullet,)))
   }
 }
-
-// ============================================================================
-//  Projects
-// ============================================================================
 
 #if r-projects.len() > 0 {
-  section(t("Projects", "Проекты"))
-  for p in r-projects {
-    entry(p.title, p.date, p.subtitle, p.detail,
-      items: p.bullets.map(b => (text: b,)))
+  section(translate("Projects", "Проекты"))
+  for project in r-projects {
+    entry(project.title, project.date, project.subtitle, project.detail,
+      items: project.bullets.map(bullet => (text: bullet,)))
   }
 }
 
-// ============================================================================
-//  Technical Skills
-// ============================================================================
-
 #if r-skills.len() > 0 {
-  section(t("Technical Skills", "Технические навыки"))
+  section(translate("Technical Skills", "Технические навыки"))
   block(above: 0pt, below: 0pt,
-    for s in r-skills {
-      skill(s.category, s.items)
+    for skills in r-skills {
+      skill(skills.category, skills.items)
     }
   )
 }
 
-// ============================================================================
-//  Education
-// ============================================================================
-
-#section(t("Education", "Образование"))
-#for edu in r-edu {
-  entry(edu.title, edu.location, edu.degree, edu.date)
+#if r-edu.len() > 0 {
+  section(translate("Education", "Образование"))
+  for education in r-edu {
+    entry(education.title, education.date, education.degree, education.location)
+  }
 }
 
 #context [#metadata(here().position()) <end-marker>]

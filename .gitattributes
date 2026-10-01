@@ -1,0 +1,2 @@
+# Tagged PDFs can have a long text prefix before their binary streams.
+*.pdf binary

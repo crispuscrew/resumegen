@@ -1,67 +1,69 @@
-// --- Page & base typography ---
-
+// Page and base typography.
 #let resume-init(body) = {
   set page(
-    paper:  "a4",
+    paper: "a4",
     margin: (top: 0.5in, bottom: 0.5in, x: 0.5in),
   )
-  // Both families ship inside the typst binary, so a render is reproducible on
-  // any machine regardless of installed system fonts. New Computer Modern is
-  // the body face (it covers Latin and Cyrillic); Libertinus Serif is named
-  // explicitly as the fallback so a glyph missing from NCM lands somewhere
-  // predictable instead of wherever the local font list happens to point.
-  // Check a render with `pdffonts output/<profile>.pdf`: extra families in that
-  // list mean your data uses a glyph NCM lacks.
-  set text(font: ("New Computer Modern", "Libertinus Serif"), size: 11pt)
-  // Inline `code spans` in bullet text; DejaVu Sans Mono also ships with typst.
+  // These fonts ship with Typst and cover Latin and Cyrillic.
+  set text(
+    font: ("New Computer Modern", "Libertinus Serif"),
+    size: 11pt,
+    ligatures: false,
+    hyphenate: false,
+  )
   show raw: set text(font: "DejaVu Sans Mono")
   set par(leading: 0.55em, spacing: 0.55em)
+  show title: set text(size: 22pt, weight: "bold")
+  show title: set align(center)
+  show title: set block(above: 0pt, below: 6pt)
+  show heading: set text(size: 12pt, weight: "bold")
+  show heading: heading => block(
+    width: 100%, above: 12pt, below: 6pt, breakable: false, sticky: true,
+    stack(dir: ttb, spacing: 3pt,
+      upper(heading.body),
+      line(length: 100%, stroke: 0.35pt + black),
+    ),
+  )
   body
 }
 
-// --- Section heading ---
+// Real headings preserve section semantics in the tagged PDF.
+#let section(title) = heading(level: 1, numbering: none, title)
 
-#let section(title) = block(
-  above: 12pt,
-  below: 5pt,
-  width: 100%,
-  stack(
-    dir: ttb,
-    spacing: 3pt,
-    text(size: 12pt, weight: "bold", smallcaps(title)),
-    line(length: 100%, stroke: 0.5pt + black),
-  ),
-)
-
-// --- Two-row entry ---
-// a / b  ->  bold title        right-aligned date
-// c / d  ->  italic subtitle   right-aligned detail
-// items  ->  optional bullet list of (text: content) dicts
-
-#let entry(a, b, c, d, items: none) = {
-  v(9pt, weak: true)
-  grid(
-    columns:    (1fr, auto),
-    row-gutter: 4pt,
-    strong(a),                        align(right, b),
-    emph(text(size: 9.5pt, c)),       align(right, emph(text(size: 9.5pt, d))),
-  )
+// Keep the positional interface for custom resume.typ files. All fields flow
+// left to right, top to bottom. Keep metadata together so extraction cannot
+// mistake distant right-aligned dates for a separate text column.
+#let entry(title, date, subtitle, detail, items: none) = {
+  let metadata = (
+    (value: subtitle, emphasis: true),
+    (value: date, emphasis: false),
+    (value: detail, emphasis: true),
+  ).filter(field => field.value != "")
+  block(above: 9pt, below: 0pt, breakable: false)[
+    #strong(title)
+    #if metadata.len() > 0 {
+      linebreak()
+      text(size: 9.5pt)[
+        #for (index, field) in metadata.enumerate() {
+          if index > 0 [#h(3pt)|#h(3pt)]
+          if field.emphasis { emph(field.value) } else { field.value }
+        }
+      ]
+    }
+  ]
   if items != none and items.len() > 0 {
     v(5pt)
-    pad(
-      left: 12pt,
-      list(
-        marker:  sym.bullet,
-        spacing: 5pt,
-        ..items.map(i => text(size: 9.5pt, i.text))
-      ),
+    list(
+      marker: sym.bullet,
+      indent: 8pt,
+      body-indent: 10pt,
+      spacing: 5pt,
+      ..items.map(item => text(size: 10pt, item.text))
     )
   }
 }
 
-// --- Skill row ---
-
-#let skill(cat, items) = {
-    text(size: 9.5pt)[*#cat*: #items.join(", ")]
-    linebreak()
+#let skill(category, items) = {
+  text(size: 10pt)[*#category*: #items.join(", ")]
+  linebreak()
 }
