@@ -142,7 +142,7 @@ func (m model) generateView() string {
 		return m.styl.errText.Render("error: " + g.loadErr.Error())
 	}
 	if len(g.profiles) == 0 {
-		return m.styl.subtle.Render("no profiles (profiles/*.toml) in this appdir — run `resumegen init` first.")
+		return m.styl.subtle.Render("no profiles (profiles/*.toml) in this appdir - run `resumegen init` first.")
 	}
 	var b strings.Builder
 	b.WriteString(m.styl.label.Render("Profiles") + "\n\n")
@@ -158,7 +158,7 @@ func (m model) generateView() string {
 	case genRunning:
 		b.WriteString(m.styl.badge.Render("● rendering… (esc cancels)") + "\n")
 	case genDone:
-		b.WriteString(m.styl.flash.Render("✓ rendered → "+g.outPath) + "\n")
+		b.WriteString(m.styl.flash.Render("✓ rendered -> "+g.outPath) + "\n")
 	case genError:
 		b.WriteString(m.styl.errText.Render("✗ "+g.errMsg) + "\n")
 	}

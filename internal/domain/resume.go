@@ -81,7 +81,7 @@ func FlatNested(data ResumeData) []*Meta {
 // FlatNestedVisible is FlatNested restricted to children of parents that are
 // themselves Included. Scoring only filters an element on its own tags, so the
 // bullets of a filtered-out job stay Included with score 0 and would otherwise
-// be picked first by the trimmer — costing a full typst compile+query round
+// be picked first by the trimmer - costing a full typst compile+query round
 // trip each, without ever changing the page count.
 func FlatNestedVisible(data ResumeData) []*Meta {
 	return flatNested(data, true)

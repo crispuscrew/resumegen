@@ -24,7 +24,7 @@ func TestCmdInit_EndToEnd(t *testing.T) {
 	target := t.TempDir()
 	ctx := context.Background()
 
-	// 1) Default init: marker + data + profiles + templates + config.toml —
+	// 1) Default init: marker + data + profiles + templates + config.toml -
 	// the workspace must render out of the box.
 	if err := (cmdInit{}).Run(ctx, deps, []string{"--name", "test-ws", target}); err != nil {
 		t.Fatalf("init (default): %v", err)

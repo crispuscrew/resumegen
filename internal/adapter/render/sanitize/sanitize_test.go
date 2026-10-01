@@ -39,7 +39,7 @@ func TestSanitize_HappyPath(t *testing.T) {
 	}
 }
 
-// Escaping table: every Typst metachar listed in DESIGN §4.2 step 3 (single
+// Escaping table: every Typst metachar listed in DESIGN section 4.2 step 3 (single
 // char) gets a leading backslash when emitted as plain text.
 func TestSanitize_EscapesTypstMetachars(t *testing.T) {
 	cases := []struct{ ch, want string }{
@@ -91,7 +91,7 @@ func TestSanitize_InjectionAttempts(t *testing.T) {
 				continue
 			}
 			// Inside Bold/Italic/Code/Link spans, the delimiter itself is
-			// supposed to appear bare — but the corpus below only contains
+			// supposed to appear bare - but the corpus below only contains
 			// plain-text injection attempts (no legitimate markup), so any
 			// metachar in the output must be backslash-prefixed.
 			if i == 0 || out[i-1] != '\\' {
@@ -225,7 +225,7 @@ func TestSanitize_PermissiveRecoversFromBadInput(t *testing.T) {
 	}
 }
 
-// Lone '[' that doesn't open a link is treated as literal — not an error.
+// Lone '[' that doesn't open a link is treated as literal - not an error.
 // Default-appdir data uses brackets in prose like "[1] reference".
 func TestSanitize_BracketWithoutLinkIsLiteral(t *testing.T) {
 	got, err := Sanitize("see [1] for details", Strict)
@@ -248,7 +248,7 @@ func TestSanitize_EmptyInput(t *testing.T) {
 	}
 }
 
-// URL allowlist is exhaustive — only http, https, mailto pass.
+// URL allowlist is exhaustive - only http, https, mailto pass.
 func TestValidateURL(t *testing.T) {
 	good := []string{
 		"http://example.com",

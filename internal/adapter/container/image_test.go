@@ -105,7 +105,7 @@ func TestBuildImage_WritesContainerfileAndRunsEngine(t *testing.T) {
 		t.Fatalf("argv prefix = %v", args[:4])
 	}
 	cfPath = args[4]
-	// file should have already been removed by defer — only the tmp dir leak would surface.
+	// file should have already been removed by defer - only the tmp dir leak would surface.
 	if filepath.Base(cfPath) != "Containerfile" {
 		t.Errorf("expected -f to point at Containerfile, got %q", cfPath)
 	}

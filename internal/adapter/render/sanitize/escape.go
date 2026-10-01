@@ -3,7 +3,7 @@ package sanitize
 import "strings"
 
 // escapeTypstContent escapes the Typst markup metachars listed in DESIGN
-// §4.2 step 3 so the result is safe to inline as literal text inside a
+// section 4.2 step 3 so the result is safe to inline as literal text inside a
 // content block `[...]`. Backslash is escaped first to keep the operation
 // idempotent. Multi-char patterns (`--`, `---`) are NOT escaped: Typst's
 // smart-dash substitution is a presentational concern, not a security one,
@@ -18,7 +18,7 @@ func escapeTypstContent(s string) string {
 		// '/' is a metachar, not punctuation: "//" opens a line comment,
 		// "/*" a block comment, and "/ " at line start a term list. Left
 		// unescaped, "3/*4 of peak*/ sustained" silently renders as
-		// "3 sustained" — the text between the delimiters just disappears.
+		// "3 sustained" - the text between the delimiters just disappears.
 		case '\\', '"', '*', '_', '`', '#', '<', '>', '@', '=',
 			'[', ']', '(', ')', '~', '$', '/':
 			b.WriteByte('\\')

@@ -9,7 +9,7 @@ func TestTypstStr(t *testing.T) {
 		`back\slash`:   `"back\\slash"`,
 		"tab\there":    `"tab\there"`,
 		"line\nbreak":  `"line\nbreak"`,
-		"bell\x07ring": `"bell\u{7}ring"`, // Go %q would emit \x07 — invalid Typst
+		"bell\x07ring": `"bell\u{7}ring"`, // Go %q would emit \x07 - invalid Typst
 		"Привет":       `"Привет"`,        // printable unicode passes raw
 	}
 	for in, want := range cases {

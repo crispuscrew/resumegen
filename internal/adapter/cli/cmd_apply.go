@@ -77,7 +77,7 @@ func printApplyHelp() {
 // tracker builds a track.Tracker over the resolved appdir, reading tracker
 // config (with defaults, global-under-workspace layering) and a real clock.
 // A missing config falls back to defaults, but a config that EXISTS and fails
-// to parse is a loud error — silently ghosting at 30 days because the user
+// to parse is a loud error - silently ghosting at 30 days because the user
 // typo'd their 90 would be a debugging nightmare.
 func tracker(ctx context.Context, deps Deps, appDirPath string) (*track.Tracker, error) {
 	cfgSource, res, err := layeredConfigSource(appDirPath)
@@ -354,7 +354,7 @@ func applyNote(ctx context.Context, deps Deps, args []string) error {
 	return nil
 }
 
-// resolveDue parses --due as a local-date. Empty means "use the default lag" —
+// resolveDue parses --due as a local-date. Empty means "use the default lag" -
 // signalled to the tracker as the zero time; the lag rule lives in ONE place
 // (track.AddFollowup), not per front-end.
 func resolveDue(due string) (time.Time, error) {
@@ -430,7 +430,7 @@ func printApplication(a domain.Application) {
 
 // applyEdit fixes fields after creation. Flags left unset stay untouched
 // (flag.Visit distinguishes "not given" from "given empty"); the ID never
-// changes — it is stable identity, not derived state.
+// changes - it is stable identity, not derived state.
 func applyEdit(ctx context.Context, deps Deps, args []string) error {
 	if helped, err := positionalArgs(args, 1, "resumegen apply edit <id> [--company ...] [--role ...] [--salary ...] [--jd ...] [--source ...] [--profile ...] [--remote=true|false] [--resume-pdf ...] [--cover-letter ...] [--notes ...]"); helped || err != nil {
 		return err
