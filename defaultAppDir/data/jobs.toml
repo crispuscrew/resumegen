@@ -4,8 +4,9 @@
 # Bullet tags: at least one must match an active profile tag for the bullet to appear.
 # A job with zero visible bullets is always omitted.
 #
-# Strings may contain Typst inline markup (*bold*, _italic_, #link(...)[...]).
-# They are written into data_gen.typ as content blocks: [string].
+# Bullet text may contain Typst inline markup (*bold*, _italic_, `code`, #link(...)[...]);
+# it is written into data_gen.typ as a content block: [string]. The other fields (company,
+# title, date, location) are emitted as plain strings, so markup there renders literally.
 #
 # This is placeholder data - the companies below are fictional. Replace it with your own.
 
