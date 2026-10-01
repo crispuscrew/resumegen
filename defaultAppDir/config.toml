@@ -9,8 +9,13 @@ skill_priority  = 7         # Higher means skills are more important in the scor
 page_limit      = 1.0       # Max number of pages. Trim stage removes lowest-scored bullets until this limit is met.
 page_height_pt  = 841.89    # Page height in points. A4 = 841.89, US Letter = 792. Must match the paper setting in template.typ.
 
-# --- Optional hardening: all off by default; v1.0 output is unchanged. See README "Security & hardening". ---
-# use_container  = "auto"   # ""/"false" host (default) | "true" require a container engine | "auto" container if present, else host
+# Renderer backend. "auto" runs Typst inside a throwaway rootless container when podman or docker
+# is present, so you do not need Typst installed on the host. With no engine on PATH it falls back
+# to the host `typst` binary above and prints a one-line banner on stderr.
+#   ""/"false" host only | "true" require a container engine (hard error if none) | "auto" as described
+use_container   = "auto"
+
+# --- Optional hardening: off by default. See README "Security & hardening". ---
 # strip_metadata = true     # empty the PDF's /Author /Creator /Producer /CreationDate /ModDate via qpdf (qpdf must be installed)
 # strict_input   = true     # reject control chars, invalid UTF-8, and oversized fields when loading data (NUL is always rejected)
 

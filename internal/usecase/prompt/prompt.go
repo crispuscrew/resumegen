@@ -14,10 +14,7 @@ import (
 	toml "github.com/pelletier/go-toml/v2"
 )
 
-// InputSpec declares where one placeholder's value comes from. Source is one of
-// the source constants below; Flag names the CLI flag that feeds it (for the
-// flag/jd-file sources); Default is used when the value is unset and Required is
-// false.
+// InputSpec declares a placeholder's source, CLI flag, default and requirements.
 type InputSpec struct {
 	Source   string `toml:"source"`
 	Flag     string `toml:"flag"`
@@ -28,18 +25,17 @@ type InputSpec struct {
 	Field string `toml:"field"`
 }
 
-// Recognized input sources.
 const (
 	SourceDataDump = "data-dump" // contents of output/<profile>.md (v1.2)
-	SourceJDFile   = "jd-file"   // contents of the file named by --<Flag>
+	SourceFile     = "file"      // contents of the file named by --<Flag>
+	SourceJDFile   = "jd-file"   // file contents, with a tracked JD fallback
 	SourceFlag     = "flag"      // raw --<Flag> value
 	SourcePrompt   = "prompt"    // one line read interactively
 	SourceStdin    = "stdin"     // all of stdin
 	SourceAppID    = "app-id"    // a Field of the application named by --app (v1.4 tracker)
 )
 
-// appIDFields are the fields an app-id input may resolve to. "jd" resolves to the
-// contents of the file at the application's jd_path.
+// "jd" resolves to the contents of the application's jd_path.
 var appIDFields = map[string]struct{}{
 	"company": {}, "role": {}, "status": {}, "source": {}, "notes": {}, "jd": {},
 }
@@ -63,9 +59,7 @@ var (
 	frontmatterRe = regexp.MustCompile(`(?s)\A\+\+\+\r?\n(.*?)\r?\n\+\+\+\r?\n?(.*)\z`)
 )
 
-// Parse splits a template's TOML frontmatter (fenced by +++ lines) from its
-// Markdown body, decodes the metadata, and checks that every {{placeholder}} in
-// the body has a matching [inputs.<key>] table and vice versa.
+// Parse decodes frontmatter and checks input/placeholder symmetry.
 func Parse(raw []byte) (PromptTemplate, error) {
 	m := frontmatterRe.FindSubmatch(raw)
 	if m == nil {
@@ -95,9 +89,7 @@ func Parse(raw []byte) (PromptTemplate, error) {
 	return t, nil
 }
 
-// Render substitutes each {{key}} with in[key]. A required input that is missing
-// or empty (and has no default already applied by the caller) is an error naming
-// the input. Unknown placeholders cannot occur because Parse enforces symmetry.
+// Render substitutes declared placeholders, rejecting missing required inputs.
 func Render(t PromptTemplate, in PromptInput) (string, error) {
 	var missing []string
 	for key, spec := range t.Inputs {
@@ -149,7 +141,7 @@ func checkSymmetry(t PromptTemplate) error {
 
 func validSource(s string) bool {
 	switch s {
-	case SourceDataDump, SourceJDFile, SourceFlag, SourcePrompt, SourceStdin, SourceAppID:
+	case SourceDataDump, SourceFile, SourceJDFile, SourceFlag, SourcePrompt, SourceStdin, SourceAppID:
 		return true
 	default:
 		return false

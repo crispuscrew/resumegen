@@ -2,11 +2,12 @@
 en = "Ivan Petrov"
 ru = "Иван Петров"
 
-# Text fields support Typst inline markup: *bold*, _italic_, #link("url")[text], #box[...].
-# They are rendered as Typst content blocks, so standard Typst inline syntax works anywhere.
+# The summary below is rendered as a Typst content block, so inline markup works there:
+# *bold*, _italic_, `code`, #link("url")[text]. name and contact value/href are
+# emitted as plain strings - markup written in those shows up literally.
 
 # Contacts: if lang is set, shown only for that language. If absent/empty, always shown.
-# value/href can be plain strings (language-independent) or bilingual tables.
+# value/href are plain strings; use separate lang-specific contacts to translate them.
 #
 # Everything in this directory is placeholder data. Replace it with your own.
 
